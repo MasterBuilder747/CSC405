@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 
 public class RenderSurface extends WritableImage {
 	
-	private int surface[][];
+	private int[][] surface;
 	
 	public RenderSurface(int width, int height)
 	{
