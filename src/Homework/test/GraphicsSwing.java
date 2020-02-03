@@ -1,4 +1,4 @@
-package Week01;
+package Homework.test;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

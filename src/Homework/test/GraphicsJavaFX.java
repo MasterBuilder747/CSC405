@@ -1,4 +1,4 @@
-package Week01;
+package Homework.test;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -42,12 +42,7 @@ public class GraphicsJavaFX extends Application
     
     // -- Controls container
     private ControlBoxInner controlBox;
-
-    // -- launch the application
-    public void launchApp(String[] args)
-    {
-        launch(args);
-    }
+    
 
     @Override
     public void start(Stage mainStage)
@@ -71,7 +66,7 @@ public class GraphicsJavaFX extends Application
         // -- set up key listeners (to Pane) 
         prepareActionHandlers(pane);
 
-
+       
         mainScene = new Scene(pane);
         mainStage.setScene(mainScene);
 
@@ -114,6 +109,13 @@ public class GraphicsJavaFX extends Application
             }
         });
         
+    }
+    
+
+    // -- launch the application 
+    public void launchApp(String[] args)
+    {
+        launch(args);
     }
 
     

@@ -1,4 +1,4 @@
-package Week01;
+package Homework.HW2;
 
 public class MainAppJavaFX {
 

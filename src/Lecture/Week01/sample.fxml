@@ -3,6 +3,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<GridPane fx:controller="Week01.GraphicsJavaFX"
+<GridPane fx:controller="Lecture.Week01.GraphicsJavaFX"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
 </GridPane>

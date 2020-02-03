@@ -1,4 +1,4 @@
-package Week01;
+package Lecture.Week01;
 
 import java.awt.image.BufferedImage;
 

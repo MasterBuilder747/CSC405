@@ -1,4 +1,4 @@
-package Week01;
+package Homework.test;
 
 public class MainAppJavaSwing {
 	
