@@ -211,7 +211,7 @@ public class GraphicsJavaFX extends Application
     public class ControlBoxInner extends VBox {
 
         private Button buttons[];
-        private int nButtons = 2;
+        private int nButtons = 3;
 
         private TextField textField;
         
@@ -269,6 +269,23 @@ public class GraphicsJavaFX extends Application
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
                         System.out.println("Parametric image rendered.");
+                    }
+                    // focus back to the pane
+                    pane.requestFocus();
+                }
+            });
+
+            //bresenham button
+            buttons[2] = new Button();
+            buttons[2].setMnemonicParsing(true);
+            buttons[2].setText("Bresenham");
+            buttons[2].setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if (actionEvent.getSource() == buttons[2]) {
+                        // display bresenham image
+
+                        System.out.println("Bresenham image rendered.");
                     }
                     // focus back to the pane
                     pane.requestFocus();
