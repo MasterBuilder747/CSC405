@@ -53,7 +53,7 @@ public class GraphicsJavaFX extends Application
     public void start(Stage mainStage)
     {
     	// -- Application title
-        mainStage.setTitle("JavaFX Graphics Application");
+        mainStage.setTitle("Homework 2 Joseph Audras");
 
         // -- create canvas for drawing
         graphicsCanvas = new GraphicsCanvasInner(WIDTH, HEIGHT);
@@ -140,6 +140,7 @@ public class GraphicsJavaFX extends Application
     	
 
     	// -- check the active keys and render graphics
+        //update display
         public void repaint()
         {
         	double height = this.getHeight();
@@ -150,16 +151,25 @@ public class GraphicsJavaFX extends Application
 
             graphicsContext.setStroke(Color.RED);
 
-            //RENDER THE IMAGE
-            // HW: PUT THIS IN EACH BUTTON
+            graphicsContext.drawImage(renderSurface, 0, 0, this.getWidth(), this.getHeight());
+        }
 
-            //clear the surface
-            renderSurface.clearSurface();
+        //display image
+        public void paintTwoPoint() {
+            //two point
+            graphicsCanvas.renderSurface.clearSurface();
             //then add the twopoint image
             Lines.mainTwoPoint(renderSurface.getSurface());
-            renderSurface.insertArray();
+            graphicsCanvas.renderSurface.insertArray();
+        }
 
-            graphicsContext.drawImage(renderSurface, 0, 0, this.getWidth(), this.getHeight());
+        //display image
+        public void paintParametric() {
+            //parametric
+            renderSurface.clearSurface();
+            //then add the parametric image
+            Lines.mainParametric(renderSurface.getSurface());
+            renderSurface.insertArray();
         }
 
         private void prepareActionHandlers()
@@ -207,7 +217,7 @@ public class GraphicsJavaFX extends Application
     public class ControlBoxInner extends VBox {
 
         private Button buttons[];
-        private int nButtons = 6;
+        private int nButtons = 2;
 
         private TextField textField;
         
@@ -221,40 +231,55 @@ public class GraphicsJavaFX extends Application
             // -- add the buttons to an V (vertical) Box (container)
             for (int i = 0; i < buttons.length; ++i) {
             	this.getChildren().add(buttons[i]);
-            	if (i == 1) {
-            		textField = new TextField();
-            		textField.setMaxWidth(60);
-            		this.getChildren().add(textField);
-            	}
             }
         }
         
-        private void prepareButtonHandlers()
-        {
+        private void prepareButtonHandlers() {
         	buttons = new Button[nButtons];
-        	for (int i = 0; i < buttons.length; ++i) {
-                buttons[i] = new Button();
-                buttons[i].setMnemonicParsing(true);
-                buttons[i].setText("Button _" + i);        
-                buttons[i].setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                    	if (actionEvent.getSource() == buttons[0]) {
-                    		animationTimer.start();
-                    	}
-                    	else if (actionEvent.getSource() == buttons[nButtons - 1]) {
-                    		animationTimer.stop();
-                    	}
-                    	else if (actionEvent.getSource() == buttons[1]) {
-                    		System.out.println(textField.getText());
-                    	}
-                    	// -- process the button
-                        System.out.println(actionEvent.getSource().toString());
-                        // -- and return focus back to the pane
-                        pane.requestFocus();
+
+        	//two point button
+        	buttons[0] = new Button();
+        	buttons[0].setMnemonicParsing(true);
+        	buttons[0].setText("Two Point");
+        	buttons[0].setOnAction(new EventHandler<ActionEvent>() {
+        	    @Override
+                public void handle(ActionEvent actionEvent) {
+        	        if (actionEvent.getSource() == buttons[0]) {
+        	            // display two point image
+                        //two point
+                        graphicsCanvas.renderSurface.clearSurface();
+                        //then add the twopoint image
+                        Lines.mainTwoPoint(graphicsCanvas.renderSurface.getSurface());
+                        graphicsCanvas.renderSurface.insertArray();
+                        graphicsCanvas.repaint();
+                        System.out.println("Two-point image rendered.");
+        	        }
+        	        // focus back to the pane
+                    pane.requestFocus();
+        	    }
+        	});
+
+        	//parametric button
+            buttons[1] = new Button();
+            buttons[1].setMnemonicParsing(true);
+            buttons[1].setText("Parametric");
+            buttons[1].setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if (actionEvent.getSource() == buttons[1]) {
+                        // display parametric image
+                        //parametric
+                        graphicsCanvas.renderSurface.clearSurface();
+                        //then add the parametric image
+                        Lines.mainParametric(graphicsCanvas.renderSurface.getSurface());
+                        graphicsCanvas.renderSurface.insertArray();
+                        graphicsCanvas.repaint();
+                        System.out.println("Parametric image rendered.");
                     }
-                });
-        	}
+                    // focus back to the pane
+                    pane.requestFocus();
+                }
+            });
         }
     }
 }

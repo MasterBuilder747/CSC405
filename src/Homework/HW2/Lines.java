@@ -61,9 +61,18 @@ public class Lines extends LineBase {
         }
     }
 
+    public static void mainParametric(int[][] framebuffer) {
+        LineBase lb = new Lines();
+        for (int x = 0; x < framebuffer[0].length; x += 13) {
+            lb.parametricForm(x, 0, framebuffer[0].length - x - 1, framebuffer.length - 1, framebuffer);
+        }
+        for (int y = 0; y < framebuffer.length; y += 13) {
+            lb.parametricForm(0, y, framebuffer[0].length - 1, framebuffer.length - y - 1, framebuffer);
+        }
+    }
+
     public static void main (String[] args) {
         LineBase lb = new Lines();
-
         {
             int[][] framebuffer = new int[256][256];
             for (int x = 0; x < framebuffer[0].length; x += 13) {
