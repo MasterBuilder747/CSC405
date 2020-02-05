@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class GraphicsJavaFX extends Application
@@ -211,7 +212,7 @@ public class GraphicsJavaFX extends Application
     public class ControlBoxInner extends VBox {
 
         private Button buttons[];
-        private int nButtons = 3;
+        private int nButtons = 4;
 
         private TextField textField;
         
@@ -232,10 +233,11 @@ public class GraphicsJavaFX extends Application
         	buttons = new Button[nButtons];
 
         	//two point button
-        	buttons[0] = new Button();
-        	buttons[0].setMnemonicParsing(true);
-        	buttons[0].setText("Two Point");
-        	buttons[0].setOnAction(new EventHandler<ActionEvent>() {
+            int i = 0;
+        	buttons[i] = new Button();
+        	buttons[i].setMnemonicParsing(true);
+        	buttons[i].setText("Two Point");
+        	buttons[i].setOnAction(new EventHandler<ActionEvent>() {
         	    @Override
                 public void handle(ActionEvent actionEvent) {
         	        if (actionEvent.getSource() == buttons[0]) {
@@ -254,10 +256,11 @@ public class GraphicsJavaFX extends Application
         	});
 
         	//parametric button
-            buttons[1] = new Button();
-            buttons[1].setMnemonicParsing(true);
-            buttons[1].setText("Parametric");
-            buttons[1].setOnAction(new EventHandler<ActionEvent>() {
+            i = 1;
+            buttons[i] = new Button();
+            buttons[i].setMnemonicParsing(true);
+            buttons[i].setText("Parametric");
+            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[1]) {
@@ -276,16 +279,36 @@ public class GraphicsJavaFX extends Application
             });
 
             //bresenham button
-            buttons[2] = new Button();
-            buttons[2].setMnemonicParsing(true);
-            buttons[2].setText("Bresenham");
-            buttons[2].setOnAction(new EventHandler<ActionEvent>() {
+            i = 2;
+            buttons[i] = new Button();
+            buttons[i].setMnemonicParsing(true);
+            buttons[i].setText("Bresenham");
+            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[2]) {
                         // display bresenham image
 
                         System.out.println("Bresenham image rendered.");
+                    }
+                    // focus back to the pane
+                    pane.requestFocus();
+                }
+            });
+
+            //write to png button
+            i = 3;
+            buttons[i] = new Button();
+            buttons[i].setMnemonicParsing(true);
+            buttons[i].setText("Write to png");
+            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if (actionEvent.getSource() == buttons[3]) {
+                        // save as png
+                        //FileChooser is the method to make a dialog to find a place to save the file
+
+                        System.out.println("File saved.");
                     }
                     // focus back to the pane
                     pane.requestFocus();
