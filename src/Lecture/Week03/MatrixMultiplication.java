@@ -30,9 +30,11 @@ public class MatrixMultiplication {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     public static void main(String[] args) {
+        /*
         try {
             double[][] a = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
             printmat(a);
@@ -48,6 +50,38 @@ public class MatrixMultiplication {
             System.out.println();
             double[][] e = {{1}, {2}, {3}}; //columns only
             printmat(e);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
+        */
+
+        try {
+            double[][] a = {{1, 0, 0, 10}, {0, 1, 0, 10}, {0, 0, 0, 1}, {0, 0, 0, 1}};
+            printmat(a);
+
+            double[][] scene = {{0, 10}, {0, 10}, {0, 0}, {1, 1}};
+            printmat(scene); //movement
+
+            printmat(matmult(a, scene));
+
+            double[][] x = {{1, 0, 0, 0},
+                            {0, Math.cos(Math.toRadians(90)), -Math.sin(Math.toRadians(90)), 0},
+                            {0, Math.sin(Math.toRadians(90)), Math.cos(Math.toRadians(90)), 0},
+                            {0, 0, 0, 1}};
+            printmat(matmult(x, scene));
+
+            double[][] y = {{Math.cos(Math.toRadians(90)), 0, Math.sin(Math.toRadians(90)), 0},
+                            {0, 1, 0, 0},
+                            {-Math.sin(Math.toRadians(90)), 0, Math.cos(Math.toRadians(90)), 0},
+                            {0, 0, 0, 1}};
+            printmat(matmult(y, scene));
+
+            double[][] z = {{Math.cos(Math.toRadians(90)), -Math.sin(Math.toRadians(90)), 0, 0},
+                            {Math.sin(Math.toRadians(90)), Math.cos(Math.toRadians(90)), 0, 0},
+                            {0, 0, 1, 0},
+                            {0, 0, 0, 1}};
+            printmat(matmult(z, scene));
+
         } catch (IllegalArgumentException e) {
             System.out.println(e);
         }
