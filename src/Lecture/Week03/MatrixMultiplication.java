@@ -42,6 +42,12 @@ public class MatrixMultiplication {
             System.out.println();
             double[][] c = matmult(a, b);
             printmat(c);
+            System.out.println();
+            double[][] d = {{1, 2, 3}}; //rows only
+            printmat(d);
+            System.out.println();
+            double[][] e = {{1}, {2}, {3}}; //columns only
+            printmat(e);
         } catch (IllegalArgumentException e) {
             System.out.println(e);
         }
