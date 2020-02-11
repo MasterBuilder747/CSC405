@@ -1,3 +1,11 @@
+/*
+Homework 3
+Name: Joseph Audras
+Professor: Dr. Reinhart
+Class: CSC 405-1
+Date due: 2-11-20
+*/
+
 package Homework.HW3;
 
 import javax.imageio.ImageIO;

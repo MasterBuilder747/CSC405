@@ -4,7 +4,7 @@ Name: Joseph Audras
 Professor: Dr. Reinhart
 Class: CSC 405-1
 Date due: 2-11-20
- */
+*/
 
 //SOURCE: https://github.com/SagarGaniga/computer-graphics/blob/master/Bresenham's%20Line/Bresenhams.cpp
 /*
