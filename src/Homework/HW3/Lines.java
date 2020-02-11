@@ -72,12 +72,14 @@ public class Lines extends LineBase {
 
          */
 
-        double dx = x2 - x1;
-        double dy = y2 - y1;
+        //inputs are the range and the numbers that go through the array of the framebuffer
+
+        double dx = x2 - x1; //change in x axis
+        double dy = y2 - y1; //change in y axis
 
         // Find Signs
-        int sx = (dx >= 0) ? 1 : (-1);
-        int sy = (dy >= 0) ? 1 : (-1);
+        int sx = (dx >= 0) ? 1 : (-1); //if the change in x is equal to or greater than 0, sx will be 1 otherwise -1
+        int sy = (dy >= 0) ? 1 : (-1); //if the change in y is equal to or greater than 0, yx will be 1 otherwise -1
 
         // Get Initial Points
         double x = x1;
@@ -87,37 +89,37 @@ public class Lines extends LineBase {
         int isSwaped = 0;
 
         // Swap if needed
-        if (Math.abs(dy) > Math.abs(dx)) {
+        if (Math.abs(dy) > Math.abs(dx)) { //if the magnitude of the change in y is greater than x, then:
             // swap dx and dy
-            double tdx = dx;
+            double tdx = dx; //so that dx will be larger than dy
             dx = dy;
             dy = tdx;
 
-            isSwaped = 1;
+            isSwaped = 1; //swap variable incremented for control
         }
 
         // Decision parameter
-        double p = 2 * (Math.abs(dy)) - Math.abs(dx);
-
+        double p = 2 * Math.abs(dy) - Math.abs(dx); //p is the difference in ranges,
+        //this is used for determining what direction the line will be rendered
         //Print Initial Point
         //putpixels(x,y);
 
         // Loop for dx times
         for (int i = 0; i < Math.abs(dx); i++) {
             // Depending on decision parameter
-            if (p < 0) {
+            if (p < 0) { //p is negative, dx is greater than dy, point is rendered above the line
                 if (isSwaped == 0) {
-                    x = x + sx;
-                    framebuffer[(int)x][(int)y] = 255;
+                    x = x + sx; //plot the point at (x+1,y)
+                    framebuffer[(int)x][(int)y] = 255; //plot the image
                 } else {
-                    y = y + sy;
-                    framebuffer[(int)x][(int)y] = 255;
+                    y = y + sy; //plot the point at (x,y+1)
+                    framebuffer[(int)x][(int)y] = 255; //plot the image
                 }
                 p = p + 2 * Math.abs(dy);
-            } else {
-                x = x + sx;
+            } else { //p is positive, dy is greater than dx, and the point rendered is below the line
+                x = x + sx; //plot the point at (x+1,y+1)
                 y = y + sy;
-                framebuffer[(int)x][(int)y] = 255;
+                framebuffer[(int)x][(int)y] = 255; //plot the image
                 p = p + 2 * Math.abs(dy) - 2 * Math.abs(dx);
             }
         }
@@ -166,5 +168,3 @@ public class Lines extends LineBase {
         }
     }
 }
-
-

@@ -18,6 +18,8 @@ public abstract class LineBase {
 
     public abstract void parametricForm(int x0, int y0, int x1, int y1, int[][] framebuffer) throws NullPointerException, ArrayIndexOutOfBoundsException;
 
+    public abstract void bresenhamForm(int x0, int y0, int x1, int y1, int[][] framebuffer) throws NullPointerException, ArrayIndexOutOfBoundsException;
+
     public static void ImageWrite(int[][] img, String filename) throws IOException
     {
         try {
@@ -27,7 +29,7 @@ public abstract class LineBase {
             for (int i = 0; i < bi.getHeight(); ++i) {
                 for (int j = 0; j < bi.getWidth(); ++j) {
                     int pixel =	(img[i][j] << 16) | (img[i][j] << 8) | (img[i][j]);
-//	    			int pixel =	((int)(Math.random() * 255) << 16) | (img[i][j] << 8) | (img[i][j]);
+	    			// int pixel =	((int)(Math.random() * 255) << 16) | (img[i][j] << 8) | (img[i][j]);
                     bi.setRGB(j, i, pixel);
                 }
             }

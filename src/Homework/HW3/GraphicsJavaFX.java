@@ -12,6 +12,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -26,13 +27,21 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
 import static Homework.HW3.Bresenham.bresLine;
+import static Homework.HW3.Lines.*;
 
 public class GraphicsJavaFX extends Application
 {
     int WIDTH = 512;
     int HEIGHT = 512;
+
+    int imageMode = 0;
     
     private AnimationTimer animationTimer;
 
@@ -57,7 +66,7 @@ public class GraphicsJavaFX extends Application
     public void start(Stage mainStage)
     {
     	// -- Application title
-        mainStage.setTitle("Homework 2 Joseph Audras");
+        mainStage.setTitle("Homework 3 Joseph Audras");
 
         // -- create canvas for drawing
         graphicsCanvas = new GraphicsCanvasInner(WIDTH, HEIGHT);
@@ -258,6 +267,7 @@ public class GraphicsJavaFX extends Application
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
                         System.out.println("Two-point image rendered.");
+                        imageMode = 1;
         	        }
         	        // focus back to the pane
                     pane.requestFocus();
@@ -281,6 +291,7 @@ public class GraphicsJavaFX extends Application
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
                         System.out.println("Parametric image rendered.");
+                        imageMode = 2;
                     }
                     // focus back to the pane
                     pane.requestFocus();
@@ -303,10 +314,11 @@ public class GraphicsJavaFX extends Application
                         //bresLine(0, h / 2, 0, -h / 2);
                         graphicsCanvas.renderSurface.clearSurface();
                         //then add the bresenham image
-                        Lines.mainBresenham(graphicsCanvas.renderSurface.getSurface());
+                        mainBresenham(graphicsCanvas.renderSurface.getSurface());
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
                         System.out.println("Bresenham image rendered.");
+                        imageMode = 3;
                     }
                     // focus back to the pane
                     pane.requestFocus();
@@ -324,8 +336,24 @@ public class GraphicsJavaFX extends Application
                     if (actionEvent.getSource() == buttons[3]) {
                         // save as png
                         //FileChooser is the method to make a dialog to find a place to save the file
-
-                        System.out.println("File saved.");
+                        FileChooser fc = new FileChooser();
+                        fc.setInitialDirectory(new File(System.getProperty("user.home")));
+                        File file = fc.showSaveDialog(null);
+                        String fileName = file.getAbsolutePath();
+                        int[][] im = new int[WIDTH][HEIGHT];
+                        if (imageMode == 1) {
+                            mainTwoPoint(im);
+                        } else if (imageMode == 2) {
+                            mainParametric(im);
+                        } else if (imageMode == 3) {
+                            mainBresenham(im);
+                        }
+                        try {
+                            LineBase.ImageWrite(im, fileName + ".png");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        //System.out.println("File saved in: " + fileName);
                     }
                     // focus back to the pane
                     pane.requestFocus();
