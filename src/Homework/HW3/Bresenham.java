@@ -17,6 +17,8 @@ Ganiga, Sagar. “Computer-Graphics.” GitHub, 4 Nov. 2017,
 
 //converted from C++ to Java code:
 
+//this is a standalone class, not used
+
 package Homework.HW3;
 
 public class Bresenham {

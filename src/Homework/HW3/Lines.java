@@ -2,6 +2,8 @@ package Homework.HW3;
 
 import Homework.HW1LineDrawing.LineBase;
 
+import static Homework.HW3.Bresenham.bresLine;
+
 public class Lines extends LineBase {
 
     @Override
@@ -48,10 +50,71 @@ public class Lines extends LineBase {
             y = y1 - ((y1 - y0) * (i / pd));
             framebuffer[(int)x][(int)y] = 255;
         }
-
     }
 
-    
+    //@Override
+    public static void bresenhamForm(int x1, int y1, int x2, int y2, int[][] framebuffer)
+            throws NullPointerException, ArrayIndexOutOfBoundsException {
+
+        //SOURCE: https://github.com/SagarGaniga/computer-graphics/blob/master/Bresenham's%20Line/Bresenhams.cpp
+        /*
+        Works Cited:
+
+        Ganiga, Sagar. “Computer-Graphics.” GitHub, 4 Nov. 2017,
+            github.com/SagarGaniga/computer-graphics/blob/master/Bresenham's%20Line/Bresenhams.cpp.
+
+         */
+
+        double dx = x2 - x1;
+        double dy = y2 - y1;
+
+        // Find Signs
+        int sx = (dx >= 0) ? 1 : (-1);
+        int sy = (dy >= 0) ? 1 : (-1);
+
+        // Get Initial Points
+        double x = x1;
+        double y = y1;
+
+        // Flag to check if swapping happens
+        int isSwaped = 0;
+
+        // Swap if needed
+        if (Math.abs(dy) > Math.abs(dx)) {
+            // swap dx and dy
+            double tdx = dx;
+            dx = dy;
+            dy = tdx;
+
+            isSwaped = 1;
+        }
+
+        // Decision parameter
+        double p = 2 * (Math.abs(dy)) - Math.abs(dx);
+
+        //Print Initial Point
+        //putpixels(x,y);
+
+        // Loop for dx times
+        for (int i = 0; i < Math.abs(dx); i++) {
+            // Depending on decision parameter
+            if (p < 0) {
+                if (isSwaped == 0) {
+                    x = x + sx;
+                    framebuffer[(int)x][(int)y] = 255;
+                } else {
+                    y = y + sy;
+                    framebuffer[(int)x][(int)y] = 255;
+                }
+                p = p + 2 * Math.abs(dy);
+            } else {
+                x = x + sx;
+                y = y + sy;
+                framebuffer[(int)x][(int)y] = 255;
+                p = p + 2 * Math.abs(dy) - 2 * Math.abs(dx);
+            }
+        }
+    }
 
     public static void mainTwoPoint(int[][] framebuffer) {
         LineBase lb = new Lines();
@@ -70,6 +133,16 @@ public class Lines extends LineBase {
         }
         for (int y = 0; y < framebuffer.length; y += 13) {
             lb.parametricForm(0, y, framebuffer[0].length - 1, framebuffer.length - y - 1, framebuffer);
+        }
+    }
+
+    public static void mainBresenham(int[][] framebuffer) {
+        LineBase lb = new Lines();
+        for (int x = 0; x < framebuffer[0].length; x += 13) {
+            bresenhamForm(x, 0, framebuffer[0].length - x - 1, framebuffer.length - 1, framebuffer);
+        }
+        for (int y = 0; y < framebuffer.length; y += 13) {
+            bresenhamForm(0, y, framebuffer[0].length - 1, framebuffer.length - y - 1, framebuffer);
         }
     }
 

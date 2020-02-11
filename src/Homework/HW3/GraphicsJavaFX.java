@@ -20,6 +20,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import static Homework.HW3.Bresenham.bresLine;
+
 public class GraphicsJavaFX extends Application
 {
     int WIDTH = 512;
@@ -288,7 +290,15 @@ public class GraphicsJavaFX extends Application
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[2]) {
                         // display bresenham image
-
+                        double w = WIDTH;
+                        double h = HEIGHT;
+                        //bresLine(-w / 2, 0, w / 2, 0);
+                        //bresLine(0, h / 2, 0, -h / 2);
+                        graphicsCanvas.renderSurface.clearSurface();
+                        //then add the bresenham image
+                        Lines.mainBresenham(graphicsCanvas.renderSurface.getSurface());
+                        graphicsCanvas.renderSurface.insertArray();
+                        graphicsCanvas.repaint();
                         System.out.println("Bresenham image rendered.");
                     }
                     // focus back to the pane
