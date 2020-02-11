@@ -51,6 +51,8 @@ public class Lines extends LineBase {
 
     }
 
+    
+
     public static void mainTwoPoint(int[][] framebuffer) {
         LineBase lb = new Lines();
         for (int x = 0; x < framebuffer[0].length; x += 13) {
