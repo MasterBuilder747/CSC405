@@ -96,22 +96,35 @@ public class Lines extends LineBase {
         //Print Initial Point
         //putpixels(x,y);
 
-        // Loop for dx times
+
+            // Loop for dx times
         for (int i = 0; i < Math.abs(dx); i++) {
             // Depending on decision parameter
             if (p < 0) { //p is negative, dx is greater than dy, point is rendered above the line
                 if (isSwaped == 0) {
                     x = x + sx; //plot the point at (x+1,y)
-                    framebuffer[(int)x][(int)y] = 255; //plot the image
+                    try {
+                        framebuffer[(int) x][(int) y] = 255; //plot the image
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        //ignore exception due to clipping
+                    }
                 } else {
                     y = y + sy; //plot the point at (x,y+1)
-                    framebuffer[(int)x][(int)y] = 255; //plot the image
+                    try {
+                        framebuffer[(int) x][(int) y] = 255; //plot the image
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        //ignore exception due to clipping
+                    }
                 }
                 p = p + 2 * Math.abs(dy);
             } else { //p is positive, dy is greater than dx, and the point rendered is below the line
                 x = x + sx; //plot the point at (x+1,y+1)
                 y = y + sy;
-                framebuffer[(int)x][(int)y] = 255; //plot the image
+                try {
+                framebuffer[(int) x][(int) y] = 255; //plot the image
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    //ignore exception due to clipping
+                }
                 p = p + 2 * Math.abs(dy) - 2 * Math.abs(dx);
             }
         }

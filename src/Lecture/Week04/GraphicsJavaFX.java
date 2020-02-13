@@ -51,6 +51,8 @@ public class GraphicsJavaFX extends Application
         launch(args);
     }
 
+    SceneGraph sc = new SceneGraph();
+
     @Override
     public void start(Stage mainStage)
     {
@@ -152,7 +154,7 @@ public class GraphicsJavaFX extends Application
             graphicsContext.clearRect(0, 0, width, height);
 
             graphicsContext.setStroke(Color.RED);
-
+            //sc.render(renderSurface.getSurface());
             graphicsContext.drawImage(renderSurface, 0, 0, this.getWidth(), this.getHeight());
         }
 
@@ -219,7 +221,7 @@ public class GraphicsJavaFX extends Application
     public class ControlBoxInner extends VBox {
 
         private Button buttons[];
-        private int nButtons = 4;
+        private int nButtons = 1;
 
         private TextField textField;
         
@@ -239,110 +241,20 @@ public class GraphicsJavaFX extends Application
         private void prepareButtonHandlers() {
         	buttons = new Button[nButtons];
 
-        	//two point button
+        	//scene button
             int i = 0;
-        	buttons[i] = new Button();
-        	buttons[i].setMnemonicParsing(true);
-        	buttons[i].setText("Two Point");
-        	buttons[i].setOnAction(new EventHandler<ActionEvent>() {
-        	    @Override
-                public void handle(ActionEvent actionEvent) {
-        	        if (actionEvent.getSource() == buttons[0]) {
-        	            // display two point image
-                        //two point
-                        graphicsCanvas.renderSurface.clearSurface();
-                        //then add the twopoint image
-                        Lines.mainTwoPoint(graphicsCanvas.renderSurface.getSurface());
-                        graphicsCanvas.renderSurface.insertArray();
-                        graphicsCanvas.repaint();
-                        System.out.println("Two-point image rendered.");
-                        imageMode = 1;
-        	        }
-        	        // focus back to the pane
-                    pane.requestFocus();
-        	    }
-        	});
-
-        	//parametric button
-            i = 1;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Parametric");
+            buttons[i].setText("Scene");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if (actionEvent.getSource() == buttons[1]) {
-                        // display parametric image
-                        //parametric
+                    if (actionEvent.getSource() == buttons[0]) {
                         graphicsCanvas.renderSurface.clearSurface();
-                        //then add the parametric image
-                        Lines.mainParametric(graphicsCanvas.renderSurface.getSurface());
+                        sc.render(graphicsCanvas.renderSurface.getSurface());
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
-                        System.out.println("Parametric image rendered.");
-                        imageMode = 2;
-                    }
-                    // focus back to the pane
-                    pane.requestFocus();
-                }
-            });
-
-            //bresenham button
-            i = 2;
-            buttons[i] = new Button();
-            buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Bresenham");
-            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    if (actionEvent.getSource() == buttons[2]) {
-                        // display bresenham image
-                        double w = WIDTH;
-                        double h = HEIGHT;
-                        //bresLine(-w / 2, 0, w / 2, 0);
-                        //bresLine(0, h / 2, 0, -h / 2);
-                        graphicsCanvas.renderSurface.clearSurface();
-                        //then add the bresenham image
-                        mainBresenham(graphicsCanvas.renderSurface.getSurface());
-                        graphicsCanvas.renderSurface.insertArray();
-                        graphicsCanvas.repaint();
-                        System.out.println("Bresenham image rendered.");
-                        imageMode = 3;
-                    }
-                    // focus back to the pane
-                    pane.requestFocus();
-                }
-            });
-
-            //write to png button
-            i = 3;
-            buttons[i] = new Button();
-            buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Write to png");
-            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    if (actionEvent.getSource() == buttons[3]) {
-                        // save as png
-                        //FileChooser is the method to make a dialog to find a place to save the file
-                        FileChooser fc = new FileChooser();
-                        fc.setInitialDirectory(new File(System.getProperty("user.home")));
-                        File file = fc.showSaveDialog(null);
-                        String fileName = file.getAbsolutePath();
-                        int[][] im = new int[WIDTH][HEIGHT];
-                        if (imageMode == 1) {
-                            mainTwoPoint(im);
-                        } else if (imageMode == 2) {
-                            mainParametric(im);
-                        } else if (imageMode == 3) {
-                            mainBresenham(im);
-                        }
-                        try {
-                            LineBase.ImageWrite(im, fileName + ".png");
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        //System.out.println("File saved in: " + fileName);
+                        System.out.println("Square generated.");
                     }
                     // focus back to the pane
                     pane.requestFocus();
