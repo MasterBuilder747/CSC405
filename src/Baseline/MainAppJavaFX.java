@@ -1,12 +1,4 @@
-/*
-Homework 4
-Name: Joseph Audras
-Professor: Dr. Reinhart
-Class: CSC 405-1
-Date due: 2-21-20
-*/
-
-package Homework.HW4;
+package Baseline;
 
 public class MainAppJavaFX {
 

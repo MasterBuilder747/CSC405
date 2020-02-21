@@ -1,22 +1,14 @@
-/*
-Homework 4
-Name: Joseph Audras
-Professor: Dr. Reinhart
-Class: CSC 405-1
-Date due: 2-21-20
-*/
+package Baseline;
 
-package Homework.HW4;
+import java.awt.image.BufferedImage;
 
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
-import java.awt.image.BufferedImage;
-
 public class RenderSurface extends WritableImage {
 	
-	private int[][] surface;
+	private int surface[][];
 	
 	public RenderSurface(int width, int height)
 	{
@@ -28,10 +20,6 @@ public class RenderSurface extends WritableImage {
 			}
 		}
 		insertArray();
-	}
-
-	public void clearSurface() {
-		surface = new int[surface.length][surface[0].length];
 	}
 	
 	public int[][] getSurface()
