@@ -220,10 +220,11 @@ public class GraphicsJavaFX extends Application
     public class ControlBoxInner extends VBox {
 
         private Button buttons[];
-        private int nButtons = 7;
+        private int nButtons = 8;
 
-        private TextField textField;
-        
+        private TextField button0;
+        private TextField button1;
+
         public ControlBoxInner()
         {
         	super();
@@ -234,10 +235,14 @@ public class GraphicsJavaFX extends Application
             // -- add the buttons to an V (vertical) Box (container)
             for (int i = 0; i < buttons.length; ++i) {
                 this.getChildren().add(buttons[i]);
-                if (i == 0 || i == 1) {
-                    textField = new TextField();
-                    textField.setMaxWidth(60);
-                    this.getChildren().add(textField);
+                if (i == 0) {
+                    button0 = new TextField();
+                    button0.setMaxWidth(60);
+                    this.getChildren().add(button0);
+                } else if (i == 1) {
+                    button1 = new TextField();
+                    button1.setMaxWidth(60);
+                    this.getChildren().add(button1);
                 }
             }
         }
@@ -247,18 +252,15 @@ public class GraphicsJavaFX extends Application
             for (int i = 0; i < buttons.length; ++i) {
                 buttons[i] = new Button();
                 buttons[i].setMnemonicParsing(true);
-                buttons[i].setText("Button _" + i);
+                buttons[i].setText("Enter box " + i + ":"); //trans (x,y,z) and rotate (deg)
                 buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         if (actionEvent.getSource() == buttons[0]) {
-                            animationTimer.start();
-                        }
-                        else if (actionEvent.getSource() == buttons[nButtons - 1]) {
-                            animationTimer.stop();
+                            System.out.println(button0.getText());
                         }
                         else if (actionEvent.getSource() == buttons[1]) {
-                            System.out.println(textField.getText());
+                            System.out.println(button1.getText());
                         }
                         // -- process the button
                         System.out.println(actionEvent.getSource().toString());
@@ -268,19 +270,15 @@ public class GraphicsJavaFX extends Application
                 });
             }
 
-        	//scene button
-            int i = 0;
+            int i = 2;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
             buttons[i].setText("Scene");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if (actionEvent.getSource() == buttons[0]) {
-                        graphicsCanvas.renderSurface.clearSurface();
-                        sc.render(graphicsCanvas.renderSurface.getSurface());
-                        graphicsCanvas.renderSurface.insertArray();
-                        graphicsCanvas.repaint();
+                    if (actionEvent.getSource() == buttons[2]) {
+
                         System.out.println("Square generated.");
                     }
                     // focus back to the pane
@@ -288,7 +286,85 @@ public class GraphicsJavaFX extends Application
                 }
             });
 
+            i = 3;
+            buttons[i] = new Button();
+            buttons[i].setMnemonicParsing(true);
+            buttons[i].setText("Rotate X");
+            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if (actionEvent.getSource() == buttons[3]) {
 
+                        System.out.println("Rotate by X.");
+                    }
+                    // focus back to the pane
+                    pane.requestFocus();
+                }
+            });
+
+            i = 4;
+            buttons[i] = new Button();
+            buttons[i].setMnemonicParsing(true);
+            buttons[i].setText("Rotate Y");
+            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if (actionEvent.getSource() == buttons[4]) {
+
+                        System.out.println("Rotate by Y.");
+                    }
+                    // focus back to the pane
+                    pane.requestFocus();
+                }
+            });
+
+            i = 5;
+            buttons[i] = new Button();
+            buttons[i].setMnemonicParsing(true);
+            buttons[i].setText("Rotate Z");
+            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if (actionEvent.getSource() == buttons[5]) {
+
+                        System.out.println("Rotate by Z.");
+                    }
+                    // focus back to the pane
+                    pane.requestFocus();
+                }
+            });
+
+            i = 6;
+            buttons[i] = new Button();
+            buttons[i].setMnemonicParsing(true);
+            buttons[i].setText("Translation");
+            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if (actionEvent.getSource() == buttons[6]) {
+
+                        System.out.println("Translated by [textbox]");
+                    }
+                    // focus back to the pane
+                    pane.requestFocus();
+                }
+            });
+
+            i = 7;
+            buttons[i] = new Button();
+            buttons[i].setMnemonicParsing(true);
+            buttons[i].setText("Scale");
+            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if (actionEvent.getSource() == buttons[7]) {
+
+                        System.out.println("Scaled by [textbox]");
+                    }
+                    // focus back to the pane
+                    pane.requestFocus();
+                }
+            });
         }
     }
 }
