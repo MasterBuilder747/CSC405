@@ -119,7 +119,6 @@ public class GraphicsJavaFX extends Application
         
     }
 
-    
     // -- Inner class for Graphics
     public class GraphicsCanvasInner extends Canvas  {
     	
@@ -257,9 +256,11 @@ public class GraphicsJavaFX extends Application
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         if (actionEvent.getSource() == buttons[0]) {
+
                             System.out.println(button0.getText());
                         }
                         else if (actionEvent.getSource() == buttons[1]) {
+
                             System.out.println(button1.getText());
                         }
                         // -- process the button
@@ -273,13 +274,18 @@ public class GraphicsJavaFX extends Application
             int i = 2;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Scene");
+            buttons[i].setText("Generate");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[2]) {
+                        graphicsCanvas.renderSurface.clearSurface();
 
-                        System.out.println("Square generated.");
+                        sc.render(graphicsCanvas.renderSurface.getSurface());
+
+                        graphicsCanvas.renderSurface.insertArray();
+                        graphicsCanvas.repaint();
+                        System.out.println("square generated.");
                     }
                     // focus back to the pane
                     pane.requestFocus();

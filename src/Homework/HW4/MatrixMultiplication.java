@@ -32,16 +32,98 @@ public class MatrixMultiplication {
     }
 
     public static void printmat(double[][]a) {
-        for(int i = 0; i < a.length; i++) {
+        for (double[] doubles : a) {
             for (int j = 0; j < a[0].length; j++) {
-                System.out.printf("%7.2f ", a[i][j]); // 7.2f = 7 spaces, 2 digits to the right of the decimal, floating point representation
+                System.out.printf("%7.2f ", doubles[j]); // 7.2f = 7 spaces, 2 digits to the right of the decimal, floating point representation
             }
             System.out.println();
         }
         System.out.println();
     }
 
-    public static void main(String[] args) {
+    //example arrays
+    double[][] a = {{1, 0, 0, 10},
+                    {0, 1, 0, 10},
+                    {0, 0, 0, 1},
+                    {0, 0, 0, 1}};
+    double[][] scene = {{0, 10}, {0, 10}, {0, 0}, {1, 1}};
+
+
+    //lowercase: the movement
+    //uppercase: the point
+    public static double[][] transPt(double x, double y, double z, double X, double Y, double Z) {
+        double[][] trans = {{1, 0, 0, x},
+                            {0, 1, 0, y},
+                            {0, 0, 1, z},
+                            {0, 0, 0, 1}};
+
+        double[][] point = {{X},
+                            {Y},
+                            {Z},
+                            {1}};
+
+        return matmult(trans, point);
+    }
+
+    public static double[][] scalePt(double x, double y, double z, double X, double Y, double Z) {
+        double[][] scale = {{x, 0, 0, 0},
+                            {0, y, 0, 0},
+                            {0, 0, z, 0},
+                            {0, 0, 0, 1}};
+
+        double[][] point = {{X},
+                            {Y},
+                            {Z},
+                            {1}};
+
+        return matmult(scale, point);
+    }
+
+    public static double[][] rotateXPt(double X, double Y, double Z, double angle) {
+        double[][] rotateX = {{1, 0, 0, 0},
+                              {0, Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)), 0},
+                              {0, Math.sin(Math.toRadians(angle)), Math.cos(Math.toRadians(angle)), 0},
+                              {0, 0, 0, 1}};
+
+        double[][] point = {{X},
+                            {Y},
+                            {Z},
+                            {1}};
+
+        return matmult(rotateX, point);
+    }
+
+    public static double[][] rotateYPt(double X, double Y, double Z, double angle) {
+        double[][] rotateY = {{Math.cos(Math.toRadians(angle)), 0, Math.sin(Math.toRadians(angle)), 0},
+                              {0, 1, 0, 0},
+                              {-Math.sin(Math.toRadians(angle)), 0, Math.cos(Math.toRadians(angle)), 0},
+                              {0, 0, 0, 1}};
+
+        double[][] point = {{X},
+                            {Y},
+                            {Z},
+                            {1}};
+
+        return matmult(rotateY, point);
+    }
+
+    public static double[][] rotateZPt(double X, double Y, double Z, double angle) {
+        double[][] rotateZ = {{Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)), 0, 0},
+                              {Math.sin(Math.toRadians(angle)), Math.cos(Math.toRadians(angle)), 0, 0},
+                              {0, 0, 1, 0},
+                              {0, 0, 0, 1}};
+
+        double[][] point = {{X},
+                            {Y},
+                            {Z},
+                            {1}};
+
+        return matmult(rotateZ, point);
+    }
+
+
+
+    //public static void main(String[] args) {
         /*
         try {
             double[][] a = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
@@ -62,37 +144,6 @@ public class MatrixMultiplication {
             System.out.println(e);
         }
         */
-
-        try {
-            double[][] a = {{1, 0, 0, 10}, {0, 1, 0, 10}, {0, 0, 0, 1}, {0, 0, 0, 1}};
-            printmat(a);
-
-            double[][] scene = {{0, 10}, {0, 10}, {0, 0}, {1, 1}};
-            printmat(scene); //movement
-
-            printmat(matmult(a, scene));
-
-            double[][] x = {{1, 0, 0, 0},
-                            {0, Math.cos(Math.toRadians(90)), -Math.sin(Math.toRadians(90)), 0},
-                            {0, Math.sin(Math.toRadians(90)), Math.cos(Math.toRadians(90)), 0},
-                            {0, 0, 0, 1}};
-            printmat(matmult(x, scene));
-
-            double[][] y = {{Math.cos(Math.toRadians(90)), 0, Math.sin(Math.toRadians(90)), 0},
-                            {0, 1, 0, 0},
-                            {-Math.sin(Math.toRadians(90)), 0, Math.cos(Math.toRadians(90)), 0},
-                            {0, 0, 0, 1}};
-            printmat(matmult(y, scene));
-
-            double[][] z = {{Math.cos(Math.toRadians(90)), -Math.sin(Math.toRadians(90)), 0, 0},
-                            {Math.sin(Math.toRadians(90)), Math.cos(Math.toRadians(90)), 0, 0},
-                            {0, 0, 1, 0},
-                            {0, 0, 0, 1}};
-            printmat(matmult(z, scene));
-
-        } catch (IllegalArgumentException e) {
-            System.out.println(e);
-        }
-    }
+    //}
 
 }
