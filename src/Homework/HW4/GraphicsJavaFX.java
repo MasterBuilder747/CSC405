@@ -248,6 +248,8 @@ public class GraphicsJavaFX extends Application
 
         private void prepareButtonHandlers() {
             buttons = new Button[nButtons];
+
+            //textboxes and enter buttons
             for (int i = 0; i < buttons.length; ++i) {
                 buttons[i] = new Button();
                 buttons[i].setMnemonicParsing(true);
@@ -271,10 +273,11 @@ public class GraphicsJavaFX extends Application
                 });
             }
 
+            //action buttons
             int i = 2;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Generate");
+            buttons[i].setText("Square");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
@@ -285,7 +288,7 @@ public class GraphicsJavaFX extends Application
 
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
-                        System.out.println("square generated.");
+                        System.out.println("Square generated.");
                     }
                     // focus back to the pane
                     pane.requestFocus();
@@ -295,13 +298,20 @@ public class GraphicsJavaFX extends Application
             i = 3;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Rotate X");
+            buttons[i].setText("Translate");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[3]) {
+                        graphicsCanvas.renderSurface.clearSurface();
 
-                        System.out.println("Rotate by X.");
+                        //input textbox here
+                        sc.translation(20, 20, 0);
+                        sc.render(graphicsCanvas.renderSurface.getSurface());
+
+                        graphicsCanvas.renderSurface.insertArray();
+                        graphicsCanvas.repaint();
+                        System.out.println("Translated by [textbox]");
                     }
                     // focus back to the pane
                     pane.requestFocus();
@@ -311,13 +321,21 @@ public class GraphicsJavaFX extends Application
             i = 4;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Rotate Y");
+            buttons[i].setText("Scale");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[4]) {
+                        graphicsCanvas.renderSurface.clearSurface();
 
-                        System.out.println("Rotate by Y.");
+                        //input textbox here
+                        //this cannot be 0
+                        sc.scaling(1.2, 1.2, 1);
+                        sc.render(graphicsCanvas.renderSurface.getSurface());
+
+                        graphicsCanvas.renderSurface.insertArray();
+                        graphicsCanvas.repaint();
+                        System.out.println("Scaled by [textbox]");
                     }
                     // focus back to the pane
                     pane.requestFocus();
@@ -327,13 +345,18 @@ public class GraphicsJavaFX extends Application
             i = 5;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Rotate Z");
+            buttons[i].setText("Rotate X");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[5]) {
+                        //input textbox here
+                        sc.rotateX(45);
+                        sc.render(graphicsCanvas.renderSurface.getSurface());
 
-                        System.out.println("Rotate by Z.");
+                        graphicsCanvas.renderSurface.insertArray();
+                        graphicsCanvas.repaint();
+                        System.out.println("Rotate by X.");
                     }
                     // focus back to the pane
                     pane.requestFocus();
@@ -343,13 +366,18 @@ public class GraphicsJavaFX extends Application
             i = 6;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Translation");
+            buttons[i].setText("Rotate Y");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[6]) {
+                        //input textbox here
+                        sc.rotateY(45);
+                        sc.render(graphicsCanvas.renderSurface.getSurface());
 
-                        System.out.println("Translated by [textbox]");
+                        graphicsCanvas.renderSurface.insertArray();
+                        graphicsCanvas.repaint();
+                        System.out.println("Rotate by Y.");
                     }
                     // focus back to the pane
                     pane.requestFocus();
@@ -359,13 +387,18 @@ public class GraphicsJavaFX extends Application
             i = 7;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Scale");
+            buttons[i].setText("Rotate Z");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[7]) {
+                        //input textbox here
+                        sc.rotateZ(45);
+                        sc.render(graphicsCanvas.renderSurface.getSurface());
 
-                        System.out.println("Scaled by [textbox]");
+                        graphicsCanvas.renderSurface.insertArray();
+                        graphicsCanvas.repaint();
+                        System.out.println("Rotate by Z.");
                     }
                     // focus back to the pane
                     pane.requestFocus();
