@@ -210,7 +210,6 @@ public class GraphicsJavaFX extends Application
                 	repaint();
                 }
             });
-
         }
     }
 
@@ -219,7 +218,7 @@ public class GraphicsJavaFX extends Application
     public class ControlBoxInner extends VBox {
 
         private Button buttons[];
-        private int nButtons = 8;
+        private int nButtons = 9;
 
         private TextField button0;
         private TextField button1;
@@ -350,6 +349,8 @@ public class GraphicsJavaFX extends Application
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[5]) {
+                        graphicsCanvas.renderSurface.clearSurface();
+
                         //input textbox here
                         sc.rotateX(45);
                         sc.render(graphicsCanvas.renderSurface.getSurface());
@@ -371,6 +372,8 @@ public class GraphicsJavaFX extends Application
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[6]) {
+                        graphicsCanvas.renderSurface.clearSurface();
+
                         //input textbox here
                         sc.rotateY(45);
                         sc.render(graphicsCanvas.renderSurface.getSurface());
@@ -392,6 +395,8 @@ public class GraphicsJavaFX extends Application
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[7]) {
+                        graphicsCanvas.renderSurface.clearSurface();
+
                         //input textbox here
                         sc.rotateZ(45);
                         sc.render(graphicsCanvas.renderSurface.getSurface());
@@ -399,6 +404,29 @@ public class GraphicsJavaFX extends Application
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
                         System.out.println("Rotate by Z.");
+                    }
+                    // focus back to the pane
+                    pane.requestFocus();
+                }
+            });
+
+            i = 8;
+            buttons[i] = new Button();
+            buttons[i].setMnemonicParsing(true);
+            buttons[i].setText("Origin");
+            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if (actionEvent.getSource() == buttons[8]) {
+                        graphicsCanvas.renderSurface.clearSurface();
+
+                        //input textbox here
+                        sc.toOrigin();
+                        sc.render(graphicsCanvas.renderSurface.getSurface());
+
+                        graphicsCanvas.renderSurface.insertArray();
+                        graphicsCanvas.repaint();
+                        System.out.println("Moved to origin.");
                     }
                     // focus back to the pane
                     pane.requestFocus();

@@ -12,7 +12,9 @@ import static Homework.HW4.MatrixMultiplication.matMult;
 
 public class SceneGraph {
 
-    //starting template
+    //object info
+
+    //starting template, defaulted to origin
     static double[][] scene = {
     //   pt0   pt1  pt2    pt3
         {-100,  100, 100,   -100}, //x
@@ -20,6 +22,30 @@ public class SceneGraph {
         {0,       0,   0,      0}, //z
         {1,       1,   1,      1}  //w
     };
+    //  (-100, -100, 0), top left
+    //  (100, -100, 0), top right
+    //  (100, 100, 0), bottom right
+    //  (-100, 100, 0) bottom left
+
+    //the position at the origin
+    static double[][] origin = {
+        //   pt0   pt1  pt2    pt3
+        {-100,  100, 100,   -100}, //x
+        {-100, -100, 100,    100}, //y
+        {0,       0,   0,      0}, //z
+        {1,       1,   1,      1}  //w
+    };
+
+    //distance / 2 for each axis
+    public static double sum(double[] a) {
+        double sum = 0;
+        for (double v : a) {
+            sum += v;
+        }
+        return sum;
+    }
+    //only works for a square, use sum / 8 for a cube
+    static double[] center = {(scene[0][0] + scene[1][0]) / 2.0, (scene[0][2] + scene[1][2]) / 2.0};
 
     //change the coordinates of the scene
     private static void setScene(double[][] a) {
@@ -28,6 +54,10 @@ public class SceneGraph {
                 scene[i][j] = a[i][j];
             }
         }
+    }
+
+    public void toOrigin() {
+        setScene(origin);
     }
 
     public static void printMat(double[][]a) {
