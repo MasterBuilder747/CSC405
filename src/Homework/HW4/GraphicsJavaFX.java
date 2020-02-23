@@ -276,7 +276,7 @@ public class GraphicsJavaFX extends Application
             int i = 2;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Square");
+            buttons[i].setText("Scene");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
@@ -287,7 +287,7 @@ public class GraphicsJavaFX extends Application
 
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
-                        System.out.println("Square generated.");
+                        System.out.println("Scene rendered.");
                     }
                     // focus back to the pane
                     pane.requestFocus();

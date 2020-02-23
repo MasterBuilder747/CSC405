@@ -8,6 +8,8 @@ Date due: 2-21-20
 
 package Homework.HW4;
 
+import java.util.Arrays;
+
 import static Homework.HW4.MatrixMultiplication.matMult;
 
 public class SceneGraph {
@@ -35,18 +37,6 @@ public class SceneGraph {
         {0,       0,   0,      0}, //z
         {1,       1,   1,      1}  //w
     };
-
-    //distance / 2 for each axis
-    public static double sum(double[] a) {
-        double sum = 0;
-        for (double v : a) {
-            sum += v;
-        }
-        return sum;
-    }
-    //only works for a square, use sum / 8 for a cube
-    static double[] center = {(scene[0][0] + scene[1][0]) / 2.0, (scene[0][2] + scene[1][2]) / 2.0};
-
     //change the coordinates of the scene
     private static void setScene(double[][] a) {
         for (int i = 0; i < a.length; i++) {
@@ -54,10 +44,6 @@ public class SceneGraph {
                 scene[i][j] = a[i][j];
             }
         }
-    }
-
-    public void toOrigin() {
-        setScene(origin);
     }
 
     public static void printMat(double[][]a) {
@@ -70,6 +56,28 @@ public class SceneGraph {
         System.out.println();
     }
 
+    //distance / 2 for each axis
+    public static double sum(double[] a) {
+        double sum = 0;
+        for (double v : a) {
+            sum += v;
+        }
+        return sum;
+    }
+
+    //only works for a square, use sum / 8 for a cube
+    public static double[] center = new double[3];
+    public static void updateC() {
+        center[0] = (scene[0][0] + scene[0][2]) / 2.0;
+        center[1] = (scene[1][0] + scene[1][2]) / 2.0;
+        center[2] = 0;
+    }
+
+    public static void printCenter() {
+        System.out.println(Arrays.toString(center));
+    }
+
+    //transformations
     //lowercase: the movement
     //uppercase: the point
     //angle in degrees
@@ -104,6 +112,70 @@ public class SceneGraph {
             scene[1][i] = a[1][0];
             scene[2][i] = a[2][0];
         }
+        updateC();
+        //printCenter();
+    }
+
+    public static double[][] originPt(double X, double Y, double Z, double[] a) {
+        double[][] trans = {
+            {1, 0, 0, -a[0]},
+            {0, 1, 0, -a[1]},
+            {0, 0, 1, -a[2]},
+            {0, 0, 0, 1}
+        };
+        double[][] point = {
+            {X},
+            {Y},
+            {Z},
+            {1}
+        };
+        //this returns a 4x1 array
+        //so the other 3 points needs to be added for the square to be rendered
+        return matMult(trans, point);
+    }
+    public void toOrigin() {
+        for (int i = 0; i < scene[0].length; i++) {
+            double[][] a = originPt(scene[0][i], scene[1][i], scene[2][i], center);
+            scene[0][i] = a[0][0];
+            scene[1][i] = a[1][0];
+            scene[2][i] = a[2][0];
+        }
+        updateC();
+        //printCenter();
+        //System.out.println(Arrays.toString(scene[0]));
+        //System.out.println(Arrays.toString(scene[1]));
+        //System.out.println(Arrays.toString(scene[2]));
+    }
+
+    public static double[][] oldPt(double X, double Y, double Z, double[] a) {
+        double[][] trans = {
+                {1, 0, 0, a[0]},
+                {0, 1, 0, a[1]},
+                {0, 0, 1, a[2]},
+                {0, 0, 0, 1}
+        };
+        double[][] point = {
+                {X},
+                {Y},
+                {Z},
+                {1}
+        };
+        //this returns a 4x1 array
+        //so the other 3 points needs to be added for the square to be rendered
+        return matMult(trans, point);
+    }
+    public void toOldCenter(double[] b) {
+        for (int i = 0; i < scene[0].length; i++) {
+            double[][] a = oldPt(scene[0][i], scene[1][i], scene[2][i], b);
+            scene[0][i] = a[0][0];
+            scene[1][i] = a[1][0];
+            scene[2][i] = a[2][0];
+        }
+        updateC();
+        //printCenter();
+        //System.out.println(Arrays.toString(scene[0]));
+        //System.out.println(Arrays.toString(scene[1]));
+        //System.out.println(Arrays.toString(scene[2]));
     }
 
     public static double[][] scalePt(double X, double Y, double Z, double x, double y, double z) {
@@ -146,12 +218,19 @@ public class SceneGraph {
         return matMult(rotateX, point);
     }
     public void rotateX(double angle) {
+        //store the old center information (so it can go back if needed)
+        double[] oldCenter = {center[0], center[1], center[2]};
+        //System.out.println(Arrays.toString(oldCenter));
+        //move the the origin
+        toOrigin();
+        //rotate it at the origin
         for (int i = 0; i < scene[0].length; i++) {
             double[][] a = rotateXPt(scene[0][i], scene[1][i], scene[2][i], angle);
             scene[0][i] = a[0][0];
             scene[1][i] = a[1][0];
             scene[2][i] = a[2][0];
         }
+        toOldCenter(oldCenter);
     }
 
     public static double[][] rotateYPt(double X, double Y, double Z, double angle) {
@@ -170,12 +249,17 @@ public class SceneGraph {
         return matMult(rotateY, point);
     }
     public void rotateY(double angle) {
+        //store the old center information (so it can go back if needed)
+        double[] oldCenter = {center[0], center[1], center[2]};
+        //move the the origin
+        toOrigin();
         for (int i = 0; i < scene[0].length; i++) {
             double[][] a = rotateYPt(scene[0][i], scene[1][i], scene[2][i], angle);
             scene[0][i] = a[0][0];
             scene[1][i] = a[1][0];
             scene[2][i] = a[2][0];
         }
+        toOldCenter(oldCenter);
     }
 
     public static double[][] rotateZPt(double X, double Y, double Z, double angle) {
@@ -194,12 +278,16 @@ public class SceneGraph {
         return matMult(rotateZ, point);
     }
     public void rotateZ(double angle) {
+        //store the old center information (so it can go back if needed)
+        double[] oldCenter = {center[0], center[1], center[2]};
+        //move the the origin
         for (int i = 0; i < scene[0].length; i++) {
             double[][] a = rotateZPt(scene[0][i], scene[1][i], scene[2][i], angle);
             scene[0][i] = a[0][0];
             scene[1][i] = a[1][0];
             scene[2][i] = a[2][0];
         }
+        toOldCenter(oldCenter);
     }
 
     //render the lines at those coordinates
