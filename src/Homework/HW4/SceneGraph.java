@@ -281,6 +281,7 @@ public class SceneGraph {
         //store the old center information (so it can go back if needed)
         double[] oldCenter = {center[0], center[1], center[2]};
         //move the the origin
+        toOrigin();
         for (int i = 0; i < scene[0].length; i++) {
             double[][] a = rotateZPt(scene[0][i], scene[1][i], scene[2][i], angle);
             scene[0][i] = a[0][0];
