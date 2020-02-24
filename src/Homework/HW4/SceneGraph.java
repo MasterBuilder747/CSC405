@@ -30,7 +30,7 @@ public class SceneGraph {
     //  (-100, 100, 0) bottom left
 
     //the position at the origin
-    static double[][] origin = {
+    static double[][] square = {
         //   pt0   pt1  pt2    pt3
         {-100,  100, 100,   -100}, //x
         {-100, -100, 100,    100}, //y
@@ -54,6 +54,10 @@ public class SceneGraph {
             System.out.println();
         }
         System.out.println();
+    }
+
+    public void resetShape() {
+        setScene(square);
     }
 
     //distance / 2 for each axis
@@ -239,7 +243,7 @@ public class SceneGraph {
 
     //fixed point:
     //x, y, z is the defined fixed point
-    public void rotateX(double angle, double x, double y, double z) {
+    public void rotateX(double angle) {
         //store the old center information (so it can go back if needed)
         double[] oldCenter = {center[0], center[1], center[2]};
         //System.out.println(Arrays.toString(oldCenter));
