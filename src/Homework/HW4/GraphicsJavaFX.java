@@ -87,7 +87,7 @@ public class GraphicsJavaFX extends Application
             }
         };
 
-        
+
         // -- paint the graphics canvas before the initial display
         graphicsCanvas.repaint();
 
@@ -139,7 +139,6 @@ public class GraphicsJavaFX extends Application
         	renderSurface = new RenderSurface((int)width, (int)height);
 
     	}
-    	
 
     	// -- check the active keys and render graphics
         //update display
@@ -258,11 +257,17 @@ public class GraphicsJavaFX extends Application
                     public void handle(ActionEvent actionEvent) {
                         if (actionEvent.getSource() == buttons[0]) {
 
-                            System.out.println(button0.getText());
                         }
                         else if (actionEvent.getSource() == buttons[1]) {
-
-                            System.out.println(button1.getText());
+                            String s = button0.getText();
+                            String[] but1 = s.split(",\\s*");
+                            try {
+                                System.out.println(but1[0]);
+                                System.out.println(but1[1]);
+                                System.out.println(but1[2]);
+                            } catch (Exception e) {
+                                //do nothing
+                            }
                         }
                         // -- process the button
                         System.out.println(actionEvent.getSource().toString());
@@ -305,12 +310,27 @@ public class GraphicsJavaFX extends Application
                         graphicsCanvas.renderSurface.clearSurface();
 
                         //input textbox here
-                        sc.translation(20, 20, 0);
+                        String s = button0.getText();
+                        String[] but0 = s.split(",\\s*");
+                        double x = 0;
+                        double y = 0;
+                        double z = 0;
+                        try {
+                            if (but0[0] != null || but0[1] != null || but0[2] != null) {
+                                x = Double.parseDouble(but0[0]);
+                                y = Double.parseDouble(but0[1]);
+                                z = Double.parseDouble(but0[2]);
+                                sc.translation(x, y, z);
+                            }
+                        } catch (Exception e) {
+                            //do nothing
+                        }
+
                         sc.render(graphicsCanvas.renderSurface.getSurface());
 
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
-                        System.out.println("Translated by [textbox]");
+                        System.out.println("Translated by " + x + ", " + y + ", " + z);
                     }
                     // focus back to the pane
                     pane.requestFocus();
@@ -328,13 +348,27 @@ public class GraphicsJavaFX extends Application
                         graphicsCanvas.renderSurface.clearSurface();
 
                         //input textbox here
-                        //this cannot be 0
-                        sc.scaling(1.2, 1.2, 1);
+                        String s = button0.getText();
+                        String[] but0 = s.split(",\\s*");
+                        double x = 0;
+                        double y = 0;
+                        double z = 0;
+                        try {
+                            if (but0[0] != null || but0[1] != null || but0[2] != null) {
+                                x = Double.parseDouble(but0[0]);
+                                y = Double.parseDouble(but0[1]);
+                                z = Double.parseDouble(but0[2]);
+                                sc.scaling(x, y, z);
+                            }
+                        } catch (Exception e) {
+                            //do nothing
+                        }
+
                         sc.render(graphicsCanvas.renderSurface.getSurface());
 
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
-                        System.out.println("Scaled by [textbox]");
+                        System.out.println("Scaled by " + x + ", " + y + ", " + z);
                     }
                     // focus back to the pane
                     pane.requestFocus();
@@ -352,7 +386,7 @@ public class GraphicsJavaFX extends Application
                         graphicsCanvas.renderSurface.clearSurface();
 
                         //input textbox here
-                        sc.rotateX(45);
+                        sc.rotateX(45, 0, 0, 0);
                         sc.render(graphicsCanvas.renderSurface.getSurface());
 
                         graphicsCanvas.renderSurface.insertArray();

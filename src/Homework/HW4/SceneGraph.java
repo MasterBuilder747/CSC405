@@ -147,6 +147,21 @@ public class SceneGraph {
         //System.out.println(Arrays.toString(scene[2]));
     }
 
+    //this version passes through a fixed point
+    public void toOrigin(double x, double y, double z) {
+        for (int i = 0; i < scene[0].length; i++) {
+            double[][] a = originPt(scene[0][i], scene[1][i], scene[2][i], center);
+            scene[0][i] = a[0][0];
+            scene[1][i] = a[1][0];
+            scene[2][i] = a[2][0];
+        }
+        updateC();
+        //printCenter();
+        //System.out.println(Arrays.toString(scene[0]));
+        //System.out.println(Arrays.toString(scene[1]));
+        //System.out.println(Arrays.toString(scene[2]));
+    }
+
     public static double[][] oldPt(double X, double Y, double Z, double[] a) {
         double[][] trans = {
                 {1, 0, 0, a[0]},
@@ -194,12 +209,16 @@ public class SceneGraph {
         return matMult(scale, point);
     }
     public void scaling(double x, double y, double z) {
+        double[] oldCenter = {center[0], center[1], center[2]};
+        toOrigin();
         for (int i = 0; i < scene[0].length; i++) {
+
             double[][] a = scalePt(scene[0][i], scene[1][i], scene[2][i], x, y, z);
             scene[0][i] = a[0][0];
             scene[1][i] = a[1][0];
             scene[2][i] = a[2][0];
         }
+        toOldCenter(oldCenter);
     }
 
     public static double[][] rotateXPt(double X, double Y, double Z, double angle) {
@@ -217,7 +236,10 @@ public class SceneGraph {
         };
         return matMult(rotateX, point);
     }
-    public void rotateX(double angle) {
+
+    //fixed point:
+    //x, y, z is the defined fixed point
+    public void rotateX(double angle, double x, double y, double z) {
         //store the old center information (so it can go back if needed)
         double[] oldCenter = {center[0], center[1], center[2]};
         //System.out.println(Arrays.toString(oldCenter));
