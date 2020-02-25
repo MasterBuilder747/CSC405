@@ -213,16 +213,19 @@ public class SceneGraph {
         return matMult(scale, point);
     }
     public void scaling(double x, double y, double z) {
-        double[] oldCenter = {center[0], center[1], center[2]};
-        toOrigin();
-        for (int i = 0; i < scene[0].length; i++) {
-
-            double[][] a = scalePt(scene[0][i], scene[1][i], scene[2][i], x, y, z);
-            scene[0][i] = a[0][0];
-            scene[1][i] = a[1][0];
-            scene[2][i] = a[2][0];
+        if (x != 0 || y != 0) {
+            double[] oldCenter = {center[0], center[1], center[2]};
+            toOrigin();
+            for (int i = 0; i < scene[0].length; i++) {
+                double[][] a = scalePt(scene[0][i], scene[1][i], scene[2][i], x, y, z);
+                scene[0][i] = a[0][0];
+                scene[1][i] = a[1][0];
+                scene[2][i] = a[2][0];
+            }
+            toOldCenter(oldCenter);
+        } else {
+            System.out.println("x and/or y cannot be 0.");
         }
-        toOldCenter(oldCenter);
     }
 
     public static double[][] rotateXPt(double X, double Y, double Z, double angle) {
@@ -240,7 +243,6 @@ public class SceneGraph {
         };
         return matMult(rotateX, point);
     }
-
     //fixed point:
     //x, y, z is the defined fixed point
     public void rotateX(double angle) {
@@ -325,5 +327,4 @@ public class SceneGraph {
         Lines.bresenhamForm((int)scene[0][2], (int)scene[1][2], (int)scene[0][3], (int)scene[1][3], framebuffer);
         Lines.bresenhamForm((int)scene[0][3], (int)scene[1][3], (int)scene[0][0], (int)scene[1][0], framebuffer);
     }
-
 }

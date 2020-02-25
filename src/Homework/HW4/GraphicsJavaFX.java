@@ -234,11 +234,11 @@ public class GraphicsJavaFX extends Application
                 this.getChildren().add(buttons[i]);
                 if (i == 0) {
                     button0 = new TextField();
-                    button0.setMaxWidth(60);
+                    button0.setMaxWidth(100);
                     this.getChildren().add(button0);
                 } else if (i == 1) {
                     button1 = new TextField();
-                    button1.setMaxWidth(60);
+                    button1.setMaxWidth(100);
                     this.getChildren().add(button1);
                 }
             }
@@ -301,7 +301,6 @@ public class GraphicsJavaFX extends Application
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[3]) {
-                        graphicsCanvas.renderSurface.clearSurface();
 
                         //input textbox here
                         String s = button0.getText();
@@ -314,6 +313,7 @@ public class GraphicsJavaFX extends Application
                                 x = Double.parseDouble(but0[0]);
                                 y = Double.parseDouble(but0[1]);
                                 z = Double.parseDouble(but0[2]);
+                                graphicsCanvas.renderSurface.clearSurface();
                                 sc.translation(x, y, z);
                                 System.out.println("Translated by " + x + ", " + y + ", " + z);
                             }
@@ -339,24 +339,27 @@ public class GraphicsJavaFX extends Application
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[4]) {
-                        graphicsCanvas.renderSurface.clearSurface();
 
                         //input textbox here
                         String s = button0.getText();
                         String[] but0 = s.split(",\\s*");
-                        double x;
-                        double y;
-                        double z;
                         try {
                             if (but0[0] != null || but0[1] != null || but0[2] != null) {
-                                x = Double.parseDouble(but0[0]);
-                                y = Double.parseDouble(but0[1]);
-                                z = Double.parseDouble(but0[2]);
-                                sc.scaling(x, y, z);
-                                System.out.println("Scaled by " + x + ", " + y + ", " + z);
+                                double x = Double.parseDouble(but0[0]);
+                                double y = Double.parseDouble(but0[1]);
+                                double z = Double.parseDouble(but0[2]);
+                                //add z != 0 for cube
+                                if (x != 0 & y != 0) {
+                                    graphicsCanvas.renderSurface.clearSurface();
+                                    sc.scaling(x, y, z);
+                                    System.out.println("Scaled by " + x + ", " + y + ", " + z);
+                                } else {
+                                    System.out.println("0 is not accepted as the object will not render.");
+                                }
                             }
                         } catch (Exception e) {
                             System.out.println("Requires 3 doubles: x, y, and z from the top textbox.");
+                            System.out.println("Values larger than 1 increase the size, values less than 0 decrease it.");
                         }
 
                         sc.render(graphicsCanvas.renderSurface.getSurface());
@@ -377,13 +380,13 @@ public class GraphicsJavaFX extends Application
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[5]) {
-                        graphicsCanvas.renderSurface.clearSurface();
 
                         //input textbox here
                         String but1 = button1.getText();
-                        double angle = 0;
+                        double angle;
                         try {
                             if (but1 != null) {
+                                graphicsCanvas.renderSurface.clearSurface();
                                 angle = Double.parseDouble(but1);
                                 sc.rotateX(angle);
                             }
@@ -395,7 +398,6 @@ public class GraphicsJavaFX extends Application
 
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
-                        System.out.println("Rotate by X.");
                     }
                     // focus back to the pane
                     pane.requestFocus();
