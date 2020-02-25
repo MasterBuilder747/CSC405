@@ -249,7 +249,7 @@ public class SceneGraph {
         double[] oldCenter = {center[0], center[1], center[2]};
         //System.out.println(Arrays.toString(oldCenter));
         //move the the origin
-        //toOrigin();
+        toOrigin();
         //rotate it at the origin
         for (int i = 0; i < scene[0].length; i++) {
             //for every point:
@@ -258,7 +258,7 @@ public class SceneGraph {
             scene[1][i] = a[1][0]; //y
             scene[2][i] = a[2][0]; //z
         }
-        //toOldCenter(oldCenter);
+        toOldCenter(oldCenter);
     }
     //fixed point:
     //x, y, z is the defined fixed point, needs 2 parameters (3 for cube)

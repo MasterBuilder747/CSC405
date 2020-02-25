@@ -236,7 +236,7 @@ public class GraphicsJavaFX extends Application
                 if (i == 0) {
                     button0 = new TextField();
                     button0.setMaxWidth(100);
-                    this.getChildren().add(button0); //fixed point / translation
+                    this.getChildren().add(button0); //fixed point
                 } else if (i == 1) {
                     button1 = new TextField();
                     button1.setMaxWidth(100);
@@ -244,7 +244,7 @@ public class GraphicsJavaFX extends Application
                 } else if (i == 2) {
                     button2 = new TextField();
                     button2.setMaxWidth(100);
-                    this.getChildren().add(button2); //scaling
+                    this.getChildren().add(button2); //scaling / translation
                 }
             }
         }
@@ -311,22 +311,22 @@ public class GraphicsJavaFX extends Application
                     if (actionEvent.getSource() == buttons[4]) {
 
                         //input textbox here
-                        String s = button0.getText();
-                        String[] but0 = s.split(",\\s*");
+                        String s = button2.getText();
+                        String[] but2 = s.split(",\\s*");
                         double x;
                         double y;
                         double z;
                         try {
-                            if (but0[0] != null || but0[1] != null || but0[2] != null) {
-                                x = Double.parseDouble(but0[0]);
-                                y = Double.parseDouble(but0[1]);
-                                z = Double.parseDouble(but0[2]);
+                            if (but2[0] != null || but2[1] != null || but2[2] != null) {
+                                x = Double.parseDouble(but2[0]);
+                                y = Double.parseDouble(but2[1]);
+                                z = Double.parseDouble(but2[2]);
                                 graphicsCanvas.renderSurface.clearSurface();
                                 sc.translation(x, y, z);
                                 System.out.println("Translated by " + x + ", " + y + ", " + z);
                             }
                         } catch (Exception e) {
-                            System.out.println("Requires 3 doubles: x, y, and z comma separated from the top textbox.");
+                            System.out.println("Requires 3 doubles: x, y, and z comma separated from the last textbox.");
                         }
 
                         sc.render(graphicsCanvas.renderSurface.getSurface());
@@ -347,33 +347,74 @@ public class GraphicsJavaFX extends Application
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[5]) {
-
                         //input textbox here
-                        String s = button0.getText();
-                        String[] but0 = s.split(",\\s*");
-                        try {
-                            if (but0[0] != null || but0[1] != null || but0[2] != null) {
-                                double x = Double.parseDouble(but0[0]);
-                                double y = Double.parseDouble(but0[1]);
-                                double z = Double.parseDouble(but0[2]);
-                                //add z != 0 for cube
-                                if (x != 0 & y != 0) {
-                                    graphicsCanvas.renderSurface.clearSurface();
-                                    sc.scaling(x, y, z, 100, 100, 0);
-                                    System.out.println("Scaled by " + x + ", " + y + ", " + z);
-                                } else {
-                                    System.out.println("0 is not accepted for x or y as the object will not render.");
+                        String fixed = button0.getText(); //fixed point, optional
+                        String[] but0 = fixed.split(",\\s*");
+
+                        String scale = button2.getText(); //scale vector, required
+                        String[] but2 = scale.split(",\\s*");
+
+                        //handle scale first, no fixed point
+                        if (but0[0].equals("")) {
+                            if (but2.length == 3) {
+                                //process scale only, without a fixed point
+                                try {
+                                    if (but2[0] != null || but2[1] != null || but2[2] != null) {
+                                        double x = Double.parseDouble(but2[0]);
+                                        double y = Double.parseDouble(but2[1]);
+                                        double z = Double.parseDouble(but2[2]);
+                                        //add z != 0 for cube
+                                        if (x != 0 & y != 0) {
+                                            graphicsCanvas.renderSurface.clearSurface();
+                                            sc.scaling(x, y, z);
+                                            sc.render(graphicsCanvas.renderSurface.getSurface());
+                                            graphicsCanvas.renderSurface.insertArray();
+                                            graphicsCanvas.repaint();
+                                            System.out.println("Scaled object by " + x + ", " + y + ", " + z);
+                                        }else{
+                                            System.out.println("x, y cannot be 0.");
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println("Requires 3 doubles: x, y, and z comma separated from the last textbox.");
+                                    System.out.println("Values larger than 1 increase the size, values less than 0 decrease it.");
                                 }
+                            } else if (but0.length == 2 || but0.length == 1) {
+                                //there are some values that have been inputted but others that have not
+                                System.out.println("For scale, x, y, and z need to be inputted in the last textbox.");
+                            } else {
+                                System.out.println("Too many inputs in the textbox.");
                             }
-                        } catch (Exception e) {
-                            System.out.println("Requires 3 doubles: x, y, and z comma separated from the top textbox.");
-                            System.out.println("Values larger than 1 increase the size, values less than 0 decrease it.");
+                            //handle both scaled and fixed point
+                        } else if (but0.length == 3 && but2.length == 3) {
+                            //process scale with fixed point
+                            try {
+                                double sx = Double.parseDouble(but0[0]);
+                                double sy = Double.parseDouble(but0[1]);
+                                double sz = Double.parseDouble(but0[2]);
+                                double fx = Double.parseDouble(but2[0]);
+                                double fy = Double.parseDouble(but2[1]);
+                                double fz = Double.parseDouble(but2[2]);
+                                //add z != 0 for cube
+                                if (sx != 0 & sy != 0) {
+                                    graphicsCanvas.renderSurface.clearSurface();
+                                    sc.scaling(sx, sy, sz, fx, fy, fz);
+                                    sc.render(graphicsCanvas.renderSurface.getSurface());
+                                    graphicsCanvas.renderSurface.insertArray();
+                                    graphicsCanvas.repaint();
+                                    System.out.println("Scaled object by " + sx + ", " + sy + ", " + sz + " from fixed point " + fx + ", " + fy + ", " + fz);
+                                } else {
+                                    System.out.println("x, y cannot be 0.");
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Requires one double of angle in degrees in the second textbox. Fixed point is already defined.");
+                            }
+                        } else if (but0.length == 2 || but0.length == 1 || but2.length == 2 || but2.length == 1) {
+                            //there are some values that have been inputted but others that have not
+                            System.out.println("For fixed point and scale, x, y, and z need to be inputted in first and last textbox respectively");
+                        } else {
+                            System.out.println("Too many inputs in either textbox.");
                         }
-
-                        sc.render(graphicsCanvas.renderSurface.getSurface());
-
-                        graphicsCanvas.renderSurface.insertArray();
-                        graphicsCanvas.repaint();
                     }
                     // focus back to the pane
                     pane.requestFocus();
@@ -408,7 +449,7 @@ public class GraphicsJavaFX extends Application
                                     pane.requestFocus();
                                 }
                             } catch (Exception e) {
-                                System.out.println("Requires one double of angle in degrees in the bottom textbox.");
+                                System.out.println("Requires one double of angle in degrees in the second textbox.");
                             }
                         } else if (but0.length == 3) {
                             //fixed point information is null
@@ -428,11 +469,11 @@ public class GraphicsJavaFX extends Application
                                     pane.requestFocus();
                                 }
                             } catch (Exception e) {
-                                System.out.println("Requires one double of angle in degrees in the bottom textbox. Fixed point is already defined.");
+                                System.out.println("Requires one double of angle in degrees in the second textbox. Fixed point is already defined.");
                             }
                         } else if (but0.length == 2 || but0.length == 1) {
                             //there are some values that have been inputted but others that have not
-                            System.out.println("For a fixed point, x, y, and z need to be inputted.");
+                            System.out.println("For a fixed point, x, y, and z need to be inputted in the first textbox.");
                         } else {
                             System.out.println("Too many inputs in the textbox.");
                         }
@@ -468,7 +509,7 @@ public class GraphicsJavaFX extends Application
                                     pane.requestFocus();
                                 }
                             } catch (Exception e) {
-                                System.out.println("Requires one double of angle in degrees in the bottom textbox.");
+                                System.out.println("Requires one double of angle in degrees in the second textbox.");
                             }
                         } else if (but0.length == 3) {
                             //fixed point information is null
@@ -488,11 +529,11 @@ public class GraphicsJavaFX extends Application
                                     pane.requestFocus();
                                 }
                             } catch (Exception e) {
-                                System.out.println("Requires one double of angle in degrees in the bottom textbox. Fixed point is already defined.");
+                                System.out.println("Requires one double of angle in degrees in the second textbox. Fixed point is already defined.");
                             }
                         } else if (but0.length == 2 || but0.length == 1) {
                             //there are some values that have been inputted but others that have not
-                            System.out.println("For a fixed point, x, y, and z need to be inputted.");
+                            System.out.println("For a fixed point, x, y, and z need to be inputted in the first textbox.");
                         } else {
                             System.out.println("Too many inputs in the textbox.");
                         }
@@ -528,7 +569,7 @@ public class GraphicsJavaFX extends Application
                                     pane.requestFocus();
                                 }
                             } catch (Exception e) {
-                                System.out.println("Requires one double of angle in degrees in the bottom textbox.");
+                                System.out.println("Requires one double of angle in degrees in the second textbox.");
                             }
                         } else if (but0.length == 3) {
                             //fixed point information is null
@@ -548,11 +589,11 @@ public class GraphicsJavaFX extends Application
                                     pane.requestFocus();
                                 }
                             } catch (Exception e) {
-                                System.out.println("Requires one double of angle in degrees in the bottom textbox. Fixed point is already defined.");
+                                System.out.println("Requires one double of angle in degrees in the second textbox. Fixed point is already defined.");
                             }
                         } else if (but0.length == 2 || but0.length == 1) {
                             //there are some values that have been inputted but others that have not
-                            System.out.println("For a fixed point, x, y, and z need to be inputted.");
+                            System.out.println("For a fixed point, x, y, and z need to be inputted in the first textbox.");
                         } else {
                             System.out.println("Too many inputs in the textbox.");
                         }
