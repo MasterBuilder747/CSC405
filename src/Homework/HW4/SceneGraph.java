@@ -29,6 +29,14 @@ public class SceneGraph {
     //  (100, 100, 0), bottom right
     //  (-100, 100, 0) bottom left
 
+    //only works for a square, use sum / 8 for a cube
+    public static double[] center = new double[3];
+    public static void updateC() {
+        center[0] = (scene[0][0] + scene[0][2]) / 2.0;
+        center[1] = (scene[1][0] + scene[1][2]) / 2.0;
+        center[2] = 0;
+    }
+
     //the position at the origin
     static double[][] square = {
         //   pt0   pt1  pt2    pt3
@@ -37,15 +45,7 @@ public class SceneGraph {
         {0,       0,   0,      0}, //z
         {1,       1,   1,      1}  //w
     };
-    //change the coordinates of the scene
-    private static void setScene(double[][] a) {
-        for (int i = 0; i < a.length; i++) {
-            for (int j = 0; j < a[0].length; j++) {
-                scene[i][j] = a[i][j];
-            }
-        }
-    }
-
+    //testing
     public static void printMat(double[][]a) {
         for (double[] doubles : a) {
             for (int j = 0; j < a[0].length; j++) {
@@ -56,10 +56,23 @@ public class SceneGraph {
         System.out.println();
     }
 
+    //testing
+    public static void printCenter() {
+        System.out.println(Arrays.toString(center));
+    }
+    //change the coordinates of the scene
+    private static void setScene(double[][] a) {
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[0].length; j++) {
+                scene[i][j] = a[i][j];
+            }
+        }
+    }
     public void resetShape() {
         setScene(square);
     }
 
+    //used for cube
     //distance / 2 for each axis
     public static double sum(double[] a) {
         double sum = 0;
@@ -67,18 +80,6 @@ public class SceneGraph {
             sum += v;
         }
         return sum;
-    }
-
-    //only works for a square, use sum / 8 for a cube
-    public static double[] center = new double[3];
-    public static void updateC() {
-        center[0] = (scene[0][0] + scene[0][2]) / 2.0;
-        center[1] = (scene[1][0] + scene[1][2]) / 2.0;
-        center[2] = 0;
-    }
-
-    public static void printCenter() {
-        System.out.println(Arrays.toString(center));
     }
 
     //transformations
@@ -151,10 +152,30 @@ public class SceneGraph {
         //System.out.println(Arrays.toString(scene[2]));
     }
 
+    //translates to the origin but adding in the fixed point as lowercase x, y, z
+    public static double[][] fixedPt(double X, double Y, double Z, double x, double y, double z, double[] a) {
+        double[][] trans = {
+                {1, 0, 0, -a[0] + x},
+                {0, 1, 0, -a[1] + y},
+                {0, 0, 1, -a[2] + z},
+                {0, 0, 0, 1}
+        };
+        double[][] point = {
+                {X},
+                {Y},
+                {Z},
+                {1}
+        };
+        //this returns a 4x1 array
+        //so the other 3 points needs to be added for the square to be rendered
+        return matMult(trans, point);
+    }
     //this version passes through a fixed point
-    public void toOrigin(double x, double y, double z) {
+    public void toFixedPoint(double x, double y) {
+        //move this up to the parms for cube:
+        double z = 0;
         for (int i = 0; i < scene[0].length; i++) {
-            double[][] a = originPt(scene[0][i], scene[1][i], scene[2][i], center);
+            double[][] a = fixedPt(scene[0][i], scene[1][i], scene[2][i], x, y, z, center);
             scene[0][i] = a[0][0];
             scene[1][i] = a[1][0];
             scene[2][i] = a[2][0];
@@ -168,16 +189,16 @@ public class SceneGraph {
 
     public static double[][] oldPt(double X, double Y, double Z, double[] a) {
         double[][] trans = {
-                {1, 0, 0, a[0]},
-                {0, 1, 0, a[1]},
-                {0, 0, 1, a[2]},
-                {0, 0, 0, 1}
+            {1, 0, 0, a[0]},
+            {0, 1, 0, a[1]},
+            {0, 0, 1, a[2]},
+            {0, 0, 0, 1}
         };
         double[][] point = {
-                {X},
-                {Y},
-                {Z},
-                {1}
+            {X},
+            {Y},
+            {Z},
+            {1}
         };
         //this returns a 4x1 array
         //so the other 3 points needs to be added for the square to be rendered
@@ -243,10 +264,8 @@ public class SceneGraph {
         };
         return matMult(rotateX, point);
     }
-    //fixed point:
-    //x, y, z is the defined fixed point
     public void rotateX(double angle) {
-        //store the old center information (so it can go back if needed)
+        //store the old center information (so it can go back)
         double[] oldCenter = {center[0], center[1], center[2]};
         //System.out.println(Arrays.toString(oldCenter));
         //move the the origin
@@ -259,6 +278,23 @@ public class SceneGraph {
             scene[2][i] = a[2][0];
         }
         toOldCenter(oldCenter);
+    }
+    //fixed point:
+    //x, y, z is the defined fixed point, needs 2 parameters (3 for cube)
+    public void rotateX(double angle, double x, double y) {
+        //store the old center information (so it can go back)
+        double[] oldCenter = {center[0], center[1], center[2]};
+        //move the the defined fixed point
+        toFixedPoint(x, y);
+        //printCenter();
+        //rotate it at the origin
+        for (int i = 0; i < scene[0].length; i++) {
+            //double[][] a = rotateXPt(scene[0][i], scene[1][i], scene[2][i], angle);
+            //scene[0][i] = a[0][0];
+            //scene[1][i] = a[1][0];
+            //scene[2][i] = a[2][0];
+        }
+        //toOldCenter(oldCenter);
     }
 
     public static double[][] rotateYPt(double X, double Y, double Z, double angle) {

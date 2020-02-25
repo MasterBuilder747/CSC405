@@ -31,17 +31,17 @@ public class GraphicsJavaFX extends Application
     int HEIGHT = 512;
 
     int imageMode = 0;
-    
+
     private AnimationTimer animationTimer;
 
     private Scene mainScene;
-    
+
     // -- Main container
     private BorderPane pane;
-    
+
     // -- Graphics container
     private GraphicsCanvasInner graphicsCanvas;
-    
+
     // -- Controls container
     private ControlBoxInner controlBox;
 
@@ -56,19 +56,19 @@ public class GraphicsJavaFX extends Application
     @Override
     public void start(Stage mainStage)
     {
-    	// -- Application title
+        // -- Application title
         mainStage.setTitle("Homework 4 Joseph Audras");
 
         // -- create canvas for drawing
         graphicsCanvas = new GraphicsCanvasInner(WIDTH, HEIGHT);
- 
-    	// -- construct the controls
-    	controlBox = new ControlBoxInner();
+
+        // -- construct the controls
+        controlBox = new ControlBoxInner();
 
         // -- create the primary window structure
         pane = new BorderPane();
 
-    	// -- add the graphics canvas and the control box to the split pan
+        // -- add the graphics canvas and the control box to the split pan
         pane.setLeft(controlBox);
         pane.setCenter(graphicsCanvas);
 
@@ -83,7 +83,7 @@ public class GraphicsJavaFX extends Application
         animationTimer = new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 //graphicsCanvas.repaint();
-            	System.out.println("tic");
+                System.out.println("tic");
             }
         };
 
@@ -93,10 +93,10 @@ public class GraphicsJavaFX extends Application
 
         // -- display the application window
         mainStage.show();
-        
+
         // -- set keyboard focus to the pane
         pane.requestFocus();
-       
+
     }
 
     // -- key handlers belong to the Pane
@@ -106,7 +106,7 @@ public class GraphicsJavaFX extends Application
         container.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-            	System.out.println(event.getCode().toString());
+                System.out.println(event.getCode().toString());
                 graphicsCanvas.repaint();
             }
         });
@@ -116,37 +116,37 @@ public class GraphicsJavaFX extends Application
                 graphicsCanvas.repaint();
             }
         });
-        
+
     }
 
     // -- Inner class for Graphics
     public class GraphicsCanvasInner extends Canvas  {
-    	
-    	private GraphicsContext graphicsContext;
 
-    	private RenderSurface renderSurface;
-    	
-    	public GraphicsCanvasInner(int width, int height)
-    	{
-    		super(width, height);
-    		
+        private GraphicsContext graphicsContext;
+
+        private RenderSurface renderSurface;
+
+        public GraphicsCanvasInner(int width, int height)
+        {
+            super(width, height);
+
             // -- get the context for drawing on the canvas
             graphicsContext = this.getGraphicsContext2D();
 
             // -- set up event handlers for mouse
             prepareActionHandlers();
 
-        	renderSurface = new RenderSurface((int)width, (int)height);
+            renderSurface = new RenderSurface((int)width, (int)height);
 
-    	}
+        }
 
-    	// -- check the active keys and render graphics
+        // -- check the active keys and render graphics
         //update display
         public void repaint()
         {
-        	double height = this.getHeight();
-        	double width = this.getWidth();
- 
+            double height = this.getHeight();
+            double width = this.getWidth();
+
             // -- clear canvas
             graphicsContext.clearRect(0, 0, width, height);
 
@@ -175,44 +175,44 @@ public class GraphicsJavaFX extends Application
 
         private void prepareActionHandlers()
         {
-        	
+
             // -- mouse listeners belong to the canvas
             this.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                	if (event.getButton() == MouseButton.PRIMARY) {
-                	}
-                	else if (event.getButton() == MouseButton.SECONDARY) {
-                	}
-                	pane.requestFocus();
+                    if (event.getButton() == MouseButton.PRIMARY) {
+                    }
+                    else if (event.getButton() == MouseButton.SECONDARY) {
+                    }
+                    pane.requestFocus();
                 }
             });
             this.setOnMouseReleased(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                	if (event.getButton() == MouseButton.PRIMARY) {
-                 	}
-                	else if (event.getButton() == MouseButton.SECONDARY) {
-                	}
-                	pane.requestFocus();
-                	repaint();
+                    if (event.getButton() == MouseButton.PRIMARY) {
+                    }
+                    else if (event.getButton() == MouseButton.SECONDARY) {
+                    }
+                    pane.requestFocus();
+                    repaint();
                 }
             });
-        	this.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            this.setOnMouseDragged(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                	if (event.getButton() == MouseButton.PRIMARY) {
-                	}
-                	else if (event.getButton() == MouseButton.SECONDARY) {
-                	}
-                	pane.requestFocus();
-                	repaint();
+                    if (event.getButton() == MouseButton.PRIMARY) {
+                    }
+                    else if (event.getButton() == MouseButton.SECONDARY) {
+                    }
+                    pane.requestFocus();
+                    repaint();
                 }
             });
         }
     }
 
-    
+
     // -- Inner class for Controls
     public class ControlBoxInner extends VBox {
 
@@ -224,8 +224,8 @@ public class GraphicsJavaFX extends Application
 
         public ControlBoxInner()
         {
-        	super();
-        	
+            super();
+
             // -- set up buttons
             prepareButtonHandlers();
 
@@ -318,7 +318,7 @@ public class GraphicsJavaFX extends Application
                                 System.out.println("Translated by " + x + ", " + y + ", " + z);
                             }
                         } catch (Exception e) {
-                            System.out.println("Requires 3 doubles: x, y, and z from the top textbox.");
+                            System.out.println("Requires 3 doubles: x, y, and z comma separated from the top textbox.");
                         }
 
                         sc.render(graphicsCanvas.renderSurface.getSurface());
@@ -354,11 +354,11 @@ public class GraphicsJavaFX extends Application
                                     sc.scaling(x, y, z);
                                     System.out.println("Scaled by " + x + ", " + y + ", " + z);
                                 } else {
-                                    System.out.println("0 is not accepted as the object will not render.");
+                                    System.out.println("0 is not accepted for x or y as the object will not render.");
                                 }
                             }
                         } catch (Exception e) {
-                            System.out.println("Requires 3 doubles: x, y, and z from the top textbox.");
+                            System.out.println("Requires 3 doubles: x, y, and z comma separated from the top textbox.");
                             System.out.println("Values larger than 1 increase the size, values less than 0 decrease it.");
                         }
 
@@ -381,22 +381,50 @@ public class GraphicsJavaFX extends Application
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[5]) {
                         //input textbox here
-                        String but1 = button1.getText();
-                        double angle;
+                        String s = button0.getText(); //fixed point, optional
+                        String[] but0 = s.split(",\\s*");
 
-                        try {
-                            if (but1 != null) {
-                                graphicsCanvas.renderSurface.clearSurface();
-                                angle = Double.parseDouble(but1);
-                                sc.rotateX(angle);
-                                sc.render(graphicsCanvas.renderSurface.getSurface());
-                                graphicsCanvas.renderSurface.insertArray();
-                                graphicsCanvas.repaint();
-                                System.out.println("Rotate by " + angle + " degrees.");
-                                pane.requestFocus();
+                        String but1 = button1.getText(); //angle, required
+                        double angle;
+                        if (but0.length == 0) {
+                            //process angle only, without a fixed point
+                            try {
+                                if (but1 != null) {
+                                    graphicsCanvas.renderSurface.clearSurface();
+                                    angle = Double.parseDouble(but1);
+                                    sc.rotateX(angle);
+                                    sc.render(graphicsCanvas.renderSurface.getSurface());
+                                    graphicsCanvas.renderSurface.insertArray();
+                                    graphicsCanvas.repaint();
+                                    System.out.println("Rotate by " + angle + " degrees.");
+                                    pane.requestFocus();
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Requires one double of angle in degrees in the bottom textbox.");
                             }
-                        } catch (Exception e) {
-                            System.out.println("Requires one double of angle in degrees in the bottom textbox.");
+                        } else if (but0.length == 3) {
+                            //fixed point information is null
+                            //process angle only, with a fixed point
+                            double x = Double.parseDouble(but0[0]);
+                            double y = Double.parseDouble(but0[1]);
+                            double z = Double.parseDouble(but0[2]);
+                            try {
+                                if (but1 != null) {
+                                    graphicsCanvas.renderSurface.clearSurface();
+                                    angle = Double.parseDouble(but1);
+                                    sc.rotateX(angle, x, y); //z will be passed for cube
+                                    sc.render(graphicsCanvas.renderSurface.getSurface());
+                                    graphicsCanvas.renderSurface.insertArray();
+                                    graphicsCanvas.repaint();
+                                    System.out.println("Rotate by " + angle + " degrees.");
+                                    pane.requestFocus();
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Requires one double of angle in degrees in the bottom textbox. Fixed point is already defined.");
+                            }
+                        } else if (but0.length == 2 | but0.length == 1) {
+                            //there are some values that have been inputted but others that have not
+                            System.out.println("For a fixed point, x, y need to be inputted.");
                         }
                     }
                 }
