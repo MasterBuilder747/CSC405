@@ -380,27 +380,25 @@ public class GraphicsJavaFX extends Application
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[5]) {
-
                         //input textbox here
                         String but1 = button1.getText();
                         double angle;
+
                         try {
                             if (but1 != null) {
                                 graphicsCanvas.renderSurface.clearSurface();
                                 angle = Double.parseDouble(but1);
                                 sc.rotateX(angle);
+                                sc.render(graphicsCanvas.renderSurface.getSurface());
+                                graphicsCanvas.renderSurface.insertArray();
+                                graphicsCanvas.repaint();
+                                System.out.println("Rotate by " + angle + " degrees.");
+                                pane.requestFocus();
                             }
                         } catch (Exception e) {
-                            System.out.println("Requires 1 double of angle in degrees in the bottom textbox.");
+                            System.out.println("Requires one double of angle in degrees in the bottom textbox.");
                         }
-
-                        sc.render(graphicsCanvas.renderSurface.getSurface());
-
-                        graphicsCanvas.renderSurface.insertArray();
-                        graphicsCanvas.repaint();
                     }
-                    // focus back to the pane
-                    pane.requestFocus();
                 }
             });
 
@@ -412,18 +410,25 @@ public class GraphicsJavaFX extends Application
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[6]) {
-                        graphicsCanvas.renderSurface.clearSurface();
-
                         //input textbox here
-                        sc.rotateY(45);
-                        sc.render(graphicsCanvas.renderSurface.getSurface());
+                        String but1 = button1.getText();
+                        double angle;
 
-                        graphicsCanvas.renderSurface.insertArray();
-                        graphicsCanvas.repaint();
-                        System.out.println("Rotate by Y.");
+                        try {
+                            if (but1 != null) {
+                                graphicsCanvas.renderSurface.clearSurface();
+                                angle = Double.parseDouble(but1);
+                                sc.rotateY(angle);
+                                sc.render(graphicsCanvas.renderSurface.getSurface());
+                                graphicsCanvas.renderSurface.insertArray();
+                                graphicsCanvas.repaint();
+                                System.out.println("Rotate by " + angle + " degrees.");
+                                pane.requestFocus();
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Requires one double of angle in degrees in the bottom textbox.");
+                        }
                     }
-                    // focus back to the pane
-                    pane.requestFocus();
                 }
             });
 
@@ -435,18 +440,25 @@ public class GraphicsJavaFX extends Application
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[7]) {
-                        graphicsCanvas.renderSurface.clearSurface();
-
                         //input textbox here
-                        sc.rotateZ(45);
-                        sc.render(graphicsCanvas.renderSurface.getSurface());
+                        String but1 = button1.getText();
+                        double angle;
 
-                        graphicsCanvas.renderSurface.insertArray();
-                        graphicsCanvas.repaint();
-                        System.out.println("Rotate by Z.");
+                        try {
+                            if (but1 != null) {
+                                graphicsCanvas.renderSurface.clearSurface();
+                                angle = Double.parseDouble(but1);
+                                sc.rotateZ(angle);
+                                sc.render(graphicsCanvas.renderSurface.getSurface());
+                                graphicsCanvas.renderSurface.insertArray();
+                                graphicsCanvas.repaint();
+                                System.out.println("Rotate by " + angle + " degrees.");
+                                pane.requestFocus();
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Requires one double of angle in degrees in the bottom textbox.");
+                        }
                     }
-                    // focus back to the pane
-                    pane.requestFocus();
                 }
             });
         }
