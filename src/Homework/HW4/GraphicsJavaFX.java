@@ -424,7 +424,7 @@ public class GraphicsJavaFX extends Application
                             }
                         } else if (but0.length == 2 || but0.length == 1) {
                             //there are some values that have been inputted but others that have not
-                            System.out.println("For a fixed point, x, y need to be inputted.");
+                            System.out.println("For a fixed point, x, y, and z need to be inputted.");
                         } else {
                             System.out.println("Too many inputs in the textbox.");
                         }
@@ -441,22 +441,52 @@ public class GraphicsJavaFX extends Application
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[6]) {
                         //input textbox here
-                        String but1 = button1.getText();
-                        double angle;
+                        String s = button0.getText(); //fixed point, optional
+                        String[] but0 = s.split(",\\s*");
 
-                        try {
-                            if (but1 != null) {
-                                graphicsCanvas.renderSurface.clearSurface();
-                                angle = Double.parseDouble(but1);
-                                sc.rotateY(angle);
-                                sc.render(graphicsCanvas.renderSurface.getSurface());
-                                graphicsCanvas.renderSurface.insertArray();
-                                graphicsCanvas.repaint();
-                                System.out.println("Rotate by " + angle + " degrees.");
-                                pane.requestFocus();
+                        String but1 = button1.getText(); //angle, required
+                        double angle;
+                        if (but0[0].equals("")) {
+                            //process angle only, without a fixed point
+                            try {
+                                if (but1 != null) {
+                                    graphicsCanvas.renderSurface.clearSurface();
+                                    angle = Double.parseDouble(but1);
+                                    sc.rotateY(angle);
+                                    sc.render(graphicsCanvas.renderSurface.getSurface());
+                                    graphicsCanvas.renderSurface.insertArray();
+                                    graphicsCanvas.repaint();
+                                    System.out.println("Rotate by " + angle + " degrees.");
+                                    pane.requestFocus();
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Requires one double of angle in degrees in the bottom textbox.");
                             }
-                        } catch (Exception e) {
-                            System.out.println("Requires one double of angle in degrees in the bottom textbox.");
+                        } else if (but0.length == 3) {
+                            //fixed point information is null
+                            //process angle only, with a fixed point
+                            double x = Double.parseDouble(but0[0]);
+                            double y = Double.parseDouble(but0[1]);
+                            double z = Double.parseDouble(but0[2]);
+                            try {
+                                if (but1 != null) {
+                                    graphicsCanvas.renderSurface.clearSurface();
+                                    angle = Double.parseDouble(but1);
+                                    sc.rotateY(angle, x, y, z); //z will be passed for cube
+                                    sc.render(graphicsCanvas.renderSurface.getSurface());
+                                    graphicsCanvas.renderSurface.insertArray();
+                                    graphicsCanvas.repaint();
+                                    System.out.println("Rotate by " + angle + " degrees.");
+                                    pane.requestFocus();
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Requires one double of angle in degrees in the bottom textbox. Fixed point is already defined.");
+                            }
+                        } else if (but0.length == 2 || but0.length == 1) {
+                            //there are some values that have been inputted but others that have not
+                            System.out.println("For a fixed point, x, y, and z need to be inputted.");
+                        } else {
+                            System.out.println("Too many inputs in the textbox.");
                         }
                     }
                 }
@@ -471,22 +501,52 @@ public class GraphicsJavaFX extends Application
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[7]) {
                         //input textbox here
-                        String but1 = button1.getText();
-                        double angle;
+                        String s = button0.getText(); //fixed point, optional
+                        String[] but0 = s.split(",\\s*");
 
-                        try {
-                            if (but1 != null) {
-                                graphicsCanvas.renderSurface.clearSurface();
-                                angle = Double.parseDouble(but1);
-                                sc.rotateZ(angle);
-                                sc.render(graphicsCanvas.renderSurface.getSurface());
-                                graphicsCanvas.renderSurface.insertArray();
-                                graphicsCanvas.repaint();
-                                System.out.println("Rotate by " + angle + " degrees.");
-                                pane.requestFocus();
+                        String but1 = button1.getText(); //angle, required
+                        double angle;
+                        if (but0[0].equals("")) {
+                            //process angle only, without a fixed point
+                            try {
+                                if (but1 != null) {
+                                    graphicsCanvas.renderSurface.clearSurface();
+                                    angle = Double.parseDouble(but1);
+                                    sc.rotateZ(angle);
+                                    sc.render(graphicsCanvas.renderSurface.getSurface());
+                                    graphicsCanvas.renderSurface.insertArray();
+                                    graphicsCanvas.repaint();
+                                    System.out.println("Rotate by " + angle + " degrees.");
+                                    pane.requestFocus();
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Requires one double of angle in degrees in the bottom textbox.");
                             }
-                        } catch (Exception e) {
-                            System.out.println("Requires one double of angle in degrees in the bottom textbox.");
+                        } else if (but0.length == 3) {
+                            //fixed point information is null
+                            //process angle only, with a fixed point
+                            double x = Double.parseDouble(but0[0]);
+                            double y = Double.parseDouble(but0[1]);
+                            double z = Double.parseDouble(but0[2]);
+                            try {
+                                if (but1 != null) {
+                                    graphicsCanvas.renderSurface.clearSurface();
+                                    angle = Double.parseDouble(but1);
+                                    sc.rotateZ(angle, x, y, z); //z will be passed for cube
+                                    sc.render(graphicsCanvas.renderSurface.getSurface());
+                                    graphicsCanvas.renderSurface.insertArray();
+                                    graphicsCanvas.repaint();
+                                    System.out.println("Rotate by " + angle + " degrees.");
+                                    pane.requestFocus();
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Requires one double of angle in degrees in the bottom textbox. Fixed point is already defined.");
+                            }
+                        } else if (but0.length == 2 || but0.length == 1) {
+                            //there are some values that have been inputted but others that have not
+                            System.out.println("For a fixed point, x, y, and z need to be inputted.");
+                        } else {
+                            System.out.println("Too many inputs in the textbox.");
                         }
                     }
                 }
