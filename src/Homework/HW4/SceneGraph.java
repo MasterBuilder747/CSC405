@@ -200,19 +200,30 @@ public class SceneGraph {
         return matMult(scale, point);
     }
     public void scaling(double x, double y, double z) {
-        if (x != 0 || y != 0) {
-            double[] oldCenter = {center[0], center[1], center[2]};
-            toOrigin();
-            for (int i = 0; i < scene[0].length; i++) {
-                double[][] a = scalePt(scene[0][i], scene[1][i], scene[2][i], x, y, z);
-                scene[0][i] = a[0][0];
-                scene[1][i] = a[1][0];
-                scene[2][i] = a[2][0];
-            }
-            toOldCenter(oldCenter);
-        } else {
-            System.out.println("x and/or y cannot be 0.");
+        double[] oldCenter = {center[0], center[1], center[2]};
+        toOrigin();
+        for (int i = 0; i < scene[0].length; i++) {
+            double[][] a = scalePt(scene[0][i], scene[1][i], scene[2][i], x, y, z);
+            scene[0][i] = a[0][0];
+            scene[1][i] = a[1][0];
+            scene[2][i] = a[2][0];
         }
+        toOldCenter(oldCenter);
+    }
+    //lowercase: the amount being scaled
+    //uppercase: the fixed point at which it is being scaled relative to
+    public void scaling(double x, double y, double z, double X, double Y, double Z) {
+        //move the the defined fixed point
+        //translate by -fixed point
+        translation(-X, -Y, -Z);
+        //rotate it at the origin
+        for (int i = 0; i < scene[0].length; i++) {
+            double[][] a = scalePt(scene[0][i], scene[1][i], scene[2][i], x, y, z);
+            scene[0][i] = a[0][0];
+            scene[1][i] = a[1][0];
+            scene[2][i] = a[2][0];
+        }
+        translation(X, Y, Z);
     }
 
 

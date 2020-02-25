@@ -217,10 +217,11 @@ public class GraphicsJavaFX extends Application
     public class ControlBoxInner extends VBox {
 
         private Button buttons[];
-        private int nButtons = 8;
+        private int nButtons = 9;
 
         private TextField button0;
         private TextField button1;
+        private TextField button2;
 
         public ControlBoxInner()
         {
@@ -235,11 +236,15 @@ public class GraphicsJavaFX extends Application
                 if (i == 0) {
                     button0 = new TextField();
                     button0.setMaxWidth(100);
-                    this.getChildren().add(button0);
+                    this.getChildren().add(button0); //fixed point / translation
                 } else if (i == 1) {
                     button1 = new TextField();
                     button1.setMaxWidth(100);
-                    this.getChildren().add(button1);
+                    this.getChildren().add(button1); //angle in degrees
+                } else if (i == 2) {
+                    button2 = new TextField();
+                    button2.setMaxWidth(100);
+                    this.getChildren().add(button2); //scaling
                 }
             }
         }
@@ -261,6 +266,9 @@ public class GraphicsJavaFX extends Application
                         else if (actionEvent.getSource() == buttons[1]) {
 
                         }
+                        else if (actionEvent.getSource() == buttons[2]) {
+
+                        }
                         // -- process the button
                         System.out.println(actionEvent.getSource().toString());
                         // -- and return focus back to the pane
@@ -270,14 +278,14 @@ public class GraphicsJavaFX extends Application
             }
 
             //action buttons
-            int i = 2;
+            int i = 3;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
             buttons[i].setText("Scene");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if (actionEvent.getSource() == buttons[2]) {
+                    if (actionEvent.getSource() == buttons[3]) {
                         graphicsCanvas.renderSurface.clearSurface();
 
                         //resets the shape as well
@@ -293,14 +301,14 @@ public class GraphicsJavaFX extends Application
                 }
             });
 
-            i = 3;
+            i = 4;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
             buttons[i].setText("Translate");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if (actionEvent.getSource() == buttons[3]) {
+                    if (actionEvent.getSource() == buttons[4]) {
 
                         //input textbox here
                         String s = button0.getText();
@@ -331,14 +339,14 @@ public class GraphicsJavaFX extends Application
                 }
             });
 
-            i = 4;
+            i = 5;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
             buttons[i].setText("Scale");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if (actionEvent.getSource() == buttons[4]) {
+                    if (actionEvent.getSource() == buttons[5]) {
 
                         //input textbox here
                         String s = button0.getText();
@@ -351,7 +359,7 @@ public class GraphicsJavaFX extends Application
                                 //add z != 0 for cube
                                 if (x != 0 & y != 0) {
                                     graphicsCanvas.renderSurface.clearSurface();
-                                    sc.scaling(x, y, z);
+                                    sc.scaling(x, y, z, 100, 100, 0);
                                     System.out.println("Scaled by " + x + ", " + y + ", " + z);
                                 } else {
                                     System.out.println("0 is not accepted for x or y as the object will not render.");
@@ -372,14 +380,14 @@ public class GraphicsJavaFX extends Application
                 }
             });
 
-            i = 5;
+            i = 6;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
             buttons[i].setText("Rotate X");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if (actionEvent.getSource() == buttons[5]) {
+                    if (actionEvent.getSource() == buttons[6]) {
                         //input textbox here
                         String s = button0.getText(); //fixed point, optional
                         String[] but0 = s.split(",\\s*");
@@ -432,14 +440,14 @@ public class GraphicsJavaFX extends Application
                 }
             });
 
-            i = 6;
+            i = 7;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
             buttons[i].setText("Rotate Y");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if (actionEvent.getSource() == buttons[6]) {
+                    if (actionEvent.getSource() == buttons[7]) {
                         //input textbox here
                         String s = button0.getText(); //fixed point, optional
                         String[] but0 = s.split(",\\s*");
@@ -492,14 +500,14 @@ public class GraphicsJavaFX extends Application
                 }
             });
 
-            i = 7;
+            i = 8;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
             buttons[i].setText("Rotate Z");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if (actionEvent.getSource() == buttons[7]) {
+                    if (actionEvent.getSource() == buttons[8]) {
                         //input textbox here
                         String s = button0.getText(); //fixed point, optional
                         String[] but0 = s.split(",\\s*");
