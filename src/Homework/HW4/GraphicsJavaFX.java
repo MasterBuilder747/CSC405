@@ -348,68 +348,68 @@ public class GraphicsJavaFX extends Application
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[5]) {
                         //input textbox here
-                        String fixed = button0.getText(); //fixed point, optional
-                        String[] but0 = fixed.split(",\\s*");
+                        String but0 = button0.getText(); //fixed point, optional
+                        String[] fixed = but0.split(",\\s*");
 
-                        String scale = button2.getText(); //scale vector, required
-                        String[] but2 = scale.split(",\\s*");
+                        String but2 = button2.getText(); //scale vector, required
+                        String[] scale = but2.split(",\\s*");
 
                         //handle scale first, no fixed point
-                        if (but0[0].equals("")) {
-                            if (but2.length == 3) {
+                        if (fixed[0].equals("")) {
+                            if (scale.length == 3) {
                                 //process scale only, without a fixed point
                                 try {
-                                    if (but2[0] != null || but2[1] != null || but2[2] != null) {
-                                        double x = Double.parseDouble(but2[0]);
-                                        double y = Double.parseDouble(but2[1]);
-                                        double z = Double.parseDouble(but2[2]);
+                                    if (scale[0] != null || scale[1] != null || scale[2] != null) {
+                                        double x = Double.parseDouble(scale[0]);
+                                        double y = Double.parseDouble(scale[1]);
+                                        double z = Double.parseDouble(scale[2]);
                                         //add z != 0 for cube
-                                        if (x != 0 & y != 0) {
+                                        if (x == 0 & y == 0) {
+                                            System.out.println("for scaling: x, y cannot be 0.");
+                                        }else{
                                             graphicsCanvas.renderSurface.clearSurface();
                                             sc.scaling(x, y, z);
                                             sc.render(graphicsCanvas.renderSurface.getSurface());
                                             graphicsCanvas.renderSurface.insertArray();
                                             graphicsCanvas.repaint();
                                             System.out.println("Scaled object by " + x + ", " + y + ", " + z);
-                                        }else{
-                                            System.out.println("x, y cannot be 0.");
                                         }
                                     }
                                 } catch (Exception e) {
                                     System.out.println("Requires 3 doubles: x, y, and z comma separated from the last textbox.");
                                     System.out.println("Values larger than 1 increase the size, values less than 0 decrease it.");
                                 }
-                            } else if (but0.length == 2 || but0.length == 1) {
+                            } else if (fixed.length == 2 || fixed.length == 1) {
                                 //there are some values that have been inputted but others that have not
                                 System.out.println("For scale, x, y, and z need to be inputted in the last textbox.");
                             } else {
                                 System.out.println("Too many inputs in the textbox.");
                             }
                             //handle both scaled and fixed point
-                        } else if (but0.length == 3 && but2.length == 3) {
+                        } else if (fixed.length == 3 && scale.length == 3) {
                             //process scale with fixed point
                             try {
-                                double sx = Double.parseDouble(but0[0]);
-                                double sy = Double.parseDouble(but0[1]);
-                                double sz = Double.parseDouble(but0[2]);
-                                double fx = Double.parseDouble(but2[0]);
-                                double fy = Double.parseDouble(but2[1]);
-                                double fz = Double.parseDouble(but2[2]);
+                                double fx = Double.parseDouble(fixed[0]);
+                                double fy = Double.parseDouble(fixed[1]);
+                                double fz = Double.parseDouble(fixed[2]);
+                                double sx = Double.parseDouble(scale[0]);
+                                double sy = Double.parseDouble(scale[1]);
+                                double sz = Double.parseDouble(scale[2]);
                                 //add z != 0 for cube
-                                if (sx != 0 & sy != 0) {
+                                if (sx == 0 & sy == 0) {
+                                    System.out.println("for fixed/scaling: x, y cannot be 0.");
+                                } else {
                                     graphicsCanvas.renderSurface.clearSurface();
                                     sc.scaling(sx, sy, sz, fx, fy, fz);
                                     sc.render(graphicsCanvas.renderSurface.getSurface());
                                     graphicsCanvas.renderSurface.insertArray();
                                     graphicsCanvas.repaint();
                                     System.out.println("Scaled object by " + sx + ", " + sy + ", " + sz + " from fixed point " + fx + ", " + fy + ", " + fz);
-                                } else {
-                                    System.out.println("x, y cannot be 0.");
                                 }
                             } catch (Exception e) {
                                 System.out.println("Requires one double of angle in degrees in the second textbox. Fixed point is already defined.");
                             }
-                        } else if (but0.length == 2 || but0.length == 1 || but2.length == 2 || but2.length == 1) {
+                        } else if (fixed.length == 2 || fixed.length == 1 || scale.length == 2 || scale.length == 1) {
                             //there are some values that have been inputted but others that have not
                             System.out.println("For fixed point and scale, x, y, and z need to be inputted in first and last textbox respectively");
                         } else {
