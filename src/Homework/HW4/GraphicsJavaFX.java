@@ -386,7 +386,7 @@ public class GraphicsJavaFX extends Application
 
                         String but1 = button1.getText(); //angle, required
                         double angle;
-                        if (but0.length == 0) {
+                        if (but0[0].equals("")) {
                             //process angle only, without a fixed point
                             try {
                                 if (but1 != null) {
@@ -412,7 +412,7 @@ public class GraphicsJavaFX extends Application
                                 if (but1 != null) {
                                     graphicsCanvas.renderSurface.clearSurface();
                                     angle = Double.parseDouble(but1);
-                                    sc.rotateX(angle, x, y); //z will be passed for cube
+                                    sc.rotateX(angle, x, y, z); //z will be passed for cube
                                     sc.render(graphicsCanvas.renderSurface.getSurface());
                                     graphicsCanvas.renderSurface.insertArray();
                                     graphicsCanvas.repaint();
@@ -422,9 +422,11 @@ public class GraphicsJavaFX extends Application
                             } catch (Exception e) {
                                 System.out.println("Requires one double of angle in degrees in the bottom textbox. Fixed point is already defined.");
                             }
-                        } else if (but0.length == 2 | but0.length == 1) {
+                        } else if (but0.length == 2 || but0.length == 1) {
                             //there are some values that have been inputted but others that have not
                             System.out.println("For a fixed point, x, y need to be inputted.");
+                        } else {
+                            System.out.println("Too many inputs in the textbox.");
                         }
                     }
                 }

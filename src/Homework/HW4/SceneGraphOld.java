@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 import static Homework.HW4.MatrixMultiplication.matMult;
 
-public class SceneGraph {
+public class SceneGraphOld {
 
     //object info
 
