@@ -363,7 +363,7 @@ public class SceneGraph {
     }
 
     //render the lines at those coordinates
-    public void render(int[][] framebuffer) {
+    public void render(int[][] framebuffer) { //add grey for cube
         Lines.bresenhamForm((int)0, (int)0, (int)0, (int)0, framebuffer);
         Lines.bresenhamForm((int)scene[0][0], (int)scene[1][0], (int)scene[0][1], (int)scene[1][1], framebuffer);
         Lines.bresenhamForm((int)scene[0][1], (int)scene[1][1], (int)scene[0][2], (int)scene[1][2], framebuffer);
