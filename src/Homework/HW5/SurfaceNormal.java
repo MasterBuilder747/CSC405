@@ -1,6 +1,4 @@
-package Lecture.Week06;
-
-import static Homework.HW4.MatrixMultiplication.matMult;
+package Homework.HW5;
 
 public class SurfaceNormal {
 
