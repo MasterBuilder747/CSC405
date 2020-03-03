@@ -3,5 +3,5 @@ module Graphics {
     requires javafx.controls;
     requires java.desktop;
 
-    opens Homework.HW4;
+    opens Homework.HW5;
 }

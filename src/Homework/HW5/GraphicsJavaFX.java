@@ -57,7 +57,7 @@ public class GraphicsJavaFX extends Application
     public void start(Stage mainStage)
     {
         // -- Application title
-        mainStage.setTitle("Homework 4 Joseph Audras");
+        mainStage.setTitle("Homework 5 Joseph Audras");
 
         // -- create canvas for drawing
         graphicsCanvas = new GraphicsCanvasInner(WIDTH, HEIGHT);

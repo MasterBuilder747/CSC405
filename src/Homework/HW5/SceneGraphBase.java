@@ -4,7 +4,7 @@ public abstract class SceneGraphBase {
 
     protected double[][] vertices;
 
-    public void setScene(double newscene[][]) {
+    public void setScene(double[][] newscene) {
         vertices = newscene;
     }
 
