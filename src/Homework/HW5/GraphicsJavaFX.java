@@ -1,10 +1,11 @@
 /*
-Homework 4
+Homework 5
 Name: Joseph Audras
 Professor: Dr. Reinhart
 Class: CSC 405-1
-Date due: 2-21-20
+Date due: 3-5-20
 */
+
 package Homework.HW5;
 
 import javafx.animation.AnimationTimer;
