@@ -364,9 +364,10 @@ public class GraphicsJavaFX extends Application
                                         double x = Double.parseDouble(scale[0]);
                                         double y = Double.parseDouble(scale[1]);
                                         double z = Double.parseDouble(scale[2]);
+                                        System.out.println("x: " + x + "y: " + y + "z: " + z);
                                         //add z != 0 for cube
-                                        if (x == 0 & y == 0) {
-                                            System.out.println("for scaling: x, y cannot be 0.");
+                                        if (x == 0 || y == 0 || z == 0) {
+                                            System.out.println("for scaling: x, y, and z cannot be 0.");
                                         }else{
                                             graphicsCanvas.renderSurface.clearSurface();
                                             sc.scaling(x, y, z);
@@ -396,8 +397,9 @@ public class GraphicsJavaFX extends Application
                                 double sx = Double.parseDouble(scale[0]);
                                 double sy = Double.parseDouble(scale[1]);
                                 double sz = Double.parseDouble(scale[2]);
+                                //System.out.println("x: " + sx + " y: " + sy + " z: " + sz);
                                 //add z != 0 for cube
-                                if (sx == 0 & sy == 0) {
+                                if (sx == 0 || sy == 0 || sz == 0) {
                                     System.out.println("for fixed/scaling: x, y cannot be 0.");
                                 } else {
                                     graphicsCanvas.renderSurface.clearSurface();

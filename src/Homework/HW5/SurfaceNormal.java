@@ -16,6 +16,8 @@ public class SurfaceNormal {
     //3 = z
     // a x b = (a2b3 - a3b1, a1b3 - a1b3, a1b2 - a2b1)
     //cross product assumes both vectors originate at (0, 0, 0)
+
+    //cross two vectors on every specific plane
     public static double[] cross(double[] a, double[] b) {
         double[] c = new double[3];
 
