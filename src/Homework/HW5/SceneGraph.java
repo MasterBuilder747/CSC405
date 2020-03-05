@@ -118,12 +118,24 @@ public class SceneGraph {
 
         //points 8-13
         //T,   F,   Bo,  Ba,   R,    L
-        for (int i = 0; i < 3; i++) {
-            for (int j = 8; j < 14; j++) {
-                //vector - center
-                surfaceNormals[i][j-8] = (scene[i][j] - center[i]);
-            }
-        }
+
+        //clockwise of each direction on each face
+
+        //top: 2-3, 3-0
+        //front: 6-7, 7-3
+        //bottom: 5-4, 4-7
+        //back: 1-0, 0-4
+        //right: 5-6, 6-2
+        //left: 7-4, 4-0
+
+        //cross product of two vector lengths on each face
+        double x = scene[0][0] - scene[0][1];
+        double[] c = SurfaceNormal.cross(scene[0], scene[0]);
+
+        //x(c)/mag(c), y(c)/mag(c), z(c)/mag(c)
+        surfaceNormals[0][0] = c[0] / SurfaceNormal.mag(c);
+        surfaceNormals[1][0] = c[1] / SurfaceNormal.mag(c);
+        surfaceNormals[2][0] = c[2] / SurfaceNormal.mag(c);
     }
     public void updateSNScale() {
         //this particular version of the function is only used when scaling,
