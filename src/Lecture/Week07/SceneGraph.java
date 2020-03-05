@@ -1,12 +1,6 @@
-/*
-Homework 5
-Name: Joseph Audras
-Professor: Dr. Reinhart
-Class: CSC 405-1
-Date due: 3-5-20
-*/
+package Lecture.Week07;
 
-package Homework.HW5;
+import Homework.HW5.Lines;
 
 import java.util.Arrays;
 
@@ -14,78 +8,68 @@ import static Homework.HW4.MatrixMultiplication.matMult;
 
 public class SceneGraph {
 
-    //render the lines at those coordinates
-    //this renders each square
-    public void render(int[][] framebuffer) { //add grey for cube
-        //Lines.bresenhamForm((int)0, (int)0, (int)0, (int)0, framebuffer);
+    /*
 
-        //render 24 lines, 6 squares in total here
-        //from looking top down to it:
+    about an arbitrary axis and privoded a fixed point (Px, Py, Pz) = P
 
-        //face: points in clockwise rotation from looking at the surface facing outward:
-        //top (default): 0, 1, 2, 3
-        Lines.bresenhamForm((int)scene[0][0], (int)scene[1][0], (int)scene[0][1], (int)scene[1][1], framebuffer);
-        Lines.bresenhamForm((int)scene[0][1], (int)scene[1][1], (int)scene[0][2], (int)scene[1][2], framebuffer);
-        Lines.bresenhamForm((int)scene[0][2], (int)scene[1][2], (int)scene[0][3], (int)scene[1][3], framebuffer);
-        Lines.bresenhamForm((int)scene[0][3], (int)scene[1][3], (int)scene[0][0], (int)scene[1][0], framebuffer);
+    theta = 0 = angle
 
-        //front: 3, 2, 6, 7
-        Lines.bresenhamForm((int)scene[0][3], (int)scene[1][3], (int)scene[0][2], (int)scene[1][2], framebuffer);
-        Lines.bresenhamForm((int)scene[0][2], (int)scene[1][2], (int)scene[0][6], (int)scene[1][6], framebuffer);
-        Lines.bresenhamForm((int)scene[0][6], (int)scene[1][6], (int)scene[0][7], (int)scene[1][7], framebuffer);
-        Lines.bresenhamForm((int)scene[0][7], (int)scene[1][7], (int)scene[0][3], (int)scene[1][3], framebuffer);
+    0x != 0
+    0y!= 0
 
-        //bottom: 7, 6, 5, 4
-        Lines.bresenhamForm((int)scene[0][7], (int)scene[1][7], (int)scene[0][6], (int)scene[1][6], framebuffer);
-        Lines.bresenhamForm((int)scene[0][6], (int)scene[1][6], (int)scene[0][5], (int)scene[1][5], framebuffer);
-        Lines.bresenhamForm((int)scene[0][5], (int)scene[1][5], (int)scene[0][4], (int)scene[1][4], framebuffer);
-        Lines.bresenhamForm((int)scene[0][4], (int)scene[1][4], (int)scene[0][7], (int)scene[1][7], framebuffer);
+    doing matrix multiplications, all are 4x4:
+    z cannot be undone, it is the chosen axis to be rotating the object on the axis,
+    it is what is changing the rotation
 
-        //back: 4, 5, 1, 0
-        Lines.bresenhamForm((int)scene[0][4], (int)scene[1][4], (int)scene[0][5], (int)scene[1][5], framebuffer);
-        Lines.bresenhamForm((int)scene[0][5], (int)scene[1][5], (int)scene[0][1], (int)scene[1][1], framebuffer);
-        Lines.bresenhamForm((int)scene[0][1], (int)scene[1][1], (int)scene[0][0], (int)scene[1][0], framebuffer);
-        Lines.bresenhamForm((int)scene[0][0], (int)scene[1][0], (int)scene[0][4], (int)scene[1][4], framebuffer);
+    all 4x4s:
+    T = translate
+    Rx = rotate x
+    Ry = rotate y
+    Rz = rotate z
 
-        //right: 2, 1, 5, 6
-        Lines.bresenhamForm((int)scene[0][2], (int)scene[1][2], (int)scene[0][1], (int)scene[1][1], framebuffer);
-        Lines.bresenhamForm((int)scene[0][1], (int)scene[1][1], (int)scene[0][5], (int)scene[1][5], framebuffer);
-        Lines.bresenhamForm((int)scene[0][5], (int)scene[1][5], (int)scene[0][6], (int)scene[1][6], framebuffer);
-        Lines.bresenhamForm((int)scene[0][6], (int)scene[1][6], (int)scene[0][2], (int)scene[1][2], framebuffer);
+    //IN THIS ORDER!!!!! IT MATTERS HERE
+    T(P) * Rx(-0x) * Ry(-0y) * Rz(0) * Ry(0y) * Rx(0x) * T(-P) , multiply all by: |SG|
+    this all collapses to a
 
-        //left: 0, 3, 7, 4
-        Lines.bresenhamForm((int)scene[0][0], (int)scene[1][0], (int)scene[0][3], (int)scene[1][3], framebuffer);
-        Lines.bresenhamForm((int)scene[0][3], (int)scene[1][3], (int)scene[0][7], (int)scene[1][7], framebuffer);
-        Lines.bresenhamForm((int)scene[0][7], (int)scene[1][7], (int)scene[0][4], (int)scene[1][4], framebuffer);
-        Lines.bresenhamForm((int)scene[0][4], (int)scene[1][4], (int)scene[0][0], (int)scene[1][0], framebuffer);
-    }
+    specified as a vector in 3D with tail (start) at (0, 0, 0)
+    must be a unit vector
 
-    //the starting coordinates of each point, and other info
-    //starting template, defaulted to origin
-    static double[][] scene = {
-            //15x4 size
-            //pt1-8, 6 surface normal point of each side, 1 centroid point
-        //  pt: 0     1    2     3     4     5     6     7
-            {-100,  100, 100, -100, -100,  100,  100, -100}, //x 0
-            {-100, -100, 100,  100, -100, -100,  100,  100}, //y 1
-            {   0,    0,   0,    0, -200, -200, -200, -200}, //z 2
-            {1, 1, 1, 1, 1, 1, 1, 1}                         //w 3
+    A = alpha
+    d = sqrt(Ay^2 + Ay^2)
+
+
+    unit vector calculation:
+    x, y, z = x/(sqrt(x^2+y^2+z^2)) + y/(sqrt(x^2+y^2+z^2)) + z/(sqrt(x^2+y^2+z^2))
+
+     */
+
+    private static double alphaX;
+    private static double alphaY;
+    private static double alphaZ;
+    private static double d;
+    static double[][] rotateXA = {
+            {1, 0, 0, 0},
+            {0, alphaZ/d, -alphaY/d, 0},
+            {0, alphaY/d, alphaZ/d, 0},
+            {0, 0, 0, 1}
     };
-    //  (-100, -100, 0), top left
-    //  (100, -100, 0), top right
-    //  (100, 100, 0), bottom right
-    //  (-100, 100, 0) bottom left
-
-    //the position at the origin
-    static double[][] square = {
-            //15x4 size
-            //pt1-8, 6 surface normal point of each side, 1 centroid point
-            //  pt: 1     2    3     4     5     6     7     8
-            {-100,  100, 100, -100, -100,  100,  100, -100}, //x
-            {-100, -100, 100,  100, -100, -100,  100,  100}, //y
-            {0,       0,   0,    0, -200, -200, -200, -200}, //z
-            {1, 1, 1, 1, 1, 1, 1, 1}                         //w
+    static double[][] rotateYA = {
+            {d, 0, alphaX, 0},
+            {0, 1, 0, 0},
+            {-alphaX, 0, d, 0},
+            {0, 0, 0, 1}
     };
+
+
+    /*
+    cos(0x) = alphaX/d
+    -sin(0x) = -alphaY/d
+    sin(0x) = alphaX/d
+
+    sin(-0) = -sin(0)
+    cos(-0) = cos(0)
+
+     */
 
 
     //use this later
@@ -100,6 +84,21 @@ public class SceneGraph {
         printMat(surfaceNormals);
     }
 
+    //
+    //starting template, defaulted to origin
+    static double[][] scene = {
+        //15x4 size
+        //pt1-8, 6 surface normal point of each side, 1 centroid point
+        {-100,  100, 100,   -100}, //x
+        {-100, -100, 100,    100}, //y
+        {0,       0,   0,      0}, //z
+        {1,       1,   1,      1}  //w
+    };
+    //  (-100, -100, 0), top left
+    //  (100, -100, 0), top right
+    //  (100, 100, 0), bottom right
+    //  (-100, 100, 0) bottom left
+
     //only works for a square, use sum / 8 for a cube
     public static double[] center = new double[3];
     public static void updateC() {
@@ -108,6 +107,14 @@ public class SceneGraph {
         center[2] = 0;
     }
 
+    //the position at the origin
+    static double[][] square = {
+        //   pt0   pt1  pt2    pt3
+        {-100,  100, 100,   -100}, //x
+        {-100, -100, 100,    100}, //y
+        {0,       0,   0,      0}, //z
+        {1,       1,   1,      1}  //w
+    };
     //testing
     public static void printMat(double[][]a) {
         for (double[] doubles : a) {
@@ -423,5 +430,15 @@ public class SceneGraph {
             scene[2][i] = a[2][0];
         }
         translation(x, y, z);
+    }
+
+
+    //render the lines at those coordinates
+    public void render(int[][] framebuffer) { //add grey for cube
+        Lines.bresenhamForm((int)0, (int)0, (int)0, (int)0, framebuffer);
+        Lines.bresenhamForm((int)scene[0][0], (int)scene[1][0], (int)scene[0][1], (int)scene[1][1], framebuffer);
+        Lines.bresenhamForm((int)scene[0][1], (int)scene[1][1], (int)scene[0][2], (int)scene[1][2], framebuffer);
+        Lines.bresenhamForm((int)scene[0][2], (int)scene[1][2], (int)scene[0][3], (int)scene[1][3], framebuffer);
+        Lines.bresenhamForm((int)scene[0][3], (int)scene[1][3], (int)scene[0][0], (int)scene[1][0], framebuffer);
     }
 }
