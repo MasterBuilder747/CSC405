@@ -63,13 +63,13 @@ public class SceneGraph {
     //the starting coordinates of each point, and other info
     //starting template, defaulted to origin
     static double[][] scene = {
-            //15x4 size
+            //4x15 size
             //pt1-8, 6 surface normal point of each side, 1 centroid point
-        //  pt: 0     1    2     3     4     5     6     7
-            {-100,  100, 100, -100, -100,  100,  100, -100}, //x 0
-            {-100, -100, 100,  100, -100, -100,  100,  100}, //y 1
-            { 100,  100, 100,  100, -100, -100, -100, -100}, //z 2
-            {1, 1, 1, 1, 1, 1, 1, 1}                         //w 3
+            //pt: 0     1    2     3     4     5     6     7     8T   9F   10Bo  11Ba  12R   13L    14c
+            {-100,  100, 100, -100, -100,  100,  100, -100,  0,   0,   0,    0,    100, -100,   0}, //x 0
+            {-100, -100, 100,  100, -100, -100,  100,  100,  0,   100, 0,   -100,  0,    0,     0}, //y 1
+            { 100,  100, 100,  100, -100, -100, -100, -100,  100, 0,  -100,  0,    0,    0,     0}, //z 2
+            {1, 1, 1, 1, 1, 1, 1, 1} //w 3
     };
     //  (-100, -100, 0), top left
     //  (100, -100, 0), top right
@@ -78,34 +78,58 @@ public class SceneGraph {
 
     //the position at the origin
     static double[][] square = {
-            //15x4 size
+            //4x15 size
             //pt1-8, 6 surface normal point of each side, 1 centroid point
-            //  pt: 0     1    2     3     4     5     6     7
-            {-100,  100, 100, -100, -100,  100,  100, -100}, //x 0
-            {-100, -100, 100,  100, -100, -100,  100,  100}, //y 1
-            { 100,  100, 100,  100, -100, -100, -100, -100}, //z 2
-            {1, 1, 1, 1, 1, 1, 1, 1}                         //w 3
+        //pt: 0     1    2     3     4     5     6     7     8T   9F   10Bo  11Ba  12R   13L    14c
+            {-100,  100, 100, -100, -100,  100,  100, -100,  0,   0,   0,    0,    100, -100,   0}, //x 0
+            {-100, -100, 100,  100, -100, -100,  100,  100,  0,   100, 0,   -100,  0,    0,     0}, //y 1
+            { 100,  100, 100,  100, -100, -100, -100, -100,  100, 0,  -100,  0,    0,    0,     0}, //z 2
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1} //w 3
     };
 
 
     //use this later
     //print it out for now
     //sample surfaces that are default, relative to the sides
+    //unused, for reference and stored in main scene
     static double[][] surfaceNormals = {
-        {0, 0, 0, 0, 1, -1}, //x
-        {0, 0, 1, -1, 0, 0}, //y
-        {1, -1, 0, 0, 0, 0} //z
+        //T,   F,   Bo,  Ba,   R,    L
+         {0,   0,   0,   0,    100, -100}, //x
+         {0,   100, 0,  -100,  0,    0}, //y
+         {100, 0,  -100, 0,    0,    0} //z
     };
+    public void updateSN() {
+        //points 8-13
+        //T,   F,   Bo,  Ba,   R,    L
+        //
+        for (int i = 0; i < 3; i++) {
+            for (int j = 8; j < 14; j++) {
+                surfaceNormals[i][j-8] = scene[i][j];
+            }
+        }
+    }
     public void printSurfaceNormals() {
+        updateSN();
         printMat(surfaceNormals);
     }
 
+    //used for cube center
+    //diagonal points / 2 for each axis for 2d
+    public static double sum(double[] a) {
+        double sum = 0;
+        for (double v : a) {
+            sum += v;
+        }
+        return sum;
+    }
     //only works for a square, use sum / 8 for a cube
     public static double[] center = new double[3];
     public static void updateC() {
+        //(point 0 to point 6) / 2
+        //c=         pt0: x, y, z+ pt6: x, y, z / 2
         center[0] = (scene[0][0] + scene[0][2]) / 2.0;
         center[1] = (scene[1][0] + scene[1][2]) / 2.0;
-        center[2] = 0;
+        center[2] = (scene[2][0] + scene[2][2]) / 2.0;
     }
 
     //testing
@@ -133,16 +157,6 @@ public class SceneGraph {
     }
     public void resetShape() {
         setScene(square);
-    }
-
-    //used for cube
-    //distance / 2 for each axis
-    public static double sum(double[] a) {
-        double sum = 0;
-        for (double v : a) {
-            sum += v;
-        }
-        return sum;
     }
 
     //transformations
