@@ -149,8 +149,10 @@ public class SceneGraph {
     }
     //change the coordinates of the scene
     private static void setScene(double[][] a) {
+        //row
         for (int i = 0; i < a.length; i++) {
-            for (int j = 0; j < a[0].length; j++) {
+            //column: only read 0-7
+            for (int j = 0; j < 8; j++) {
                 scene[i][j] = a[i][j];
             }
         }
