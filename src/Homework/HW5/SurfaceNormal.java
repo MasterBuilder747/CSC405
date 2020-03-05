@@ -26,6 +26,7 @@ public class SurfaceNormal {
         return c;
     }
 
+    //sqrt(x, y, z)
     public static double mag (double[] a) {
         return Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2));
     }

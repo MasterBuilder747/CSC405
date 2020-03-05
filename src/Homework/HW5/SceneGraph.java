@@ -66,10 +66,10 @@ public class SceneGraph {
             //4x15 size
             //pt1-8, 6 surface normal point of each side, 1 centroid point
         //pt: 0     1    2     3     4     5     6     7     8T   9F   10Bo  11Ba  12R   13L    14c
-            {-100,  100, 100, -100, -100,  100,  100, -100,  0,   0,   0,    0,    100, -100,   0}, //x 0
-            {-100, -100, 100,  100, -100, -100,  100,  100,  0,   100, 0,   -100,  0,    0,     0}, //y 1
-            { 100,  100, 100,  100, -100, -100, -100, -100,  100, 0,  -100,  0,    0,    0,     0}, //z 2
-            {1, 1, 1, 1, 1, 1, 1, 1} //w 3
+            {-100,  100, 100, -100, -100,  100,  100, -100,  0,   0,   0,    0,    1,   -1,     0}, //x 0
+            {-100, -100, 100,  100, -100, -100,  100,  100,  0,   1,   0,   -1,    0,    0,     0}, //y 1
+            { 100,  100, 100,  100, -100, -100, -100, -100,  1,   0,  -1,    0,    0,    0,     0}, //z 2
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}                                           //w 3
     };
 
     //the position at the origin
@@ -77,10 +77,10 @@ public class SceneGraph {
             //4x15 size
             //pt1-8, 6 surface normal point of each side, 1 centroid point
         //pt: 0     1    2     3     4     5     6     7     8T   9F   10Bo  11Ba  12R   13L    14c
-            {-100,  100, 100, -100, -100,  100,  100, -100,  0,   0,   0,    0,    100, -100,   0}, //x 0
-            {-100, -100, 100,  100, -100, -100,  100,  100,  0,   100, 0,   -100,  0,    0,     0}, //y 1
-            { 100,  100, 100,  100, -100, -100, -100, -100,  100, 0,  -100,  0,    0,    0,     0}, //z 2
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1} //w 3
+            {-100,  100, 100, -100, -100,  100,  100, -100,  0,   0,   0,    0,    1,   -1,     0}, //x 0
+            {-100, -100, 100,  100, -100, -100,  100,  100,  0,   1,   0,   -1,    0,    0,     0}, //y 1
+            { 100,  100, 100,  100, -100, -100, -100, -100,  1,   0,  -1,    0,    0,    0,     0}, //z 2
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}                                           //w 3
     };
 
 
@@ -90,22 +90,65 @@ public class SceneGraph {
     //unused, for reference and stored in main scene
     static double[][] surfaceNormals = {
         //T,   F,   Bo,  Ba,   R,    L
-         {0,   0,   0,   0,    100, -100}, //x
-         {0,   100, 0,  -100,  0,    0}, //y
-         {100, 0,  -100, 0,    0,    0} //z
+         {0,   0,   0,   0,    1,   -1}, //x
+         {0,   1,   0,  -1,    0,    0}, //y
+         {1,   0,  -1,   0,    0,    0}  //z
     };
-    public void updateSN() {
-        //points 8-13
-        //T,   F,   Bo,  Ba,   R,    L
-        //
+    static double[][] surfaceNormalsDefault = {
+            //T,   F,   Bo,  Ba,   R,    L
+            {0,   0,   0,   0,    1,   -1}, //x
+            {0,   1,   0,  -1,    0,    0}, //y
+            {1,   0,  -1,   0,    0,    0}  //z
+    };
+    public void resetSN() {
         for (int i = 0; i < 3; i++) {
             for (int j = 8; j < 14; j++) {
-                surfaceNormals[i][j-8] = scene[i][j];
+                //vector - center
+                scene[i][j] = surfaceNormalsDefault[i][j-8];
+            }
+        }
+        System.out.println("Surface normals: ");
+        printMat(surfaceNormals);
+    }
+
+    public void updateSN() {
+        //the surface normals are updated based on the current center point
+        //so you can store these current calculated values in a separate array
+        //this is surfaceNormals
+
+        //points 8-13
+        //T,   F,   Bo,  Ba,   R,    L
+        for (int i = 0; i < 3; i++) {
+            for (int j = 8; j < 14; j++) {
+                //vector - center
+                surfaceNormals[i][j-8] = (scene[i][j] - center[i]);
+            }
+        }
+    }
+    public void updateSNScale() {
+        //this particular version of the function is only used when scaling,
+        //an extra step is needed when calculating the surface normals
+
+        //the surface normals are updated based on the current center point
+        //so you can store these current calculated values in a separate array
+        //this is surfaceNormals
+
+        //points 8-13
+        //T,   F,   Bo,  Ba,   R,    L
+        for (int i = 0; i < 3; i++) {
+            for (int j = 8; j < 14; j++) {
+                //cross / mag
+
             }
         }
     }
     public void printSN() {
         updateSN();
+        System.out.println("Surface normals: ");
+        printMat(surfaceNormals);
+    }
+    public void printSNScale() {
+        updateSNScale();
         System.out.println("Surface normals: ");
         printMat(surfaceNormals);
     }
@@ -146,19 +189,19 @@ public class SceneGraph {
         System.out.println(Arrays.toString(center));
     }
     //change the coordinates of the scene
-    private static void setScene(double[][] a) {
+    private static void setScene() {
         //row
-        for (int i = 0; i < a.length; i++) {
+        for (int i = 0; i < square.length; i++) {
             //column: only read 0-7
             for (int j = 0; j < 8; j++) {
-                scene[i][j] = a[i][j];
+                scene[i][j] = square[i][j];
             }
         }
     }
     public void resetShape() {
-        setScene(square);
-        printCenter();
-        printSN();
+        resetSN();
+        setScene();
+        //printCenter();
     }
 
     //transformations
@@ -197,7 +240,7 @@ public class SceneGraph {
             scene[2][i] = a[2][0];
         }
         updateC();
-        printCenter();
+        //printCenter();
         printSN();
     }
 
@@ -289,8 +332,9 @@ public class SceneGraph {
             scene[2][i] = a[2][0];
         }
         toOldCenter(oldCenter);
-        printCenter();
-        printSN();
+        //printCenter();
+
+        printSNScale();
     }
     //lowercase: the amount being scaled
     //uppercase: the fixed point at which it is being scaled relative to
@@ -341,6 +385,7 @@ public class SceneGraph {
             scene[2][i] = a[2][0]; //z
         }
         toOldCenter(oldCenter);
+        //printCenter();
         printSN();
     }
     //fixed point:
@@ -357,7 +402,7 @@ public class SceneGraph {
             scene[2][i] = a[2][0];
         }
         translation(x, y, z);
-        printCenter();
+        //printCenter();
         printSN();
     }
 
@@ -389,6 +434,7 @@ public class SceneGraph {
             scene[2][i] = a[2][0];
         }
         toOldCenter(oldCenter);
+        //printCenter();
         printSN();
     }
     public void rotateY(double angle, double x, double y, double z) {
@@ -403,7 +449,7 @@ public class SceneGraph {
             scene[2][i] = a[2][0];
         }
         translation(x, y, z);
-        printCenter();
+        //printCenter();
         printSN();
     }
 
@@ -435,6 +481,7 @@ public class SceneGraph {
             scene[2][i] = a[2][0];
         }
         toOldCenter(oldCenter);
+        //printCenter();
         printSN();
     }
     public void rotateZ(double angle, double x, double y, double z) {
@@ -449,7 +496,7 @@ public class SceneGraph {
             scene[2][i] = a[2][0];
         }
         translation(x, y, z);
-        printCenter();
+        //printCenter();
         printSN();
     }
 }
