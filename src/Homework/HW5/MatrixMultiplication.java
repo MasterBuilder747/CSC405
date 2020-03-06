@@ -47,30 +47,4 @@ public class MatrixMultiplication {
                     {0, 0, 0, 1},
                     {0, 0, 0, 1}};
     double[][] scene = {{0, 10}, {0, 10}, {0, 0}, {1, 1}};
-
-
-
-    //public static void main(String[] args) {
-        /*
-        try {
-            double[][] a = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-            printmat(a);
-            System.out.println();
-            double[][] b = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
-            printmat(b);
-            System.out.println();
-            double[][] c = matmult(a, b);
-            printmat(c);
-            System.out.println();
-            double[][] d = {{1, 2, 3}}; //rows only
-            printmat(d);
-            System.out.println();
-            double[][] e = {{1}, {2}, {3}}; //columns only
-            printmat(e);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e);
-        }
-        */
-    //}
-
 }

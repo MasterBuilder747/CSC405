@@ -1,4 +1,6 @@
-package Homework.HW5;
+package Homework.HW6;
+
+import Homework.HW5.SceneGraph;
 
 public class Cube extends SceneGraph {
 

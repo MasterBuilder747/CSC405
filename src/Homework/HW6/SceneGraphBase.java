@@ -7,7 +7,7 @@ Date due: 3-5-20
 */
 
 
-package Homework.HW5;
+package Homework.HW6;
 
 public abstract class SceneGraphBase {
 
