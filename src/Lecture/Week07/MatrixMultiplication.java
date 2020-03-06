@@ -2,7 +2,7 @@ package Lecture.Week07;
 
 public class MatrixMultiplication {
 
-    //static double m[][] =
+    static double m[][]; //transformation matrix
 
     public static double[][] matMult (double a[][], double b[][]) throws IllegalArgumentException {
         //a[0] indicates to test the length of just the columns of array a
@@ -24,47 +24,100 @@ public class MatrixMultiplication {
         }
         return c;
     }
-/*
+
     //p is the fixed point x, y, z
     //angle is the rotation angle in degrees
     //axis is the axis of rotation x, y, z
     //scene is the object (scene) to be rotated, rows are x, y, z, y, columns are the vertices
-    public static double[][] rotateArbitrary(double[] p, double angle, double[] axis) {
+    public static void rotateArbritrary (double p[], double angle, double axis[]) throws IllegalArgumentException
+    {
+        // -- make sure the angle is in radians
         double theta = Math.toRadians(angle);
-        double mag = Math.sqrt(Math.pow(axis[0], 2) + Math.pow(axis[1], 2) + Math.pow(axis[2], 2));
+        // -- convert the axis to a unit vector
+        double mag = Math.sqrt(Math.pow(axis[0],  2) + Math.pow(axis[1],  2) + Math.pow(axis[2],  2));
         double alpha[] = {axis[0] / mag, axis[1] / mag, axis[2] / mag};
 
-        double[][] t = {
-                {1, 0, 0, -p[0]},
+        if (mag < 0.000000001) {
+            throw new IllegalArgumentException("invalid axis of rotation");
+        }
+
+        double d = Math.sqrt(Math.pow(alpha[1],  2) + Math.pow(alpha[2],  2));
+        if (Math.abs(d) < 0.00000001) {
+            // -- just rotate about the x axis
+
+            // ADD CALL TO rotateX(P, angle) HERE
+            // ADD CALL TO rotateX(P, angle) HERE
+            // ADD CALL TO rotateX(P, angle) HERE
+            // ADD CALL TO rotateX(P, angle) HERE
+            // ADD CALL TO rotateX(P, angle) HERE
+            // ADD CALL TO rotateX(P, angle) HERE
+
+            return;
+        }
+
+
+        // -- now for the matrices
+
+        // -- translate fixed point to origin
+        double[][] T = {{1, 0, 0, -p[0]},
                 {0, 1, 0, -p[1]},
                 {0, 0, 1, -p[2]},
                 {0, 0, 0, 1}
         };
-
-        double[][] ti = {
-                {1, 0, 0, p[0]},
-                {}
-        }
-
+        // -- translate fixed point to original location
+        double[][] Ti = {{1, 0, 0, p[0]},
+                {0, 1, 0, p[1]},
+                {0, 0, 1, p[2]},
+                {0, 0, 0, 1}
+        };
+        // -- rotate about the z axis by theta
+        double[][] Rz = {{Math.cos(theta), -Math.sin(theta), 0, 0},
+                {Math.sin(theta), Math.cos(theta), 0, 0},
+                {0, 0, 1, 0},
+                {0, 0, 0, 1}
+        };
+        // -- rotate about y axis by theta-y (to be computed)
+        double[][] Ry = {
+                {d, 0, -alpha[0], 0},
+                {0, 1, 0, 0},
+                {alpha[0], 0, d, 0},
+                {0, 0, 0, 1}
+        };
+        // -- rotate about y axis by -theta-y (to be computed)
+        double[][] Riy = {
+                {d, 0, alpha[0], 0},
+                {0, 1, 0, 0},
+                {-alpha[0], 0, d, 0},
+                {0, 0, 0, 1}
+        };
+        // -- rotate about x axis by theta-x (to be computed)
+        double[][] Rx = {
+                {1, 0, 0, 0},
+                {0, alpha[2] / d, -alpha[1] / d, 0},
+                {0, alpha[1] / d, alpha[2] / d, 0},
+                {0, 0, 0, 1}
+        };
+        // -- rotate about x axis by -theta-x (to be computed)
         double[][] Rix = {
                 {1, 0, 0, 0},
-                {0, alpha[2] / d, alpha[1] / 2}
-        }
+                {0, alpha[2] / d, alpha[1] / d, 0},
+                {0, -alpha[1] / d, alpha[2] / d, 0},
+                {0, 0, 0, 1}
+        };
 
-        double m[][] = matMult(Rx, t);
+        // -- build the final matrix
+        m = matMult(Rx, T);
         m = matMult(Ry, m);
         m = matMult(Rz, m);
         m = matMult(Riy, m);
         m = matMult(Rix, m);
-        m = matMult(ti, m);
-
-
+        m = matMult(Ti, m);
     }
 
-    public static double[][] applyMatrix() {
-
+    public static double[][] applyMatrix(double[][] scene) {
+        return matMult(m, scene);
     }
-*/
+
     public static void printMat(double[][]a) {
         for (double[] doubles : a) {
             for (int j = 0; j < a[0].length; j++) {
@@ -81,7 +134,6 @@ public class MatrixMultiplication {
                     {0, 0, 0, 1},
                     {0, 0, 0, 1}};
     double[][] scene = {{0, 10}, {0, 10}, {0, 0}, {1, 1}};
-
 
 
     //public static void main(String[] args) {
