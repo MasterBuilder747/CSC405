@@ -12,6 +12,7 @@ public class ArrayTest {
         };
 
         //System.out.println(Arrays.toString(a[0][0]));
+        //System.out.println(0.0/0.0);
     }
 
 }
