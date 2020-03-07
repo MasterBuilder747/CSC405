@@ -364,7 +364,7 @@ public class GraphicsJavaFX extends Application
                                         double x = Double.parseDouble(scale[0]);
                                         double y = Double.parseDouble(scale[1]);
                                         double z = Double.parseDouble(scale[2]);
-                                        System.out.println("x: " + x + "y: " + y + "z: " + z);
+                                        //System.out.println("x: " + x + "y: " + y + "z: " + z);
                                         //add z != 0 for cube
                                         if (x == 0 || y == 0 || z == 0) {
                                             System.out.println("for scaling: x, y, and z cannot be 0.");
@@ -448,7 +448,7 @@ public class GraphicsJavaFX extends Application
                                     sc.render(graphicsCanvas.renderSurface.getSurface());
                                     graphicsCanvas.renderSurface.insertArray();
                                     graphicsCanvas.repaint();
-                                    System.out.println("Rotate by " + angle + " degrees.");
+                                    System.out.println("Rotate along the x axis by " + angle + " degrees.");
                                     pane.requestFocus();
                                 }
                             } catch (Exception e) {
@@ -468,7 +468,7 @@ public class GraphicsJavaFX extends Application
                                     sc.render(graphicsCanvas.renderSurface.getSurface());
                                     graphicsCanvas.renderSurface.insertArray();
                                     graphicsCanvas.repaint();
-                                    System.out.println("Rotate by " + angle + " degrees.");
+                                    System.out.println("Rotate along the x axis by " + angle + " degrees via fixed point " + x + ", " + y + ", " + z);
                                     pane.requestFocus();
                                 }
                             } catch (Exception e) {
@@ -508,7 +508,7 @@ public class GraphicsJavaFX extends Application
                                     sc.render(graphicsCanvas.renderSurface.getSurface());
                                     graphicsCanvas.renderSurface.insertArray();
                                     graphicsCanvas.repaint();
-                                    System.out.println("Rotate by " + angle + " degrees.");
+                                    System.out.println("Rotate along the y axis by " + angle + " degrees.");
                                     pane.requestFocus();
                                 }
                             } catch (Exception e) {
@@ -528,7 +528,7 @@ public class GraphicsJavaFX extends Application
                                     sc.render(graphicsCanvas.renderSurface.getSurface());
                                     graphicsCanvas.renderSurface.insertArray();
                                     graphicsCanvas.repaint();
-                                    System.out.println("Rotate by " + angle + " degrees.");
+                                    System.out.println("Rotate along the y axis by " + angle + " degrees via fixed point " + x + ", " + y + ", " + z);
                                     pane.requestFocus();
                                 }
                             } catch (Exception e) {
@@ -568,7 +568,7 @@ public class GraphicsJavaFX extends Application
                                     sc.render(graphicsCanvas.renderSurface.getSurface());
                                     graphicsCanvas.renderSurface.insertArray();
                                     graphicsCanvas.repaint();
-                                    System.out.println("Rotate by " + angle + " degrees.");
+                                    System.out.println("Rotate along the z axis by " + angle + " degrees.");
                                     pane.requestFocus();
                                 }
                             } catch (Exception e) {
@@ -588,7 +588,7 @@ public class GraphicsJavaFX extends Application
                                     sc.render(graphicsCanvas.renderSurface.getSurface());
                                     graphicsCanvas.renderSurface.insertArray();
                                     graphicsCanvas.repaint();
-                                    System.out.println("Rotate by " + angle + " degrees.");
+                                    System.out.println("Rotate along the z axis by " + angle + " degrees via fixed point " + x + ", " + y + ", " + z);
                                     pane.requestFocus();
                                 }
                             } catch (Exception e) {

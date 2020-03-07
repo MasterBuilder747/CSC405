@@ -62,6 +62,7 @@ public class SceneGraph {
 
     //the starting coordinates of each point, and other info
     //starting template, defaulted to origin
+    static double x = 0.5;
     static double[][] scene = {
             //4x15 size
             //pt1-8, 6 surface normal point of each side, 1 centroid point
@@ -77,6 +78,17 @@ public class SceneGraph {
             //4x15 size
             //pt1-8, 6 surface normal point of each side, 1 centroid point
         //pt: 0     1    2     3     4     5     6     7     8T   9F   10Bo  11Ba  12R   13L    14c
+            {-100,  100, 100, -100, -100,  100,  100, -100,  0,   0,   0,    0,    0,    0,     0}, //x 0
+            {-100, -100, 100,  100, -100, -100,  100,  100,  0,   0,   0,    0,    0,    0,     0}, //y 1
+            { 100,  100, 100,  100, -100, -100, -100, -100,  0,   0,   0,    0,    0,    0,     0}, //z 2
+            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}                                           //w 3
+    };
+
+    //the position at the origin
+    static double[][] defaultSquare = {
+            //4x15 size
+            //pt1-8, 6 surface normal point of each side, 1 centroid point
+            //pt: 0     1    2     3     4     5     6     7     8T   9F   10Bo  11Ba  12R   13L    14c
             {-100,  100, 100, -100, -100,  100,  100, -100,  0,   0,   0,    0,    0,    0,     0}, //x 0
             {-100, -100, 100,  100, -100, -100,  100,  100,  0,   0,   0,    0,    0,    0,     0}, //y 1
             { 100,  100, 100,  100, -100, -100, -100, -100,  0,   0,   0,    0,    0,    0,     0}, //z 2
@@ -103,6 +115,7 @@ public class SceneGraph {
     }
     public void resetSN() {
         //calculate the surface normals at this point
+        //calculation done HERE:
         calculateSN();
         //store it into a separete array in case
         //then put those values into the scene matrix
@@ -126,24 +139,27 @@ public class SceneGraph {
 
         //clockwise of each direction on each face
 
-        //top: 2-3, 3-0
-        setSurfaceNormals(2, 3, 3, 0, 0);
-        //front: 6-7, 7-3
-        setSurfaceNormals(6, 7, 7, 3, 1);
-        //bottom: 5-4, 4-7
-        setSurfaceNormals(5, 4, 4, 7, 2);
-        //back: 1-0, 0-4
-        setSurfaceNormals(1, 0, 0, 4, 3);
-        //right: 5-6, 6-2
-        setSurfaceNormals(5, 6, 6, 2, 4);
-        //left: 7-4, 4-0
-        setSurfaceNormals(7, 4, 4, 0, 5);
+        //side: relative origin point: point1, point2
+        //top: 3: 2, 0
+        setSurfaceNormals(3, 0, 2, 0);
+        //front: 7: 6, 3
+        setSurfaceNormals(7, 3, 6, 1);
+        //bottom: 4, 5, 7
+        setSurfaceNormals(4, 7, 5, 2);
+        //back: 0: 1, 4
+        setSurfaceNormals(0, 4, 1, 3);
+        //right: 6: 5, 2
+        setSurfaceNormals(6, 2, 5, 4);
+        //left: 4: 7, 0
+        setSurfaceNormals(4, 0, 7, 5);
     }
-    public static void setSurfaceNormals(int a, int b, int c, int d, int i) {
+    public static void setSurfaceNormals(int o, int a, int b, int i) {
         //cross product of two vector lengths on each face
         //vector sub always returns a length 3 array of x, y, z based on ints specified
         //cross returns a length 3 array of distance vector
-        double[] cross = SurfaceNormal.cross(vectorSub(a, b), vectorSub(d, c));
+        double[] cross = SurfaceNormal.cross(vectorSub(a, o), vectorSub(b, o));
+        //System.out.println("cross prod: " + Arrays.toString(cross));
+        //System.out.println();
         double cm = SurfaceNormal.mag(cross);
 
         //x(c)/mag(c), y(c)/mag(c), z(c)/mag(c)
@@ -151,15 +167,23 @@ public class SceneGraph {
         surfaceNormals[1][i] = cross[1] / cm;
         surfaceNormals[2][i] = cross[2] / cm;
     }
-    public static double[] vectorSub(int k, int j) {
+    //point k - point o
+    //where o is the relative origin and k is the point of interest
+    public static double[] vectorSub(int k, int o) {
         //convert column into row
-        double[] a1 = {scene[0][k], scene[1][k], scene[2][k]};
-        double[] a2 = {scene[0][j], scene[1][j], scene[2][j]};
-        return new double[] {scene[0][k], scene[1][k], scene[2][k]};
-
+        double[] pt = {scene[0][k], scene[1][k], scene[2][k]};
+        //aString(pt);
+        double[] og = {scene[0][o], scene[1][o], scene[2][o]};
+        //aString(og);
+        //return new double[] {scene[0][k], scene[1][k], scene[2][k]};
 
         //then subtract
-        //return new double[] {a1[0] - a2[0], a1[1] - a2[1], a1[1] - a2[1]};
+        double[] a = {pt[0] - og[0], pt[1] - og[1], pt[2] - og[2]};
+        //System.out.println("vector: " + Arrays.toString(a));
+        return a;
+    }
+    public static void aString(double[] a) {
+        System.out.println(Arrays.toString(a));
     }
 
 
