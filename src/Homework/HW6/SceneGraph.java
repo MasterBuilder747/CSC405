@@ -563,7 +563,7 @@ public class SceneGraph {
     //  0 = theta
     //  fp = fixed point vector
     //  0x, 0y, [there is no 0z, as there is already rotation on the 0z] = <arbitrary axis of rotation vector>
-    //  	[scene?] * T(fp) * Rx(-0x) * Ry(-0y) * Rz(0) * Ry(0y) * Rx(0x) * T(-fp)
+    //  	T(fp) * Rx(-0x) * Ry(-0y) * Rz(0) * Ry(0y) * Rx(0x) * T(-fp) * [scene]
     public void arbitrary(double[] fp, double angle, double[] ar) {
 
         //store the multiplication matrix in temp var
@@ -623,8 +623,11 @@ public class SceneGraph {
                 {0, 0, 0, 1}
         };
 
-        //[scene?] * T(fp) * Rx(-0x) * Ry(-0y) * Rz(0) * Ry(0y) * Rx(0x) * T(-fp)
-        matMult(matMult(matMult(matMult(matMult(matMult(matMult(trans, rotateXNeg), rotateYNeg), rotateZ), rotateY), rotateX), transNeg), scene);
+        //T(fp) * Rx(-0x) * Ry(-0y) * Rz(0) * Ry(0y) * Rx(0x) * T(-fp) * [scene?]
+        double[][] result = matMult(matMult(matMult(matMult(matMult(matMult(matMult(trans, rotateXNeg), rotateYNeg), rotateZ), rotateY), rotateX), transNeg), scene);
+
+        printSN();
+        printMat(result);
 
     }
 
