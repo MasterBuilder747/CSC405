@@ -1,5 +1,5 @@
 /*
-Homework 4
+Homework 6
 Name: Joseph Audras
 Professor: Dr. Reinhart
 Class: CSC 405-1

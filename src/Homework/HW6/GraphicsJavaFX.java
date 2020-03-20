@@ -1,9 +1,9 @@
 /*
-Homework 5
+Homework 6
 Name: Joseph Audras
 Professor: Dr. Reinhart
 Class: CSC 405-1
-Date due: 3-5-20
+Date due: 3-19-20
 */
 
 package Homework.HW6;
@@ -613,57 +613,25 @@ public class GraphicsJavaFX extends Application
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[8]) {
                         //input textbox here
-                        String s1 = button0.getText(); //fixed point, optional
+                        String s1 = button0.getText(); //fixed point, required
                         String[] but0 = s1.split(",\\s*");
 
-                        String but1 = button1.getText(); //angle, required
+                        String but1 = button1.getText(); //angle of rotation, required
 
-                        String s2 = button0.getText(); //fixed point, optional
+                        String s2 = button0.getText(); //vector axis of rotation, required
                         String[] but2 = s2.split(",\\s*");
-                        
-                        double angle;
-                        if (but0[0].equals("")) {
-                            //process angle only, without a fixed point
-                            try {
-                                if (but1 != null) {
-                                    graphicsCanvas.renderSurface.clearSurface();
-                                    angle = Double.parseDouble(but1);
-                                    sc.rotateZ(angle);
-                                    sc.render(graphicsCanvas.renderSurface.getSurface());
-                                    graphicsCanvas.renderSurface.insertArray();
-                                    graphicsCanvas.repaint();
-                                    System.out.println("Rotate along the z axis by " + angle + " degrees.");
-                                    pane.requestFocus();
-                                }
-                            } catch (Exception e) {
-                                System.out.println("Requires one double of angle in degrees in the second textbox.");
-                            }
-                        } else if (but0.length == 3) {
-                            //fixed point information is null
-                            //process angle only, with a fixed point
-                            double x = Double.parseDouble(but0[0]);
-                            double y = Double.parseDouble(but0[1]);
-                            double z = Double.parseDouble(but0[2]);
-                            try {
-                                if (but1 != null) {
-                                    graphicsCanvas.renderSurface.clearSurface();
-                                    angle = Double.parseDouble(but1);
-                                    sc.rotateZ(angle, x, y, z); //z will be passed for cube
-                                    sc.render(graphicsCanvas.renderSurface.getSurface());
-                                    graphicsCanvas.renderSurface.insertArray();
-                                    graphicsCanvas.repaint();
-                                    System.out.println("Rotate along the z axis by " + angle + " degrees via fixed point " + x + ", " + y + ", " + z);
-                                    pane.requestFocus();
-                                }
-                            } catch (Exception e) {
-                                System.out.println("Requires one double of angle in degrees in the second textbox. Fixed point is already defined.");
-                            }
-                        } else if (but0.length == 2 || but0.length == 1) {
-                            //there are some values that have been inputted but others that have not
-                            System.out.println("For a fixed point, x, y, and z need to be inputted in the first textbox.");
-                        } else {
-                            System.out.println("Too many inputs in the textbox.");
-                        }
+
+                        //check
+
+                        graphicsCanvas.renderSurface.clearSurface();
+                        //parse
+                        //arbitrary
+                        sc.render(graphicsCanvas.renderSurface.getSurface());
+                        graphicsCanvas.renderSurface.insertArray();
+                        graphicsCanvas.repaint();
+                        //sout
+                        pane.requestFocus();
+
                     }
                 }
             });

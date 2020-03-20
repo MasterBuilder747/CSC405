@@ -1,9 +1,9 @@
 /*
-Homework 5
+Homework 6
 Name: Joseph Audras
 Professor: Dr. Reinhart
 Class: CSC 405-1
-Date due: 3-5-20
+Date due: 3-19-20
 */
 
 package Homework.HW6;
@@ -557,4 +557,15 @@ public class SceneGraph {
         //printCenter();
         //printSN();
     }
+
+
+    //arbitrary rotation:
+    //  0 = theta
+    //  fp = fixed point
+    //  0x, 0y, [there is no 0z, as there is already rotation on the 0z] = <arbitrary axis of rotation vector>
+    //  	T(fp) * Rx(-0x) * Ry(-0y) * Rz(0) * Ry(0y) * Rx(0x) * T(-fp)
+    public void arbitrary() {
+
+    }
+
 }
