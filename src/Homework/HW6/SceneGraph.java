@@ -561,11 +561,73 @@ public class SceneGraph {
 
     //arbitrary rotation:
     //  0 = theta
-    //  fp = fixed point
+    //  fp = fixed point vector
     //  0x, 0y, [there is no 0z, as there is already rotation on the 0z] = <arbitrary axis of rotation vector>
-    //  	T(fp) * Rx(-0x) * Ry(-0y) * Rz(0) * Ry(0y) * Rx(0x) * T(-fp)
-    public void arbitrary() {
+    //  	[scene?] * T(fp) * Rx(-0x) * Ry(-0y) * Rz(0) * Ry(0y) * Rx(0x) * T(-fp)
+    public void arbitrary(double[] fp, double angle, double[] ar) {
+
+        //store the multiplication matrix in temp var
+        double[][] points = new double[4][8];
+        for(int i = 0; i < 4; i++) {
+            for(int j = 0; j < 8; j++) {
+                scene[i][j] = points[i][j];
+            }
+        }
+
+        double[][] trans = {
+                {1, 0, 0, fp[0]},
+                {0, 1, 0, fp[1]},
+                {0, 0, 1, fp[2]},
+                {0, 0, 0, 1}
+        };
+
+        double[][] transNeg = {
+                {1, 0, 0, -fp[0]},
+                {0, 1, 0, -fp[1]},
+                {0, 0, 1, -fp[2]},
+                {0, 0, 0, 1}
+        };
+
+        double[][] rotateX = {
+                {1, 0, 0, 0},
+                {0, Math.cos(Math.toRadians(ar[0])), -Math.sin(Math.toRadians(ar[0])), 0},
+                {0, Math.sin(Math.toRadians(ar[0])), Math.cos(Math.toRadians(ar[0])), 0},
+                {0, 0, 0, 1}
+        };
+
+        double[][] rotateY = {
+                {Math.cos(Math.toRadians(ar[1])), 0, Math.sin(Math.toRadians(ar[1])), 0},
+                {0, 1, 0, 0},
+                {-Math.sin(Math.toRadians(ar[1])), 0, Math.cos(Math.toRadians(ar[1])), 0},
+                {0, 0, 0, 1}
+        };
+
+        double[][] rotateXNeg = {
+                {1, 0, 0, 0},
+                {0, Math.cos(Math.toRadians(-ar[0])), -Math.sin(Math.toRadians(-ar[0])), 0},
+                {0, Math.sin(Math.toRadians(-ar[0])), Math.cos(Math.toRadians(-ar[0])), 0},
+                {0, 0, 0, 1}
+        };
+
+        double[][] rotateYNeg = {
+                {Math.cos(Math.toRadians(-ar[1])), 0, Math.sin(Math.toRadians(-ar[1])), 0},
+                {0, 1, 0, 0},
+                {-Math.sin(Math.toRadians(-ar[1])), 0, Math.cos(Math.toRadians(-ar[1])), 0},
+                {0, 0, 0, 1}
+        };
+
+        double[][] rotateZ = {
+                {Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)), 0, 0},
+                {Math.sin(Math.toRadians(angle)), Math.cos(Math.toRadians(angle)), 0, 0},
+                {0, 0, 1, 0},
+                {0, 0, 0, 1}
+        };
+
+        //[scene?] * T(fp) * Rx(-0x) * Ry(-0y) * Rz(0) * Ry(0y) * Rx(0x) * T(-fp)
+        matMult(matMult(matMult(matMult(matMult(matMult(matMult(trans, rotateXNeg), rotateYNeg), rotateZ), rotateY), rotateX), transNeg), scene);
 
     }
 
 }
+
+

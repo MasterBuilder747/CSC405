@@ -611,7 +611,7 @@ public class GraphicsJavaFX extends Application
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if (actionEvent.getSource() == buttons[8]) {
+                    if (actionEvent.getSource() == buttons[9]) {
                         //input textbox here
                         String s1 = button0.getText(); //fixed point, required
                         String[] but0 = s1.split(",\\s*");
@@ -625,7 +625,9 @@ public class GraphicsJavaFX extends Application
 
                         graphicsCanvas.renderSurface.clearSurface();
                         //parse
-                        //arbitrary
+                        double[] fp = {0, 0, 0};
+                        double[] ar = {0, 0, 1};
+                        sc.arbitrary(fp, 45, ar);
                         sc.render(graphicsCanvas.renderSurface.getSurface());
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
