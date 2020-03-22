@@ -570,7 +570,7 @@ public class SceneGraph {
         double[][] points = new double[4][8];
         for(int i = 0; i < 4; i++) {
             for(int j = 0; j < 8; j++) {
-                scene[i][j] = points[i][j];
+                points[i][j] = scene[i][j];
             }
         }
 
@@ -624,11 +624,29 @@ public class SceneGraph {
         };
 
         //T(fp) * Rx(-0x) * Ry(-0y) * Rz(0) * Ry(0y) * Rx(0x) * T(-fp) * [scene?]
-        double[][] result = matMult(matMult(matMult(matMult(matMult(matMult(matMult(trans, rotateXNeg), rotateYNeg), rotateZ), rotateY), rotateX), transNeg), scene);
+        //double[][] result = matMult(matMult(matMult(matMult(matMult(matMult(matMult(trans, rotateXNeg), rotateYNeg), rotateZ), rotateY), rotateX), transNeg), scene);
+        double[][] result = matMulti(new double[][][] {transNeg, rotateX, rotateY, rotateZ, rotateYNeg, rotateXNeg, trans, points});
 
+        for(int i = 0; i < 4; i++) {
+            for(int j = 0; j < 8; j++) {
+                scene[i][j] = result[i][j];
+            }
+        }
         printSN();
-        printMat(result);
+        printMat(scene);
 
+    }
+
+    //perform a series of matrix multiplications through a 3D array
+    //this is done in an array of matrices
+    //all of the matrices in the array must be the same size in rows and columns
+    //note that this goes from left to right
+    public static double[][] matMulti(double[][][] a) {
+        double[][] result = matMult(a[0], a[1]);
+        for (int i = 1; i < a.length - 1; i++) {
+            result = matMult(result, a[i+1]);
+        }
+        return result;
     }
 
 }

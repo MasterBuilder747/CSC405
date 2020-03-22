@@ -625,7 +625,7 @@ public class GraphicsJavaFX extends Application
 
                         graphicsCanvas.renderSurface.clearSurface();
                         //parse
-                        double[] fp = {0, 0, 0};
+                        double[] fp = {100, 100, 100};
                         double[] ar = {0, 0, 1};
                         sc.arbitrary(fp, 45, ar);
                         sc.render(graphicsCanvas.renderSurface.getSurface());
