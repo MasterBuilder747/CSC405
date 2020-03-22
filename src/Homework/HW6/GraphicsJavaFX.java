@@ -621,19 +621,28 @@ public class GraphicsJavaFX extends Application
                         String s2 = button0.getText(); //vector axis of rotation, required
                         String[] but2 = s2.split(",\\s*");
 
-                        //check
+                        if (but0.length == 3 && !but1.equals("") && but2.length == 3) {
 
-                        graphicsCanvas.renderSurface.clearSurface();
-                        //parse
-                        double[] fp = {100, 100, 100};
-                        double[] ar = {0, 0, 1};
-                        sc.arbitrary(fp, 45, ar);
-                        sc.render(graphicsCanvas.renderSurface.getSurface());
-                        graphicsCanvas.renderSurface.insertArray();
-                        graphicsCanvas.repaint();
-                        //sout
-                        pane.requestFocus();
-
+                            graphicsCanvas.renderSurface.clearSurface();
+                            //fixed point
+                            double fx = Double.parseDouble(but0[0]);
+                            double fy = Double.parseDouble(but0[1]);
+                            double fz = Double.parseDouble(but0[2]);
+                            //angle in degrees
+                            double angle = Double.parseDouble(but1);
+                            //axis of rotation vector
+                            double ax = Double.parseDouble(but2[0]);
+                            double ay = Double.parseDouble(but2[1]);
+                            double az = Double.parseDouble(but2[2]);
+                            sc.arbitrary(new double[] {fx, fy, fz}, angle, new double[] {ax, ay, az});
+                            sc.render(graphicsCanvas.renderSurface.getSurface());
+                            graphicsCanvas.renderSurface.insertArray();
+                            graphicsCanvas.repaint();
+                            System.out.println("Rotated along arbitrary axis of " + ax + ", " + ay + ", " + az + " by " + angle + " degrees around fixed point " + fx + ", " + fy + ", " + fz + ".");
+                            pane.requestFocus();
+                        } else {
+                            System.out.println("Invalid input for arbitrary. Requires a fixed point of x, y, z ; one angle in degrees; and a vector for the arbitrary axis of rotation in x, y, z.");
+                        }
                     }
                 }
             });

@@ -632,8 +632,8 @@ public class SceneGraph {
                 scene[i][j] = result[i][j];
             }
         }
-        printSN();
-        printMat(scene);
+        //printSN();
+        //printMat(scene);
 
     }
 
