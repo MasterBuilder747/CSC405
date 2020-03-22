@@ -580,7 +580,6 @@ public class SceneGraph {
                 {0, 0, 1, fp[2]},
                 {0, 0, 0, 1}
         };
-
         double[][] transNeg = {
                 {1, 0, 0, -fp[0]},
                 {0, 1, 0, -fp[1]},
@@ -594,14 +593,6 @@ public class SceneGraph {
                 {0, Math.sin(Math.toRadians(ar[0])), Math.cos(Math.toRadians(ar[0])), 0},
                 {0, 0, 0, 1}
         };
-
-        double[][] rotateY = {
-                {Math.cos(Math.toRadians(ar[1])), 0, Math.sin(Math.toRadians(ar[1])), 0},
-                {0, 1, 0, 0},
-                {-Math.sin(Math.toRadians(ar[1])), 0, Math.cos(Math.toRadians(ar[1])), 0},
-                {0, 0, 0, 1}
-        };
-
         double[][] rotateXNeg = {
                 {1, 0, 0, 0},
                 {0, Math.cos(Math.toRadians(-ar[0])), -Math.sin(Math.toRadians(-ar[0])), 0},
@@ -609,6 +600,12 @@ public class SceneGraph {
                 {0, 0, 0, 1}
         };
 
+        double[][] rotateY = {
+                {Math.cos(Math.toRadians(ar[1])), 0, Math.sin(Math.toRadians(ar[1])), 0},
+                {0, 1, 0, 0},
+                {-Math.sin(Math.toRadians(ar[1])), 0, Math.cos(Math.toRadians(ar[1])), 0},
+                {0, 0, 0, 1}
+        };
         double[][] rotateYNeg = {
                 {Math.cos(Math.toRadians(-ar[1])), 0, Math.sin(Math.toRadians(-ar[1])), 0},
                 {0, 1, 0, 0},
@@ -633,7 +630,7 @@ public class SceneGraph {
             }
         }
         //printSN();
-        //printMat(scene);
+        printMat(scene);
 
     }
 
@@ -648,7 +645,6 @@ public class SceneGraph {
         }
         return result;
     }
-
 }
 
 

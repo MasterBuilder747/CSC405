@@ -438,6 +438,7 @@ public class GraphicsJavaFX extends Application
 
                         String but1 = button1.getText(); //angle, required
                         double angle;
+
                         if (but0[0].equals("")) {
                             //process angle only, without a fixed point
                             try {
@@ -460,6 +461,7 @@ public class GraphicsJavaFX extends Application
                             double x = Double.parseDouble(but0[0]);
                             double y = Double.parseDouble(but0[1]);
                             double z = Double.parseDouble(but0[2]);
+
                             try {
                                 if (but1 != null) {
                                     graphicsCanvas.renderSurface.clearSurface();
@@ -498,6 +500,7 @@ public class GraphicsJavaFX extends Application
 
                         String but1 = button1.getText(); //angle, required
                         double angle;
+
                         if (but0[0].equals("")) {
                             //process angle only, without a fixed point
                             try {
@@ -618,12 +621,10 @@ public class GraphicsJavaFX extends Application
 
                         String but1 = button1.getText(); //angle of rotation, required
 
-                        String s2 = button0.getText(); //vector axis of rotation, required
+                        String s2 = button2.getText(); //vector axis of rotation, required
                         String[] but2 = s2.split(",\\s*");
 
                         if (but0.length == 3 && !but1.equals("") && but2.length == 3) {
-
-                            graphicsCanvas.renderSurface.clearSurface();
                             //fixed point
                             double fx = Double.parseDouble(but0[0]);
                             double fy = Double.parseDouble(but0[1]);
@@ -634,14 +635,18 @@ public class GraphicsJavaFX extends Application
                             double ax = Double.parseDouble(but2[0]);
                             double ay = Double.parseDouble(but2[1]);
                             double az = Double.parseDouble(but2[2]);
+                            graphicsCanvas.renderSurface.clearSurface();
                             sc.arbitrary(new double[] {fx, fy, fz}, angle, new double[] {ax, ay, az});
                             sc.render(graphicsCanvas.renderSurface.getSurface());
                             graphicsCanvas.renderSurface.insertArray();
                             graphicsCanvas.repaint();
-                            System.out.println("Rotated along arbitrary axis of " + ax + ", " + ay + ", " + az + " by " + angle + " degrees around fixed point " + fx + ", " + fy + ", " + fz + ".");
+                            System.out.println("Rotated along arbitrary axis of <" + ax + ", " + ay + ", " + az + "> by " + angle + " degrees around fixed point " + fx + ", " + fy + ", " + fz + ".");
                             pane.requestFocus();
                         } else {
-                            System.out.println("Invalid input for arbitrary. Requires a fixed point of x, y, z ; one angle in degrees; and a vector for the arbitrary axis of rotation in x, y, z.");
+                            System.out.println("Invalid input for arbitrary.");
+                            System.out.println("Requires a fixed point of x, y, z in the top textbox;");
+                            System.out.println("one angle in degrees in the middle textbox;");
+                            System.out.println("and a vector for the arbitrary axis of rotation in <x, y, z> in the bottom textbox.");
                         }
                     }
                 }
