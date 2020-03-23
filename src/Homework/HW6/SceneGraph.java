@@ -10,8 +10,6 @@ package Homework.HW6;
 
 import java.util.Arrays;
 
-import static Homework.HW4.MatrixMultiplication.matMult;
-
 public class SceneGraph {
 
     //render the lines at those coordinates
@@ -285,7 +283,7 @@ public class SceneGraph {
         return matMult(trans, point);
     }
     // X, Y, Z are just how much it is moving
-    public void translation(double x, double y, double z) {
+    public static void translation(double x, double y, double z) {
         //place the new points into the scene
         //this goes through each point
         //the scene is an array of 4x1 points
@@ -448,7 +446,7 @@ public class SceneGraph {
     }
     //fixed point:
     //x, y, z is the defined fixed point, needs 2 parameters (3 for cube)
-    public void rotateX(double angle, double x, double y, double z) {
+    public static void rotateX(double angle, double x, double y, double z) {
         //move the the defined fixed point
         //translate by -fixed point
         translation(-x, -y, -z);
@@ -632,6 +630,130 @@ public class SceneGraph {
         //printSN();
         printMat(scene);
 
+    }
+
+    static double[][] M = new double[4][4]; // -- the transformation matrix
+
+    // -- p is the fixed point x, y, z
+    //    angle is rotation angle in degrees
+    //    axis is the axis of rotation x, y, z
+    //    builds the transformation matrix M
+    public static void buildMatrix (double[] p, double angle, double[] axis) throws IllegalArgumentException
+    {
+        // -- make sure the angle is in radians
+        double theta = Math.toRadians(angle);
+        // -- convert the axis to a unit vector
+        double mag = Math.sqrt(Math.pow(axis[0],  2) + Math.pow(axis[1],  2) + Math.pow(axis[2],  2));
+        double[] alpha = {axis[0] / mag, axis[1] / mag, axis[2] / mag};
+
+        if (mag < 0.000000001) {
+            throw new IllegalArgumentException("invalid axis of rotation");
+        }
+
+        double d = Math.sqrt(Math.pow(alpha[1],  2) + Math.pow(alpha[2],  2));
+        if (Math.abs(d) < 0.00000001) {
+            // -- just rotate about the x axis
+            // ADD CALL TO rotateX(P, angle) HERE
+            rotateX(angle, p[0], p[1], p[2]);
+
+            return;
+        }
+
+
+        // -- now for the matrices
+
+        // -- translate fixed point to origin
+        double[][] T = {
+                {1, 0, 0, -p[0]},
+                {0, 1, 0, -p[1]},
+                {0, 0, 1, -p[2]},
+                {0, 0, 0, 1}
+        };
+        // -- translate fixed point to original location
+        double[][] Ti = {
+                {1, 0, 0, p[0]},
+                {0, 1, 0, p[1]},
+                {0, 0, 1, p[2]},
+                {0, 0, 0, 1}
+        };
+        // -- rotate about the z axis by theta
+        double[][] Rz = {
+                {Math.cos(theta), -Math.sin(theta), 0, 0},
+                {Math.sin(theta), Math.cos(theta), 0, 0},
+                {0, 0, 1, 0},
+                {0, 0, 0, 1}
+        };
+        // -- rotate about y axis by theta-y (to be computed)
+        double[][] Ry = {
+                {d, 0, -alpha[0], 0},
+                {0, 1, 0, 0},
+                {alpha[0], 0, d, 0},
+                {0, 0, 0, 1}
+        };
+        // -- rotate about y axis by -theta-y (to be computed)
+        double[][] Riy = {
+                {d, 0, alpha[0], 0},
+                {0, 1, 0, 0},
+                {-alpha[0], 0, d, 0},
+                {0, 0, 0, 1}
+        };
+        // -- rotate about x axis by theta-x (to be computed)
+        double[][] Rx = {
+                {1, 0, 0, 0},
+                {0, alpha[2] / d, -alpha[1] / d, 0},
+                {0, alpha[1] / d, alpha[2] / d, 0},
+                {0, 0, 0, 1}
+        };
+        // -- rotate about x axis by -theta-x (to be computed)
+        double[][] Rix = {
+                {1, 0, 0, 0},
+                {0, alpha[2] / d, alpha[1] / d, 0},
+                {0, -alpha[1] / d, alpha[2] / d, 0},
+                {0, 0, 0, 1}
+        };
+
+        // -- build the final matrix
+        M = matMult(Rx, T);
+        M = matMult(Ry, M);
+        M = matMult(Rz, M);
+        M = matMult(Riy, M);
+        M = matMult(Rix, M);
+        M = matMult(Ti, M);
+    }
+
+    //    scene is the object (scene) to be rotated, rows are x, y, z, w, columns are the vertices
+    public double[][] applyMatrix(double[][] scene)
+    {
+        return matMult(M, scene);
+    }
+
+    public void arbitraryReal(double[] fp, double angle, double[] ar) {
+        buildMatrix(fp, angle, ar);
+        scene = applyMatrix(scene);
+        //printMat(scene);
+    }
+
+    public static double[][] matMult (double[][] a, double[][] b) throws IllegalArgumentException {
+        //a[0] indicates to test the length of just the columns of array a
+        int l1 = a[0].length; //results in a null
+        int l2 = b.length;
+        if (l1 != l2) {
+            throw new IllegalArgumentException("incompatible arrays");
+        }
+
+        //vice versa
+        double c[][] = new double[a.length][b[0].length];
+
+        for (int i = 0; i < a.length; i++) { //for every row in a
+            for(int j = 0; j < b[0].length; j++) { //for every column in b
+                double dotprod = 0;
+                for(int k = 0; k < a[0].length; k++) { //dot product
+                    dotprod += a[i][k] * b[k][j];
+                }
+                c[i][j] = dotprod;
+            }
+        }
+        return c;
     }
 
     //perform a series of matrix multiplications through a 3D array

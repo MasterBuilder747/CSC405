@@ -635,13 +635,17 @@ public class GraphicsJavaFX extends Application
                             double ax = Double.parseDouble(but2[0]);
                             double ay = Double.parseDouble(but2[1]);
                             double az = Double.parseDouble(but2[2]);
-                            graphicsCanvas.renderSurface.clearSurface();
-                            sc.arbitrary(new double[] {fx, fy, fz}, angle, new double[] {ax, ay, az});
-                            sc.render(graphicsCanvas.renderSurface.getSurface());
-                            graphicsCanvas.renderSurface.insertArray();
-                            graphicsCanvas.repaint();
-                            System.out.println("Rotated along arbitrary axis of <" + ax + ", " + ay + ", " + az + "> by " + angle + " degrees around fixed point " + fx + ", " + fy + ", " + fz + ".");
-                            pane.requestFocus();
+                            if (ax < 0.000000001 && ay < 0.000000001 && az < 0.000000001) {
+                                System.out.println("Axis of rotation cannot be 0, 0, 0.");
+                            } else {
+                                graphicsCanvas.renderSurface.clearSurface();
+                                sc.arbitraryReal(new double[]{fx, fy, fz}, angle, new double[]{ax, ay, az});
+                                sc.render(graphicsCanvas.renderSurface.getSurface());
+                                graphicsCanvas.renderSurface.insertArray();
+                                graphicsCanvas.repaint();
+                                System.out.println("Rotated along arbitrary axis of <" + ax + ", " + ay + ", " + az + "> by " + angle + " degrees around fixed point " + fx + ", " + fy + ", " + fz + ".");
+                                pane.requestFocus();
+                            }
                         } else {
                             System.out.println("Invalid input for arbitrary.");
                             System.out.println("Requires a fixed point of x, y, z in the top textbox;");

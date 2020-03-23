@@ -10,7 +10,7 @@ package Homework.HW4;
 
 public class MatrixMultiplication {
 
-    public static double[][] matMult (double a[][], double b[][]) throws IllegalArgumentException {
+    public static double[][] matMult (double[][] a, double[][] b) throws IllegalArgumentException {
         //a[0] indicates to test the length of just the columns of array a
         if (a[0].length != b.length) {
             throw new IllegalArgumentException("incompatible arrays");

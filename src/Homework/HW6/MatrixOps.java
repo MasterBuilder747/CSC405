@@ -1,7 +1,7 @@
 package Homework.HW6;
 
 public class MatrixOps {
-    static double M[][]; // -- the transformation matrix
+
     public static double[][] matmult(double A[][], double B[][]) throws IllegalArgumentException
     {
         if (A[0].length != B.length) {
@@ -21,11 +21,13 @@ public class MatrixOps {
         return C;
     }
 
+    static double[][] M; // -- the transformation matrix
+
     // -- p is the fixed point x, y, z
     //    angle is rotation angle in degrees
     //    axis is the axis of rotation x, y, z
     //    builds the transformation matrix M
-    public static void buildMatrix (double p[], double angle, double axis[]) throws IllegalArgumentException
+    public static void buildMatrix (double[][] scene, double p[], double angle, double axis[]) throws IllegalArgumentException
     {
         // -- make sure the angle is in radians
         double theta = Math.toRadians(angle);
@@ -42,11 +44,7 @@ public class MatrixOps {
             // -- just rotate about the x axis
 
             // ADD CALL TO rotateX(P, angle) HERE
-            // ADD CALL TO rotateX(P, angle) HERE
-            // ADD CALL TO rotateX(P, angle) HERE
-            // ADD CALL TO rotateX(P, angle) HERE
-            // ADD CALL TO rotateX(P, angle) HERE
-            // ADD CALL TO rotateX(P, angle) HERE
+            rotateX(scene, angle, p[0], p[1], p[2]);
 
             return;
         }
@@ -110,6 +108,95 @@ public class MatrixOps {
         M = matmult(Ti, M);
     }
 
+    public static void rotateX(double[][] scene, double angle, double x, double y, double z) {
+        //move the the defined fixed point
+        //translate by -fixed point
+        translation(scene, -x, -y, -z);
+        //rotate it at the origin
+        for (int i = 0; i < scene[0].length; i++) {
+            double[][] a = rotateXPt(scene[0][i], scene[1][i], scene[2][i], angle);
+            scene[0][i] = a[0][0];
+            scene[1][i] = a[1][0];
+            scene[2][i] = a[2][0];
+        }
+        translation(scene, x, y, z);
+        //printCenter();
+        //printSN();
+    }
+
+    public static void translation(double[][] scene, double x, double y, double z) {
+        //place the new points into the scene
+        //this goes through each point
+        //the scene is an array of 4x1 points
+        for (int i = 0; i < scene[0].length; i++) {
+            //this is a 4x1 array representing one point
+            double[][] a = transPt(scene[0][i], scene[1][i], scene[2][i], x, y, z);
+            //printMat(a);
+            scene[0][i] = a[0][0];
+            scene[1][i] = a[1][0];
+            scene[2][i] = a[2][0];
+        }
+        //updateC();
+        //printCenter();
+        //printSN();
+    }
+    public static double[][] transPt(double X, double Y, double Z, double x, double y, double z) {
+        double[][] trans = {
+                {1, 0, 0, x},
+                {0, 1, 0, y},
+                {0, 0, 1, z},
+                {0, 0, 0, 1}
+        };
+        double[][] point = {
+                {X},
+                {Y},
+                {Z},
+                {1}
+        };
+        //this returns a 4x1 array
+        //so the other 3 points needs to be added for the square to be rendered
+        return matMult(trans, point);
+    }
+
+    public static double[][] rotateXPt(double X, double Y, double Z, double angle) {
+        double[][] rotateXi = {
+                {1, 0, 0, 0},
+                {0, Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)), 0},
+                {0, Math.sin(Math.toRadians(angle)), Math.cos(Math.toRadians(angle)), 0},
+                {0, 0, 0, 1}
+        };
+        double[][] point = {
+                {X},
+                {Y},
+                {Z},
+                {1}
+        };
+        return matMult(rotateXi, point);
+    }
+
+    public static double[][] matMult (double[][] a, double[][] b) throws IllegalArgumentException {
+        //a[0] indicates to test the length of just the columns of array a
+        int l1 = a[0].length; //results in a null
+        int l2 = b.length;
+        if (l1 != l2) {
+            throw new IllegalArgumentException("incompatible arrays");
+        }
+
+        //vice versa
+        double c[][] = new double[a.length][b[0].length];
+
+        for (int i = 0; i < a.length; i++) { //for every row in a
+            for(int j = 0; j < b[0].length; j++) { //for every column in b
+                double dotprod = 0;
+                for(int k = 0; k < a[0].length; k++) { //dot product
+                    dotprod += a[i][k] * b[k][j];
+                }
+                c[i][j] = dotprod;
+            }
+        }
+        return c;
+    }
+
     //    scene is the object (scene) to be rotated, rows are x, y, z, w, columns are the vertices
     public static double[][] applyMatrix(double scene[][])
     {
@@ -157,7 +244,8 @@ public class MatrixOps {
 //					{0, 0, 1, 0},
 //					{0, 0, 0, 1}};
 //			printmatrix(matmult(Z, scene));
-            double scene[][] = {{0, 0},
+            double scene[][] = {
+                    {0, 0},
                     {0, 1},
                     {0, 0},
                     {1, 1}
@@ -165,12 +253,11 @@ public class MatrixOps {
             printmatrix(scene);
             double fixedpoint[] = {0, 0, 0};
             double angle = 45;
-            double axis[] = {0, 0, 1};
-            buildMatrix(fixedpoint, angle, axis);
+            double axis[] = {1, 0, 0};
+            buildMatrix(scene, fixedpoint, angle, axis);
             scene = applyMatrix(scene);
             scene = applyMatrix(scene);
             printmatrix(scene);
-
         }
         catch (IllegalArgumentException e) {
             System.out.println(e);
