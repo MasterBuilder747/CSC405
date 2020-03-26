@@ -1,5 +1,7 @@
 package Homework.HW6;
 
+import java.util.Arrays;
+
 public class MatrixOps {
 
     public static double[][] matmult(double A[][], double B[][]) throws IllegalArgumentException
@@ -33,82 +35,88 @@ public class MatrixOps {
         double theta = Math.toRadians(angle);
         // -- convert the axis to a unit vector
         double mag = Math.sqrt(Math.pow(axis[0],  2) + Math.pow(axis[1],  2) + Math.pow(axis[2],  2));
+        //System.out.println(mag);
         double alpha[] = {axis[0] / mag, axis[1] / mag, axis[2] / mag};
+        //System.out.println(Arrays.toString(alpha));
 
         if (mag < 0.000000001) {
             throw new IllegalArgumentException("invalid axis of rotation");
         }
 
         double d = Math.sqrt(Math.pow(alpha[1],  2) + Math.pow(alpha[2],  2));
+        //System.out.println(d);
         if (Math.abs(d) < 0.00000001) {
             // -- just rotate about the x axis
 
             // ADD CALL TO rotateX(P, angle) HERE
-            rotateX(scene, angle, p[0], p[1], p[2]);
-
+            M = rotateX(scene, p[0], p[1], p[2], angle);
+            //m = xrotate((int)p[0],(int)p[1],(int)p[2],angle,scene);
             return;
         }
 
+            // -- now for the matrices
 
-        // -- now for the matrices
+            // -- translate fixed point to origin
+            double[][] T = {
+                    {1, 0, 0, -p[0]},
+                    {0, 1, 0, -p[1]},
+                    {0, 0, 1, -p[2]},
+                    {0, 0, 0, 1}
+            };
+            // -- translate fixed point to original location
+            double[][] Ti = {
+                    {1, 0, 0, p[0]},
+                    {0, 1, 0, p[1]},
+                    {0, 0, 1, p[2]},
+                    {0, 0, 0, 1}
+            };
+            // -- rotate about the z axis by theta
+            double[][] Rz = {
+                    {Math.cos(theta), -Math.sin(theta), 0, 0},
+                    {Math.sin(theta), Math.cos(theta), 0, 0},
+                    {0, 0, 1, 0},
+                    {0, 0, 0, 1}
+            };
+            // -- rotate about y axis by theta-y (to be computed)
+            double[][] Ry = {
+                    {d, 0, -alpha[0], 0},
+                    {0, 1, 0, 0},
+                    {alpha[0], 0, d, 0},
+                    {0, 0, 0, 1}
+            };
+            // -- rotate about y axis by -theta-y (to be computed)
+            double[][] Riy = {
+                    {d, 0, alpha[0], 0},
+                    {0, 1, 0, 0},
+                    {-alpha[0], 0, d, 0},
+                    {0, 0, 0, 1}
+            };
+            // -- rotate about x axis by theta-x (to be computed)
+            double[][] Rx = {
+                    {1, 0, 0, 0},
+                    {0, alpha[2] / d, -alpha[1] / d, 0},
+                    {0, alpha[1] / d, alpha[2] / d, 0},
+                    {0, 0, 0, 1}
+            };
+            // -- rotate about x axis by -theta-x (to be computed)
+            double[][] Rix = {
+                    {1, 0, 0, 0},
+                    {0, alpha[2] / d, alpha[1] / d, 0},
+                    {0, -alpha[1] / d, alpha[2] / d, 0},
+                    {0, 0, 0, 1}
+            };
 
-        // -- translate fixed point to origin
-        double[][] T = {{1, 0, 0, -p[0]},
-                {0, 1, 0, -p[1]},
-                {0, 0, 1, -p[2]},
-                {0, 0, 0, 1}
-        };
-        // -- translate fixed point to original location
-        double[][] Ti = {{1, 0, 0, p[0]},
-                {0, 1, 0, p[1]},
-                {0, 0, 1, p[2]},
-                {0, 0, 0, 1}
-        };
-        // -- rotate about the z axis by theta
-        double[][] Rz = {{Math.cos(theta), -Math.sin(theta), 0, 0},
-                {Math.sin(theta), Math.cos(theta), 0, 0},
-                {0, 0, 1, 0},
-                {0, 0, 0, 1}
-        };
-        // -- rotate about y axis by theta-y (to be computed)
-        double[][] Ry = {
-                {d, 0, -alpha[0], 0},
-                {0, 1, 0, 0},
-                {alpha[0], 0, d, 0},
-                {0, 0, 0, 1}
-        };
-        // -- rotate about y axis by -theta-y (to be computed)
-        double[][] Riy = {
-                {d, 0, alpha[0], 0},
-                {0, 1, 0, 0},
-                {-alpha[0], 0, d, 0},
-                {0, 0, 0, 1}
-        };
-        // -- rotate about x axis by theta-x (to be computed)
-        double[][] Rx = {
-                {1, 0, 0, 0},
-                {0, alpha[2] / d, -alpha[1] / d, 0},
-                {0, alpha[1] / d, alpha[2] / d, 0},
-                {0, 0, 0, 1}
-        };
-        // -- rotate about x axis by -theta-x (to be computed)
-        double[][] Rix = {
-                {1, 0, 0, 0},
-                {0, alpha[2] / d, alpha[1] / d, 0},
-                {0, -alpha[1] / d, alpha[2] / d, 0},
-                {0, 0, 0, 1}
-        };
+            // -- build the final matrix
+            M = matmult(Rx, T);
+            M = matmult(Ry, M);
+            M = matmult(Rz, M);
+            M = matmult(Riy, M);
+            M = matmult(Rix, M);
+            M = matmult(Ti, M);
 
-        // -- build the final matrix
-        M = matmult(Rx, T);
-        M = matmult(Ry, M);
-        M = matmult(Rz, M);
-        M = matmult(Riy, M);
-        M = matmult(Rix, M);
-        M = matmult(Ti, M);
     }
 
-    public static void rotateX(double[][] scene, double angle, double x, double y, double z) {
+    public static double[][] rotateX(double[][] scene, double angle, double x, double y, double z) {
         //move the the defined fixed point
         //translate by -fixed point
         translation(scene, -x, -y, -z);
@@ -122,6 +130,7 @@ public class MatrixOps {
         translation(scene, x, y, z);
         //printCenter();
         //printSN();
+        return scene;
     }
 
     public static void translation(double[][] scene, double x, double y, double z) {
@@ -172,6 +181,37 @@ public class MatrixOps {
                 {1}
         };
         return matMult(rotateXi, point);
+    }
+
+    public static double[][] rotateZPt(double X, double Y, double Z, double angle) {
+        double[][] rotateZ = {
+                {Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)), 0, 0},
+                {Math.sin(Math.toRadians(angle)), Math.cos(Math.toRadians(angle)), 0, 0},
+                {0, 0, 1, 0},
+                {0, 0, 0, 1}
+        };
+        double[][] point = {
+                {X},
+                {Y},
+                {Z},
+                {1}
+        };
+        return matMult(rotateZ, point);
+    }
+    public static void rotateZ(double[][] scene, double angle, double x, double y, double z) {
+        //move the the defined fixed point
+        //translate by -fixed point
+        translation(scene, -x, -y, -z);
+        //rotate it at the origin
+        for (int i = 0; i < scene[0].length; i++) {
+            double[][] a = rotateZPt(scene[0][i], scene[1][i], scene[2][i], angle);
+            scene[0][i] = a[0][0];
+            scene[1][i] = a[1][0];
+            scene[2][i] = a[2][0];
+        }
+        translation(scene, x, y, z);
+        //printCenter();
+        //printSN();
     }
 
     public static double[][] matMult (double[][] a, double[][] b) throws IllegalArgumentException {
@@ -255,6 +295,7 @@ public class MatrixOps {
             double angle = 45;
             double axis[] = {1, 0, 0};
             buildMatrix(scene, fixedpoint, angle, axis);
+            printmatrix(M);
             scene = applyMatrix(scene);
             scene = applyMatrix(scene);
             printmatrix(scene);
