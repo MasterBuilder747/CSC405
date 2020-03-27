@@ -29,7 +29,7 @@ public class MatrixOps {
     //    angle is rotation angle in degrees
     //    axis is the axis of rotation x, y, z
     //    builds the transformation matrix M
-    public static void buildMatrix (double[][] scene, double p[], double angle, double axis[]) throws IllegalArgumentException
+    public static double[][] buildMatrix (double[][] scene, double p[], double angle, double axis[]) throws IllegalArgumentException
     {
         // -- make sure the angle is in radians
         double theta = Math.toRadians(angle);
@@ -51,7 +51,7 @@ public class MatrixOps {
             // ADD CALL TO rotateX(P, angle) HERE
             M = rotateX(scene, p[0], p[1], p[2], angle);
             //m = xrotate((int)p[0],(int)p[1],(int)p[2],angle,scene);
-            return;
+            return M;
         }
 
             // -- now for the matrices
@@ -113,6 +113,7 @@ public class MatrixOps {
             M = matmult(Riy, M);
             M = matmult(Rix, M);
             M = matmult(Ti, M);
+            return M;
 
     }
 

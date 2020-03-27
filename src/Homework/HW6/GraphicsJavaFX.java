@@ -31,10 +31,7 @@ public class GraphicsJavaFX extends Application
     int WIDTH = 512;
     int HEIGHT = 512;
 
-    int imageMode = 0;
-
     private AnimationTimer animationTimer;
-
     private Scene mainScene;
 
     // -- Main container
@@ -52,6 +49,7 @@ public class GraphicsJavaFX extends Application
         launch(args);
     }
 
+    //this is the only object being created, right now
     SceneGraph sc = new SceneGraph();
 
     @Override
@@ -62,24 +60,17 @@ public class GraphicsJavaFX extends Application
 
         // -- create canvas for drawing
         graphicsCanvas = new GraphicsCanvasInner(WIDTH, HEIGHT);
-
         // -- construct the controls
         controlBox = new ControlBoxInner();
-
         // -- create the primary window structure
         pane = new BorderPane();
-
         // -- add the graphics canvas and the control box to the split pan
         pane.setLeft(controlBox);
         pane.setCenter(graphicsCanvas);
-
         // -- set up key listeners (to Pane)
         prepareActionHandlers(pane);
-
-
         mainScene = new Scene(pane);
         mainStage.setScene(mainScene);
-
         // -- create the animation timer handler
         animationTimer = new AnimationTimer() {
             public void handle(long currentNanoTime) {
@@ -87,17 +78,12 @@ public class GraphicsJavaFX extends Application
                 System.out.println("tic");
             }
         };
-
-
         // -- paint the graphics canvas before the initial display
         graphicsCanvas.repaint();
-
         // -- display the application window
         mainStage.show();
-
         // -- set keyboard focus to the pane
         pane.requestFocus();
-
     }
 
     // -- key handlers belong to the Pane
@@ -124,21 +110,16 @@ public class GraphicsJavaFX extends Application
     public class GraphicsCanvasInner extends Canvas  {
 
         private GraphicsContext graphicsContext;
-
         private RenderSurface renderSurface;
 
         public GraphicsCanvasInner(int width, int height)
         {
             super(width, height);
-
             // -- get the context for drawing on the canvas
             graphicsContext = this.getGraphicsContext2D();
-
             // -- set up event handlers for mouse
             prepareActionHandlers();
-
             renderSurface = new RenderSurface((int)width, (int)height);
-
         }
 
         // -- check the active keys and render graphics
@@ -176,7 +157,6 @@ public class GraphicsJavaFX extends Application
 
         private void prepareActionHandlers()
         {
-
             // -- mouse listeners belong to the canvas
             this.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
@@ -212,7 +192,6 @@ public class GraphicsJavaFX extends Application
             });
         }
     }
-
 
     // -- Inner class for Controls
     public class ControlBoxInner extends VBox {
@@ -271,7 +250,7 @@ public class GraphicsJavaFX extends Application
 
                         }
                         // -- process the button
-                        System.out.println(actionEvent.getSource().toString());
+                        //System.out.println(actionEvent.getSource().toString());
                         // -- and return focus back to the pane
                         pane.requestFocus();
                     }
@@ -290,12 +269,11 @@ public class GraphicsJavaFX extends Application
                         graphicsCanvas.renderSurface.clearSurface();
 
                         //resets the shape as well
-                        sc.resetShape();
+                        sc.resetSN();
                         sc.render(graphicsCanvas.renderSurface.getSurface());
-
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
-                        System.out.println("Scene rendered/reset.");
+                        System.out.println("Scene rendered.");
                     }
                     // focus back to the pane
                     pane.requestFocus();
@@ -639,7 +617,8 @@ public class GraphicsJavaFX extends Application
                                 System.out.println("Axis of rotation cannot be 0, 0, 0.");
                             } else {
                                 graphicsCanvas.renderSurface.clearSurface();
-                                sc.arbitraryReal(new double[]{fx, fy, fz}, angle, new double[]{ax, ay, az});
+                                sc.buildMatrix(new double[]{fx, fy, fz}, angle, new double[]{ax, ay, az});
+                                //sc.applyMatrix();
                                 sc.render(graphicsCanvas.renderSurface.getSurface());
                                 graphicsCanvas.renderSurface.insertArray();
                                 graphicsCanvas.repaint();

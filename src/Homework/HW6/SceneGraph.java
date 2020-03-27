@@ -10,13 +10,11 @@ package Homework.HW6;
 
 import java.util.Arrays;
 
-public class SceneGraph {
+public class SceneGraph extends SceneGraphBase {
 
     //render the lines at those coordinates
     //this renders each square
     public void render(int[][] framebuffer) { //add grey for cube
-        //Lines.bresenhamForm((int)0, (int)0, (int)0, (int)0, framebuffer);
-
         //render 24 lines, 6 squares in total here
         //from looking top down to it:
 
@@ -61,57 +59,27 @@ public class SceneGraph {
     //the starting coordinates of each point, and other info
     //starting template, defaulted to origin
     static double x = 0.5;
-    static double[][] scene = {
+    double[][] scene = {
             //4x15 size
             //pt1-8, 6 surface normal point of each side, 1 centroid point
-            //pt: 0     1    2     3     4     5     6     7     8T   9F   10Bo  11Ba  12R   13L    14c
-            {-100, 100, 100, -100, -100, 100, 100, -100, 0, 0, 0, 0, 0, 0, 0}, //x 0
-            {-100, -100, 100, 100, -100, -100, 100, 100, 0, 0, 0, 0, 0, 0, 0}, //y 1
-            {100, 100, 100, 100, -100, -100, -100, -100, 0, 0, 0, 0, 0, 0, 0}, //z 2
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}                                           //w 3
-    };
-
-    //the position at the origin
-    static double[][] square = {
-            //4x15 size
-            //pt1-8, 6 surface normal point of each side, 1 centroid point
-            //pt: 0     1    2     3     4     5     6     7     8T   9F   10Bo  11Ba  12R   13L    14c
-            {-100, 100, 100, -100, -100, 100, 100, -100, 0, 0, 0, 0, 0, 0, 0}, //x 0
-            {-100, -100, 100, 100, -100, -100, 100, 100, 0, 0, 0, 0, 0, 0, 0}, //y 1
-            {100, 100, 100, 100, -100, -100, -100, -100, 0, 0, 0, 0, 0, 0, 0}, //z 2
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}                                           //w 3
-    };
-
-    //the position at the origin
-    static double[][] defaultSquare = {
-            //4x15 size
-            //pt1-8, 6 surface normal point of each side, 1 centroid point
-            //pt: 0     1    2     3     4     5     6     7     8T   9F   10Bo  11Ba  12R   13L    14c
-            {-100, 100, 100, -100, -100, 100, 100, -100, 0, 0, 0, 0, 0, 0, 0}, //x 0
-            {-100, -100, 100, 100, -100, -100, 100, 100, 0, 0, 0, 0, 0, 0, 0}, //y 1
-            {100, 100, 100, 100, -100, -100, -100, -100, 0, 0, 0, 0, 0, 0, 0}, //z 2
-            {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}                                           //w 3
+        //pt:0      1       2       3       4       5       6       7       8T  9F  10Bo    11Ba    12R     13L 14c
+            {-100,  100,    100,    -100,   -100,   100,    100,    -100,   0,  0,  0,      0,      0,      0,  0}, //x 0
+            {-100,  -100,   100,    100,    -100,   -100,   100,    100,    0,  0,  0,      0,      0,      0,  0}, //y 1
+            {100,   100,    100,    100,    -100,   -100,   -100,   -100,   0,  0,  0,      0,      0,      0,  0}, //z 2
+            {1,     1,      1,      1,      1,      1,      1,      1,      1,  1,  1,      1,      1,      1,  1}  //w 3                                        //w 3
     };
 
     //use this later
     //print it out for now
     //sample surfaces that are default, relative to the sides
     //unused, for reference and stored in main scene
-    static double[][] surfaceNormals = new double[3][6];
-    static double[][] surfaceNormalsDefault = {
+    double[][] surfaceNormals = new double[3][6];
+    double[][] surfaceNormalsDefault = {
             //T,   F,   Bo,  Ba,   R,    L
             {0, 0, 0, 0, 1, -1}, //x
             {0, 1, 0, -1, 0, 0}, //y
             {1, 0, -1, 0, 0, 0}  //z
     };
-
-    public void printSN() {
-        //calculateSN();
-        //not needed, as this updates through affine transformations
-        System.out.println("Surface normals: ");
-        printMat(surfaceNormals);
-    }
-
     public void resetSN() {
         //calculate the surface normals at this point
         //calculation done HERE:
@@ -124,11 +92,8 @@ public class SceneGraph {
                 scene[i][j] = surfaceNormals[i][j - 8];
             }
         }
-        //for now on, these numbers will be updated based on affine transformations
-        System.out.println("Surface normals: ");
-        printMat(surfaceNormals);
+        printSN();
     }
-
     public void calculateSN() {
         //the surface normals are updated based on the current center point
         //so you can store these current calculated values in a separate array
@@ -153,8 +118,14 @@ public class SceneGraph {
         //left: 4: 7, 0
         setSurfaceNormals(4, 0, 7, 5);
     }
+    public void printSN() {
+        //calculateSN();
+        //not needed, as this updates through affine transformations
+        System.out.println("Surface normals: ");
+        printMat(surfaceNormals);
+    }
 
-    public static void setSurfaceNormals(int o, int a, int b, int i) {
+    public void setSurfaceNormals(int o, int a, int b, int i) {
         //cross product of two vector lengths on each face
         //vector sub always returns a length 3 array of x, y, z based on ints specified
         //cross returns a length 3 array of distance vector
@@ -171,7 +142,7 @@ public class SceneGraph {
 
     //point k - point o
     //where o is the relative origin and k is the point of interest
-    public static double[] vectorSub(int k, int o) {
+    public double[] vectorSub(int k, int o) {
         //convert column into row
         double[] pt = {scene[0][k], scene[1][k], scene[2][k]};
         //aString(pt);
@@ -183,10 +154,6 @@ public class SceneGraph {
         double[] a = {pt[0] - og[0], pt[1] - og[1], pt[2] - og[2]};
         //System.out.println("vector: " + Arrays.toString(a));
         return a;
-    }
-
-    public static void aString(double[] a) {
-        System.out.println(Arrays.toString(a));
     }
 
 
@@ -216,7 +183,7 @@ public class SceneGraph {
     //STATIC TRANSFORMATION MATRICES
     //translation
     public static double[][] bldTrans(double x, double y, double z) {
-        return new double[][]{
+        return new double[][] {
                 {1, 0, 0, x},
                 {0, 1, 0, y},
                 {0, 0, 1, z},
@@ -260,25 +227,6 @@ public class SceneGraph {
         };
     }
 
-    //used for cube center
-    //diagonal points / 2 for each axis for 2d
-    public static double sum(double[] a) {
-        double sum = 0;
-        for (double v : a) {
-            sum += v;
-        }
-        return sum;
-    }
-    //only works for a square, use sum / 8 for a cube
-    public static double[] center = new double[3];
-    public static void updateC() {
-        //(point 0 to point 6) / 2
-        //c=         pt0: x, y, z+ pt6: x, y, z / 2
-        center[0] = (scene[0][0] + scene[0][6]) / 2.0;
-        center[1] = (scene[1][0] + scene[1][6]) / 2.0;
-        center[2] = (scene[2][0] + scene[2][6]) / 2.0;
-    }
-
     //testing
     public static void printMat(double[][]a) {
         for (double[] doubles : a) {
@@ -290,28 +238,28 @@ public class SceneGraph {
         System.out.println();
     }
 
+
+    //only works for a square, use sum / 8 for a cube
+    public double[] center = new double[3];
+    //this recalculated the center of this particular object
+    public void updateC() {
+        //(point 0 to point 6) / 2
+        //c=         pt0: x, y, z+ pt6: x, y, z / 2
+        center[0] = (scene[0][0] + scene[0][6]) / 2.0;
+        center[1] = (scene[1][0] + scene[1][6]) / 2.0;
+        center[2] = (scene[2][0] + scene[2][6]) / 2.0;
+    }
     //testing
-    public static void printCenter() {
+    public void printCenter() {
         System.out.println("Center point: ");
         System.out.println(Arrays.toString(center));
-    }
-    //change the coordinates of the scene
-    private static void setScene() {
-        //row
-        for (int i = 0; i < square.length; i++) {
-            //column: only read 0-7
-            for (int j = 0; j < 8; j++) {
-                scene[i][j] = square[i][j];
-            }
-        }
     }
 
     public void resetShape() {
         resetSN();
-        setScene();
     }
 
-    public static void translation(double x, double y, double z) {
+    public void translation(double x, double y, double z) {
         scene = matMult(bldTrans(x, y, z), scene);
         updateC();
     }
@@ -349,7 +297,7 @@ public class SceneGraph {
         scene = matMult(bldX(angle), scene);
         toOldCenter(oldCenter);
     }
-    public static void rotateX(double angle, double x, double y, double z) {
+    public void rotateX(double angle, double x, double y, double z) {
         translation(-x, -y, -z);
         scene = matMult(bldX(angle), scene);
         translation(x, y, z);
@@ -362,7 +310,7 @@ public class SceneGraph {
         scene = matMult(bldY(angle), scene);
         toOldCenter(oldCenter);
     }
-    public static void rotateY(double angle, double x, double y, double z) {
+    public void rotateY(double angle, double x, double y, double z) {
         translation(-x, -y, -z);
         scene = matMult(bldY(angle), scene);
         translation(x, y, z);
@@ -375,40 +323,43 @@ public class SceneGraph {
         scene = matMult(bldZ(angle), scene);
         toOldCenter(oldCenter);
     }
-    public static void rotateZ(double angle, double x, double y, double z) {
+    public void rotateZ(double angle, double x, double y, double z) {
         translation(-x, -y, -z);
         scene = matMult(bldZ(angle), scene);
         translation(x, y, z);
     }
 
-
     //ARBITRARY
-    static double[][] M = new double[4][4]; // -- the transformation matrix
+    static double[][] M; // -- the transformation matrix
+
     // -- p is the fixed point x, y, z
     //    angle is rotation angle in degrees
     //    axis is the axis of rotation x, y, z
     //    builds the transformation matrix M
-    public static void buildMatrix (double[] p, double angle, double[] axis) throws IllegalArgumentException
+    public void buildMatrix (double p[], double angle, double axis[]) throws IllegalArgumentException
     {
         // -- make sure the angle is in radians
         double theta = Math.toRadians(angle);
         // -- convert the axis to a unit vector
         double mag = Math.sqrt(Math.pow(axis[0],  2) + Math.pow(axis[1],  2) + Math.pow(axis[2],  2));
-        double[] alpha = {axis[0] / mag, axis[1] / mag, axis[2] / mag};
+        //System.out.println(mag);
+        double alpha[] = {axis[0] / mag, axis[1] / mag, axis[2] / mag};
+        //System.out.println(Arrays.toString(alpha));
 
         if (mag < 0.000000001) {
             throw new IllegalArgumentException("invalid axis of rotation");
         }
 
         double d = Math.sqrt(Math.pow(alpha[1],  2) + Math.pow(alpha[2],  2));
+        //System.out.println(d);
         if (Math.abs(d) < 0.00000001) {
             // -- just rotate about the x axis
-            // ADD CALL TO rotateX(P, angle) HERE
-            rotateX(angle, p[0], p[1], p[2]);
 
+            // ADD CALL TO rotateX(P, angle) HERE
+            rotateX(p[0], p[1], p[2], angle);
+            //m = xrotate((int)p[0],(int)p[1],(int)p[2],angle,scene);
             return;
         }
-
 
         // -- now for the matrices
 
@@ -472,15 +423,8 @@ public class SceneGraph {
     }
 
     //    scene is the object (scene) to be rotated, rows are x, y, z, w, columns are the vertices
-    public double[][] applyMatrix(double[][] scene)
-    {
+    public double[][] applyMatrix(double[][] scene) {
         return matMult(M, scene);
-    }
-
-    public void arbitraryReal(double[] fp, double angle, double[] ar) {
-        buildMatrix(fp, angle, ar);
-        scene = applyMatrix(scene);
-        //printMat(scene);
     }
 
     public static double[][] matMult (double[][] a, double[][] b) throws IllegalArgumentException {
