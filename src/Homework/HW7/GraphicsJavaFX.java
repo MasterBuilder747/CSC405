@@ -6,7 +6,7 @@ Class: CSC 405-1
 Date due: 3-19-20
 */
 
-package Homework.HW6;
+package Homework.HW7;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
