@@ -1,6 +1,12 @@
-package Lecture.Week07;
+/*
+Homework 4
+Name: Joseph Audras
+Professor: Dr. Reinhart
+Class: CSC 405-1
+Date due: 2-21-20
+*/
 
-import Homework.HW5Transformations.Lines;
+package Homework.HW4SquareScene;
 
 import java.util.Arrays;
 
@@ -8,87 +14,11 @@ import static Homework.HW4SquareScene.MatrixMultiplication.matMult;
 
 public class SceneGraph {
 
-    /*
+    //object info
 
-    about an arbitrary axis and privoded a fixed point (Px, Py, Pz) = P
-
-    theta = 0 = angle
-
-    0x != 0
-    0y!= 0
-
-    doing matrix multiplications, all are 4x4:
-    z cannot be undone, it is the chosen axis to be rotating the object on the axis,
-    it is what is changing the rotation
-
-    all 4x4s:
-    T = translate
-    Rx = rotate x
-    Ry = rotate y
-    Rz = rotate z
-
-    //IN THIS ORDER!!!!! IT MATTERS HERE
-    T(P) * Rx(-0x) * Ry(-0y) * Rz(0) * Ry(0y) * Rx(0x) * T(-P) , multiply all by: |SG|
-    this all collapses to a
-
-    specified as a vector in 3D with tail (start) at (0, 0, 0)
-    must be a unit vector
-
-    A = alpha
-    d = sqrt(Ay^2 + Ay^2)
-
-
-    unit vector calculation:
-    x, y, z = x/(sqrt(x^2+y^2+z^2)) + y/(sqrt(x^2+y^2+z^2)) + z/(sqrt(x^2+y^2+z^2))
-
-     */
-
-    private static double alphaX;
-    private static double alphaY;
-    private static double alphaZ;
-    private static double d;
-    static double[][] rotateXA = {
-            {1, 0, 0, 0},
-            {0, alphaZ/d, -alphaY/d, 0},
-            {0, alphaY/d, alphaZ/d, 0},
-            {0, 0, 0, 1}
-    };
-    static double[][] rotateYA = {
-            {d, 0, alphaX, 0},
-            {0, 1, 0, 0},
-            {-alphaX, 0, d, 0},
-            {0, 0, 0, 1}
-    };
-
-
-    /*
-    cos(0x) = alphaX/d
-    -sin(0x) = -alphaY/d
-    sin(0x) = alphaX/d
-
-    sin(-0) = -sin(0)
-    cos(-0) = cos(0)
-
-     */
-
-
-    //use this later
-    //print it out for now
-    //sample surfaces that are default, relative to the sides
-    static double[][] surfaceNormals = {
-        {0, 0, 0, 0, 1, -1}, //x
-        {0, 0, 1, -1, 0, 0}, //y
-        {1, -1, 0, 0, 0, 0} //z
-    };
-    public void printSurfaceNormals() {
-        printMat(surfaceNormals);
-    }
-
-    //
     //starting template, defaulted to origin
     static double[][] scene = {
-        //15x4 size
-        //pt1-8, 6 surface normal point of each side, 1 centroid point
+    //   pt0   pt1  pt2    pt3
         {-100,  100, 100,   -100}, //x
         {-100, -100, 100,    100}, //y
         {0,       0,   0,      0}, //z
@@ -431,7 +361,6 @@ public class SceneGraph {
         }
         translation(x, y, z);
     }
-
 
     //render the lines at those coordinates
     public void render(int[][] framebuffer) { //add grey for cube

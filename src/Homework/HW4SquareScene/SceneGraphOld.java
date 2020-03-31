@@ -1,94 +1,24 @@
-package Lecture.Week07;
+/*
+Homework 4
+Name: Joseph Audras
+Professor: Dr. Reinhart
+Class: CSC 405-1
+Date due: 2-21-20
+*/
 
-import Homework.HW5Transformations.Lines;
+package Homework.HW4SquareScene;
 
 import java.util.Arrays;
 
 import static Homework.HW4SquareScene.MatrixMultiplication.matMult;
 
-public class SceneGraph {
+public class SceneGraphOld {
 
-    /*
+    //object info
 
-    about an arbitrary axis and privoded a fixed point (Px, Py, Pz) = P
-
-    theta = 0 = angle
-
-    0x != 0
-    0y!= 0
-
-    doing matrix multiplications, all are 4x4:
-    z cannot be undone, it is the chosen axis to be rotating the object on the axis,
-    it is what is changing the rotation
-
-    all 4x4s:
-    T = translate
-    Rx = rotate x
-    Ry = rotate y
-    Rz = rotate z
-
-    //IN THIS ORDER!!!!! IT MATTERS HERE
-    T(P) * Rx(-0x) * Ry(-0y) * Rz(0) * Ry(0y) * Rx(0x) * T(-P) , multiply all by: |SG|
-    this all collapses to a
-
-    specified as a vector in 3D with tail (start) at (0, 0, 0)
-    must be a unit vector
-
-    A = alpha
-    d = sqrt(Ay^2 + Ay^2)
-
-
-    unit vector calculation:
-    x, y, z = x/(sqrt(x^2+y^2+z^2)) + y/(sqrt(x^2+y^2+z^2)) + z/(sqrt(x^2+y^2+z^2))
-
-     */
-
-    private static double alphaX;
-    private static double alphaY;
-    private static double alphaZ;
-    private static double d;
-    static double[][] rotateXA = {
-            {1, 0, 0, 0},
-            {0, alphaZ/d, -alphaY/d, 0},
-            {0, alphaY/d, alphaZ/d, 0},
-            {0, 0, 0, 1}
-    };
-    static double[][] rotateYA = {
-            {d, 0, alphaX, 0},
-            {0, 1, 0, 0},
-            {-alphaX, 0, d, 0},
-            {0, 0, 0, 1}
-    };
-
-
-    /*
-    cos(0x) = alphaX/d
-    -sin(0x) = -alphaY/d
-    sin(0x) = alphaX/d
-
-    sin(-0) = -sin(0)
-    cos(-0) = cos(0)
-
-     */
-
-
-    //use this later
-    //print it out for now
-    //sample surfaces that are default, relative to the sides
-    static double[][] surfaceNormals = {
-        {0, 0, 0, 0, 1, -1}, //x
-        {0, 0, 1, -1, 0, 0}, //y
-        {1, -1, 0, 0, 0, 0} //z
-    };
-    public void printSurfaceNormals() {
-        printMat(surfaceNormals);
-    }
-
-    //
     //starting template, defaulted to origin
     static double[][] scene = {
-        //15x4 size
-        //pt1-8, 6 surface normal point of each side, 1 centroid point
+    //   pt0   pt1  pt2    pt3
         {-100,  100, 100,   -100}, //x
         {-100, -100, 100,    100}, //y
         {0,       0,   0,      0}, //z
@@ -204,7 +134,6 @@ public class SceneGraph {
         //System.out.println(Arrays.toString(scene[1]));
         //System.out.println(Arrays.toString(scene[2]));
     }
-
     //origin translation on center
     public static double[][] originPt(double X, double Y, double Z, double[] a) {
         double[][] trans = {
@@ -270,35 +199,22 @@ public class SceneGraph {
         return matMult(scale, point);
     }
     public void scaling(double x, double y, double z) {
-        double[] oldCenter = {center[0], center[1], center[2]};
-        toOrigin();
-        for (int i = 0; i < scene[0].length; i++) {
-            double[][] a = scalePt(scene[0][i], scene[1][i], scene[2][i], x, y, z);
-            scene[0][i] = a[0][0];
-            scene[1][i] = a[1][0];
-            scene[2][i] = a[2][0];
+        if (x != 0 || y != 0) {
+            double[] oldCenter = {center[0], center[1], center[2]};
+            toOrigin();
+            for (int i = 0; i < scene[0].length; i++) {
+                double[][] a = scalePt(scene[0][i], scene[1][i], scene[2][i], x, y, z);
+                scene[0][i] = a[0][0];
+                scene[1][i] = a[1][0];
+                scene[2][i] = a[2][0];
+            }
+            toOldCenter(oldCenter);
+        } else {
+            System.out.println("x and/or y cannot be 0.");
         }
-        toOldCenter(oldCenter);
     }
-    //lowercase: the amount being scaled
-    //uppercase: the fixed point at which it is being scaled relative to
-    public void scaling(double x, double y, double z, double X, double Y, double Z) {
-        //move the the defined fixed point
-        //translate by -fixed point
-        translation(-X, -Y, -Z);
-        //rotate it at the origin
-        for (int i = 0; i < scene[0].length; i++) {
-            double[][] a = scalePt(scene[0][i], scene[1][i], scene[2][i], x, y, z);
-            scene[0][i] = a[0][0];
-            scene[1][i] = a[1][0];
-            scene[2][i] = a[2][0];
-        }
-        translation(X, Y, Z);
-    }
-
 
     //rotations
-    // X
     public static double[][] rotateXPt(double X, double Y, double Z, double angle) {
         double[][] rotateX = {
             {1, 0, 0, 0},
@@ -319,7 +235,7 @@ public class SceneGraph {
         double[] oldCenter = {center[0], center[1], center[2]};
         //System.out.println(Arrays.toString(oldCenter));
         //move the the origin
-        toOrigin();
+        //toOrigin();
         //rotate it at the origin
         for (int i = 0; i < scene[0].length; i++) {
             //for every point:
@@ -328,14 +244,69 @@ public class SceneGraph {
             scene[1][i] = a[1][0]; //y
             scene[2][i] = a[2][0]; //z
         }
-        toOldCenter(oldCenter);
+        //toOldCenter(oldCenter);
+    }
+    //unused
+    //translates to the origin but adding in the fixed point as lowercase x, y, z
+    public static double[][] fixedPt(double X, double Y, double Z, double x, double y, double z, double[] a) {
+        double[][] trans = {
+                {1, 0, 0, -a[0] + x},
+                {0, 1, 0, -a[1] + y},
+                {0, 0, 1, -a[2] + z},
+                {0, 0, 0, 1}
+        };
+        double[][] point = {
+                {X},
+                {Y},
+                {Z},
+                {1}
+        };
+        //this returns a 4x1 array
+        //so the other 3 points needs to be added for the square to be rendered
+        return matMult(trans, point);
+    }
+    //this version passes through a fixed point
+    public void toFixedPoint(double x, double y) {
+        //move this up to the parms for cube:
+        double z = 0;
+        for (int i = 0; i < scene[0].length; i++) {
+            double[][] a = fixedPt(scene[0][i], scene[1][i], scene[2][i], x, y, z, center);
+            scene[0][i] = a[0][0];
+            scene[1][i] = a[1][0];
+            scene[2][i] = a[2][0];
+        }
+        updateC();
+        //printCenter();
+        //System.out.println(Arrays.toString(scene[0]));
+        //System.out.println(Arrays.toString(scene[1]));
+        //System.out.println(Arrays.toString(scene[2]));
+    }
+
+    public static double[][] rotateFixedXPt(double X, double Y, double Z, double angle) {
+        double[][] rotateX = {
+                {1, 0, 0, 0},
+                {0, Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)), 0},
+                {0, Math.sin(Math.toRadians(angle)), Math.cos(Math.toRadians(angle)), 0},
+                {0, 0, 0, 1}
+        };
+        double[][] point = {
+                {X},
+                {Y},
+                {Z},
+                {1}
+        };
+        return matMult(rotateX, point);
     }
     //fixed point:
     //x, y, z is the defined fixed point, needs 2 parameters (3 for cube)
     public void rotateX(double angle, double x, double y, double z) {
+        //store the old center information (so it can go back)
+        //double[] oldCenter = {center[0], center[1], center[2]};
         //move the the defined fixed point
+        //toFixedPoint(x, y);
         //translate by -fixed point
         translation(-x, -y, -z);
+        //printCenter();
         //rotate it at the origin
         for (int i = 0; i < scene[0].length; i++) {
             double[][] a = rotateXPt(scene[0][i], scene[1][i], scene[2][i], angle);
@@ -344,9 +315,9 @@ public class SceneGraph {
             scene[2][i] = a[2][0];
         }
         translation(x, y, z);
+        //toOldCenter(oldCenter);
     }
 
-    // Y
     public static double[][] rotateYPt(double X, double Y, double Z, double angle) {
         double[][] rotateY = {
             {Math.cos(Math.toRadians(angle)), 0, Math.sin(Math.toRadians(angle)), 0},
@@ -375,21 +346,7 @@ public class SceneGraph {
         }
         toOldCenter(oldCenter);
     }
-    public void rotateY(double angle, double x, double y, double z) {
-        //move the the defined fixed point
-        //translate by -fixed point
-        translation(-x, -y, -z);
-        //rotate it at the origin
-        for (int i = 0; i < scene[0].length; i++) {
-            double[][] a = rotateYPt(scene[0][i], scene[1][i], scene[2][i], angle);
-            scene[0][i] = a[0][0];
-            scene[1][i] = a[1][0];
-            scene[2][i] = a[2][0];
-        }
-        translation(x, y, z);
-    }
 
-    // Z
     public static double[][] rotateZPt(double X, double Y, double Z, double angle) {
         double[][] rotateZ = {
             {Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)), 0, 0},
@@ -418,23 +375,9 @@ public class SceneGraph {
         }
         toOldCenter(oldCenter);
     }
-    public void rotateZ(double angle, double x, double y, double z) {
-        //move the the defined fixed point
-        //translate by -fixed point
-        translation(-x, -y, -z);
-        //rotate it at the origin
-        for (int i = 0; i < scene[0].length; i++) {
-            double[][] a = rotateZPt(scene[0][i], scene[1][i], scene[2][i], angle);
-            scene[0][i] = a[0][0];
-            scene[1][i] = a[1][0];
-            scene[2][i] = a[2][0];
-        }
-        translation(x, y, z);
-    }
-
 
     //render the lines at those coordinates
-    public void render(int[][] framebuffer) { //add grey for cube
+    public void render(int[][] framebuffer) {
         Lines.bresenhamForm((int)0, (int)0, (int)0, (int)0, framebuffer);
         Lines.bresenhamForm((int)scene[0][0], (int)scene[1][0], (int)scene[0][1], (int)scene[1][1], framebuffer);
         Lines.bresenhamForm((int)scene[0][1], (int)scene[1][1], (int)scene[0][2], (int)scene[1][2], framebuffer);

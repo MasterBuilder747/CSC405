@@ -1,4 +1,12 @@
-package Lecture.Week06;
+/*
+Homework 6
+Name: Joseph Audras
+Professor: Dr. Reinhart
+Class: CSC 405-1
+Date due: 3-19-20
+*/
+
+package Homework.HW6ArbitraryRotation;
 
 public class SurfaceNormal {
 
@@ -7,6 +15,8 @@ public class SurfaceNormal {
     //3 = z
     // a x b = (a2b3 - a3b1, a1b3 - a1b3, a1b2 - a2b1)
     //cross product assumes both vectors originate at (0, 0, 0)
+
+    //cross two vectors on every specific plane
     public static double[] cross(double[] a, double[] b) {
         double[] c = new double[3];
 
@@ -17,6 +27,7 @@ public class SurfaceNormal {
         return c;
     }
 
+    //sqrt(x, y, z)
     public static double mag (double[] a) {
         return Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2));
     }

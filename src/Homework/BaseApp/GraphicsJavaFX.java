@@ -1,5 +1,4 @@
-
-package Lecture.Week04;
+package Homework.BaseApp;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -22,9 +21,7 @@ import javafx.stage.Stage;
 public class GraphicsJavaFX extends Application
 {
     int WIDTH = 512;
-    int HEIGHT = 512;
-
-    int imageMode = 0;
+    int HEIGHT = 256;
     
     private AnimationTimer animationTimer;
 
@@ -38,20 +35,13 @@ public class GraphicsJavaFX extends Application
     
     // -- Controls container
     private ControlBoxInner controlBox;
-
-    // -- launch the application
-    public void launchApp(String[] args)
-    {
-        launch(args);
-    }
-
-    SceneGraph sc = new SceneGraph();
+    
 
     @Override
     public void start(Stage mainStage)
     {
     	// -- Application title
-        mainStage.setTitle("Homework 3 Joseph Audras");
+        mainStage.setTitle("JavaFX Graphics Application");
 
         // -- create canvas for drawing
         graphicsCanvas = new GraphicsCanvasInner(WIDTH, HEIGHT);
@@ -69,7 +59,7 @@ public class GraphicsJavaFX extends Application
         // -- set up key listeners (to Pane) 
         prepareActionHandlers(pane);
 
-
+       
         mainScene = new Scene(pane);
         mainStage.setScene(mainScene);
 
@@ -113,6 +103,13 @@ public class GraphicsJavaFX extends Application
         });
         
     }
+    
+
+    // -- launch the application 
+    public void launchApp(String[] args)
+    {
+        launch(args);
+    }
 
     
     // -- Inner class for Graphics
@@ -138,7 +135,6 @@ public class GraphicsJavaFX extends Application
     	
 
     	// -- check the active keys and render graphics
-        //update display
         public void repaint()
         {
         	double height = this.getHeight();
@@ -148,26 +144,8 @@ public class GraphicsJavaFX extends Application
             graphicsContext.clearRect(0, 0, width, height);
 
             graphicsContext.setStroke(Color.RED);
-            //sc.render(renderSurface.getSurface());
+
             graphicsContext.drawImage(renderSurface, 0, 0, this.getWidth(), this.getHeight());
-        }
-
-        //display image
-        public void paintTwoPoint() {
-            //two point
-            graphicsCanvas.renderSurface.clearSurface();
-            //then add the twopoint image
-            Lines.mainTwoPoint(renderSurface.getSurface());
-            graphicsCanvas.renderSurface.insertArray();
-        }
-
-        //display image
-        public void paintParametric() {
-            //parametric
-            renderSurface.clearSurface();
-            //then add the parametric image
-            Lines.mainParametric(renderSurface.getSurface());
-            renderSurface.insertArray();
         }
 
         private void prepareActionHandlers()
@@ -215,7 +193,7 @@ public class GraphicsJavaFX extends Application
     public class ControlBoxInner extends VBox {
 
         private Button buttons[];
-        private int nButtons = 1;
+        private int nButtons = 6;
 
         private TextField textField;
         
@@ -229,31 +207,40 @@ public class GraphicsJavaFX extends Application
             // -- add the buttons to an V (vertical) Box (container)
             for (int i = 0; i < buttons.length; ++i) {
             	this.getChildren().add(buttons[i]);
+            	if (i == 1) {
+            		textField = new TextField();
+            		textField.setMaxWidth(60);
+            		this.getChildren().add(textField);
+            	}
             }
         }
         
-        private void prepareButtonHandlers() {
+        private void prepareButtonHandlers()
+        {
         	buttons = new Button[nButtons];
-
-        	//scene button
-            int i = 0;
-            buttons[i] = new Button();
-            buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Scene");
-            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    if (actionEvent.getSource() == buttons[0]) {
-                        graphicsCanvas.renderSurface.clearSurface();
-                        sc.render(graphicsCanvas.renderSurface.getSurface());
-                        graphicsCanvas.renderSurface.insertArray();
-                        graphicsCanvas.repaint();
-                        System.out.println("Square generated.");
+        	for (int i = 0; i < buttons.length; ++i) {
+                buttons[i] = new Button();
+                buttons[i].setMnemonicParsing(true);
+                buttons[i].setText("Button _" + i);        
+                buttons[i].setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                    	if (actionEvent.getSource() == buttons[0]) {
+                    		animationTimer.start();
+                    	}
+                    	else if (actionEvent.getSource() == buttons[nButtons - 1]) {
+                    		animationTimer.stop();
+                    	}
+                    	else if (actionEvent.getSource() == buttons[1]) {
+                    		System.out.println(textField.getText());
+                    	}
+                    	// -- process the button
+                        System.out.println(actionEvent.getSource().toString());
+                        // -- and return focus back to the pane
+                        pane.requestFocus();
                     }
-                    // focus back to the pane
-                    pane.requestFocus();
-                }
-            });
+                });
+        	}
         }
     }
 }

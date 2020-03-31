@@ -3,5 +3,5 @@ module Graphics {
     requires javafx.controls;
     requires java.desktop;
 
-    opens Homework.HW6;
+    opens Homework.HW7TriangleFill;
 }
