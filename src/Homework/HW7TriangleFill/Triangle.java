@@ -30,9 +30,7 @@ public class Triangle {
         Lines.bresenhamForm((int)a.x, (int)a.y, (int)b.x, (int)b.y, framebuffer, 255);
     }
 
-    int[][] fb;
-
-    public void fill() {
+    public void fill(int[][] fb) {
         for(int y = 1; y < fb.length; y++) {
             int x = 0, x2 = 0;
             for(int x0 = 0; x0 < fb[y].length; x0++) {

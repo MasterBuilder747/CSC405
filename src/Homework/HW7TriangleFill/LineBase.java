@@ -14,9 +14,6 @@ import java.io.File;
 import java.io.IOException;
 
 public abstract class LineBase {
-    public abstract void twoPointForm(int x0, int y0, int x1, int y1, int[][] framebuffer) throws NullPointerException, ArrayIndexOutOfBoundsException;
-
-    public abstract void parametricForm(int x0, int y0, int x1, int y1, int[][] framebuffer) throws NullPointerException, ArrayIndexOutOfBoundsException;
 
     public abstract void bresenhamForm(int x0, int y0, int x1, int y1, int[][] framebuffer) throws NullPointerException, ArrayIndexOutOfBoundsException;
 

@@ -1,4 +1,4 @@
-package Homework.BaseApp;
+package BaseApp;
 
 public class MainAppJavaSwing {
 	

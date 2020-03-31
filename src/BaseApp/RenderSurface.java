@@ -1,4 +1,4 @@
-package Baseline;
+package BaseApp;
 
 import java.awt.image.BufferedImage;
 

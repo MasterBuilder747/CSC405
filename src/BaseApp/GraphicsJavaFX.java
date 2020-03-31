@@ -1,4 +1,4 @@
-package Homework.BaseApp;
+package BaseApp;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
 
 public class GraphicsJavaFX extends Application
 {
