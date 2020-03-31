@@ -8,15 +8,22 @@ Date due: 3-19-20
 
 package Homework.HW7;
 
+import java.util.Scanner;
+
 public class MainAppJavaFX {
 
-	// -- There is some configuration issue with the JavaFX launcher.
-	//    It has something to do with modules vs. classpath
-	//    To get around it run this main method to invoke the actual
-	//    JavaFX main method that we want
-	//    https://github.com/javafxports/openjdk-jfx/issues/236#issuecomment-426583174
 	public static void main(String[] args) {
-		new GraphicsJavaFX().launchApp(args);
+		System.out.println("Enter three points, press enter for each x and y value: ");
+		Scanner kb = new Scanner(System.in);
+		double x1 = kb.nextDouble();
+		double y1 = kb.nextDouble();
+		double x2 = kb.nextDouble();
+		double y2 = kb.nextDouble();
+		double x3 = kb.nextDouble();
+		double y3 = kb.nextDouble();
+
+		Triangle t = new Triangle(x1, y1, x2, y2, x3, y3);
+		t.fill();
 	}
 
 }

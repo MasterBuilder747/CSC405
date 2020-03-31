@@ -59,7 +59,7 @@ public class Lines extends LineBase {
     }
 
     //@Override
-    public static void bresenhamForm(int x1, int y1, int x2, int y2, int[][] framebuffer)
+    public static void bresenhamForm(int x1, int y1, int x2, int y2, int[][] framebuffer, int color)
             throws NullPointerException, ArrayIndexOutOfBoundsException {
 
         //SOURCE: https://github.com/SagarGaniga/computer-graphics/blob/master/Bresenham's%20Line/Bresenhams.cpp
@@ -160,10 +160,10 @@ public class Lines extends LineBase {
     public static void mainBresenham(int[][] framebuffer) {
         LineBase lb = new Lines();
         for (int x = 0; x < framebuffer[0].length; x += 13) {
-            bresenhamForm(x, 0, framebuffer[0].length - x - 1, framebuffer.length - 1, framebuffer);
+            bresenhamForm(x, 0, framebuffer[0].length - x - 1, framebuffer.length - 1, framebuffer, 255);
         }
         for (int y = 0; y < framebuffer.length; y += 13) {
-            bresenhamForm(0, y, framebuffer[0].length - 1, framebuffer.length - y - 1, framebuffer);
+            bresenhamForm(0, y, framebuffer[0].length - 1, framebuffer.length - y - 1, framebuffer, 255);
         }
     }
 
