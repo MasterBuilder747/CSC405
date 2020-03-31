@@ -345,8 +345,6 @@ public class SceneGraph extends SceneGraphBase {
     //    builds the transformation matrix M
     public void arbitrary(double[] p, double angle, double[] axis) throws IllegalArgumentException
     {
-        // -- make sure the angle is in radians
-        double theta = Math.toRadians(angle);
         // -- convert the axis to a unit vector
         double mag = Math.sqrt(Math.pow(axis[0],  2) + Math.pow(axis[1],  2) + Math.pow(axis[2],  2));
         //System.out.println(mag);
@@ -374,7 +372,7 @@ public class SceneGraph extends SceneGraphBase {
         // -- translate fixed point to original location
         double[][] Ti = bldTrans(p[0], p[1], p[2]);
         // -- rotate about the z axis by theta
-        double[][] Rz = bldZ(theta);
+        double[][] Rz = bldZ(angle);
 
         // -- rotate about y axis by theta-y (to be computed)
         double[][] Ry = {
