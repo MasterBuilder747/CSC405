@@ -20,6 +20,13 @@ public class Main {
 		//store the points of the triangle
 		System.out.println("Enter three points, press enter for each x and y value: ");
 		Scanner kb = new Scanner(System.in);
+
+		//test values:
+		/*
+		(100, 512)
+		(350, 256)
+		(350, 768)
+		*/
 		double x1 = kb.nextDouble();
 		double y1 = kb.nextDouble();
 		double x2 = kb.nextDouble();

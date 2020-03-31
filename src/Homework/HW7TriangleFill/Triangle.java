@@ -27,7 +27,10 @@ public class Triangle {
     //render the lines at those coordinates
     //this renders each square
     public void render(int[][] framebuffer) {
-        Lines.bresenhamForm((int)a.x, (int)a.y, (int)b.x, (int)b.y, framebuffer, 255);
+        // b -> a -> c -> b
+        Lines.bresenhamForm((int)b.x, (int)b.y, (int)a.x, (int)a.y, framebuffer, 255);
+        Lines.bresenhamForm((int)a.x, (int)a.y, (int)c.x, (int)c.y, framebuffer, 255);
+        Lines.bresenhamForm((int)c.x, (int)c.y, (int)b.x, (int)b.y, framebuffer, 255);
     }
 
     public void fill(int[][] fb) {
