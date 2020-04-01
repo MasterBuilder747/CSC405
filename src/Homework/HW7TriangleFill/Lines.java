@@ -111,14 +111,14 @@ public class Lines extends LineBase {
                 if (isSwaped == 0) {
                     x = x + sx; //plot the point at (x+1,y)
                     try {
-                        framebuffer[(int) x][(int) y] = 255; //plot the image
+                        framebuffer[(int) x][(int) y] = color; //plot the image
                     } catch (ArrayIndexOutOfBoundsException e) {
                         //ignore exception due to clipping
                     }
                 } else {
                     y = y + sy; //plot the point at (x,y+1)
                     try {
-                        framebuffer[(int) x][(int) y] = 255; //plot the image
+                        framebuffer[(int) x][(int) y] = color; //plot the image
                     } catch (ArrayIndexOutOfBoundsException e) {
                         //ignore exception due to clipping
                     }
@@ -128,7 +128,7 @@ public class Lines extends LineBase {
                 x = x + sx; //plot the point at (x+1,y+1)
                 y = y + sy;
                 try {
-                framebuffer[(int) x][(int) y] = 255; //plot the image
+                framebuffer[(int) x][(int) y] = color; //plot the image
                 } catch (ArrayIndexOutOfBoundsException e) {
                     //ignore exception due to clipping
                 }
