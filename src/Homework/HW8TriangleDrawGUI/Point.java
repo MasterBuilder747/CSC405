@@ -1,9 +1,9 @@
 /*
-Homework 8
+Homework 7
 Name: Joseph Audras
 Professor: Dr. Reinhart
 Class: CSC 405-1
-Date due: 4-14-20
+Date due: 3-26-20
 */
 
 package Homework.HW8TriangleDrawGUI;
@@ -12,7 +12,7 @@ public class Point {
     double x;
     double y;
 
-    private Point () {
+    private Point() {
 
     }
 

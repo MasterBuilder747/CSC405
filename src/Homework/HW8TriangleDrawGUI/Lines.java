@@ -111,14 +111,14 @@ public class Lines extends LineBase {
                 if (isSwaped == 0) {
                     x = x + sx; //plot the point at (x+1,y)
                     try {
-                        framebuffer[(int) x][(int) y] = color; //plot the image
+                        framebuffer[(int) x][(int) y] = 255; //plot the image
                     } catch (ArrayIndexOutOfBoundsException e) {
                         //ignore exception due to clipping
                     }
                 } else {
                     y = y + sy; //plot the point at (x,y+1)
                     try {
-                        framebuffer[(int) x][(int) y] = color; //plot the image
+                        framebuffer[(int) x][(int) y] = 255; //plot the image
                     } catch (ArrayIndexOutOfBoundsException e) {
                         //ignore exception due to clipping
                     }
@@ -128,7 +128,7 @@ public class Lines extends LineBase {
                 x = x + sx; //plot the point at (x+1,y+1)
                 y = y + sy;
                 try {
-                framebuffer[(int) x][(int) y] = color; //plot the image
+                framebuffer[(int) x][(int) y] = 255; //plot the image
                 } catch (ArrayIndexOutOfBoundsException e) {
                     //ignore exception due to clipping
                 }
@@ -154,29 +154,6 @@ public class Lines extends LineBase {
         }
         for (int y = 0; y < framebuffer.length; y += 13) {
             lb.parametricForm(0, y, framebuffer[0].length - 1, framebuffer.length - y - 1, framebuffer);
-        }
-    }
-
-    public static void mainBresenham(int[][] framebuffer) {
-        LineBase lb = new Lines();
-        for (int x = 0; x < framebuffer[0].length; x += 13) {
-            bresenhamForm(x, 0, framebuffer[0].length - x - 1, framebuffer.length - 1, framebuffer, 255);
-        }
-        for (int y = 0; y < framebuffer.length; y += 13) {
-            bresenhamForm(0, y, framebuffer[0].length - 1, framebuffer.length - y - 1, framebuffer, 255);
-        }
-    }
-
-    public static void main (String[] args) {
-        LineBase lb = new Lines();
-        {
-            int[][] framebuffer = new int[256][256];
-            for (int x = 0; x < framebuffer[0].length; x += 13) {
-                lb.parametricForm(x, 0, framebuffer[0].length - x - 1, framebuffer.length - 1, framebuffer);
-            }
-            for (int y = 0; y < framebuffer.length; y += 13) {
-                lb.parametricForm(0, y, framebuffer[0].length - 1, framebuffer.length - y - 1, framebuffer);
-            }
         }
     }
 }
