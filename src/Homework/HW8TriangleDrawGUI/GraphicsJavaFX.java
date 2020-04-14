@@ -37,6 +37,7 @@ public class GraphicsJavaFX extends Application {
     //triangle drawing variables
     int count = 0;
     int triIndex = 0;
+    String colorText;
     ArrayList<Triangle> triangles = new ArrayList<>();
 
     private AnimationTimer animationTimer;
@@ -61,8 +62,7 @@ public class GraphicsJavaFX extends Application {
     SceneGraph sc = new SceneGraph();
 
     @Override
-    public void start(Stage mainStage)
-    {
+    public void start(Stage mainStage) {
         // -- Application title
         mainStage.setTitle("Homework 8 Joseph Audras");
 
@@ -120,8 +120,7 @@ public class GraphicsJavaFX extends Application {
         private GraphicsContext graphicsContext;
         private RenderSurface renderSurface;
 
-        public GraphicsCanvasInner(int width, int height)
-        {
+        public GraphicsCanvasInner(int width, int height) {
             super(width, height);
             // -- get the context for drawing on the canvas
             graphicsContext = this.getGraphicsContext2D();
@@ -132,8 +131,7 @@ public class GraphicsJavaFX extends Application {
 
         // -- check the active keys and render graphics
         //update display
-        public void repaint()
-        {
+        public void repaint() {
             double height = this.getHeight();
             double width = this.getWidth();
 
@@ -145,8 +143,7 @@ public class GraphicsJavaFX extends Application {
             graphicsContext.drawImage(renderSurface, 0, 0, this.getWidth(), this.getHeight());
         }
 
-        private void prepareActionHandlers()
-        {
+        private void prepareActionHandlers() {
             // -- mouse listeners belong to the canvas
             this.setOnMousePressed(new EventHandler<MouseEvent>() {
                 @Override
@@ -169,10 +166,17 @@ public class GraphicsJavaFX extends Application {
                     repaint();
                 }
             });
+
             //triangle draw
             this.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
+                    String oldText;
+                    int fillColor;
+                    int outlineColor;
+
+                    //only on the last click: check the color and draw if it is valid, if not, do not draw it
+
                     if (event.getButton() == MouseButton.PRIMARY) {
                         //draw the triangle, exclude z axis as the screen is only in 2D
                         //System.out.println("mouse pos: (" + event.getX() + ", " + event.getY() + ")");
@@ -180,11 +184,13 @@ public class GraphicsJavaFX extends Application {
                         int y = (int)event.getY();
 
                         //keep track of number of clicks
-                        System.out.println(count);
+                        //System.out.println(count);
+
                         if (count == 0) {
                             //first click creates the triangle, populating the arraylist
                             triangles.add(triIndex, new Triangle(WIDTH, HEIGHT));
                         }
+
                         //the current triangle will add the point to that triangle object
                         triangles.get(triIndex).add(count, new Point(x, y));
 
@@ -193,17 +199,38 @@ public class GraphicsJavaFX extends Application {
                             //the triangle is now finished and is stored, render it
                             //graphicsCanvas.renderSurface.clearSurface();
 
-                            triangles.get(triIndex).render(graphicsCanvas.renderSurface.getSurface(), 255);
+                            //test the color textbox
+                            String cText = controlBox.button10.getText();
 
-                            sc.render(graphicsCanvas.renderSurface.getSurface());
-                            graphicsCanvas.renderSurface.insertArray();
-                            graphicsCanvas.repaint();
-
+                            if (!cText.equals("")) {
+                                String[] s = cText.split(",\\s*");
+                                try {
+                                    if (s.length == 2) {
+                                        int[] out = {Integer.parseInt(s[0]), Integer.parseInt(s[1])};
+                                        if (out[0] > 255 || out[0] < 0 || out[1] > 255 || out[1] < 0) {
+                                            System.out.println("Triangle colors must be between 0 and 255, inclusive.");
+                                        } else {
+                                            //render the triangle, do not clear the surface so that other triangles can render
+                                            triangles.get(triIndex).render(graphicsCanvas.renderSurface.getSurface(), out[0], out[1]);
+                                            sc.render(graphicsCanvas.renderSurface.getSurface());
+                                            graphicsCanvas.renderSurface.insertArray();
+                                            graphicsCanvas.repaint();
+                                            System.out.println("Triangle rendered.");
+                                        }
+                                    } else {
+                                        System.out.println("Requires two color inputs. Inputs are outlineColor, fillColor.");
+                                    }
+                                } catch (Exception e) {
+                                    //catch unwanted text
+                                    System.out.println("Invalid input in the color textbox. Inputs are outlineColor, fillColor.");
+                                }
+                            } else {
+                                System.out.println("Colors input required for drawing a triangle.");
+                            }
                             count = 0;
                             triIndex++;
                         }
-                    }
-                    else if (event.getButton() == MouseButton.SECONDARY) {
+                    } else if (event.getButton() == MouseButton.SECONDARY) {
                         //nothing for now
                     }
                     pane.requestFocus();
@@ -248,19 +275,19 @@ public class GraphicsJavaFX extends Application {
                 this.getChildren().add(buttons[i]);
                 if (i == 0) {
                     button0 = new TextField();
-                    button0.setMaxWidth(100);
+                    button0.setMaxWidth(150);
                     this.getChildren().add(button0); //fixed point
                 } else if (i == 1) {
                     button1 = new TextField();
-                    button1.setMaxWidth(100);
+                    button1.setMaxWidth(150);
                     this.getChildren().add(button1); //angle in degrees
                 } else if (i == 2) {
                     button2 = new TextField();
-                    button2.setMaxWidth(100);
+                    button2.setMaxWidth(150);
                     this.getChildren().add(button2); //scaling / translation / abritrary vector
                 } else if (i == 10) {
                     button10 = new TextField();
-                    button10.setMaxWidth(100);
+                    button10.setMaxWidth(150);
                     this.getChildren().add(button10); //triangle color
                 }
             }
@@ -273,7 +300,16 @@ public class GraphicsJavaFX extends Application {
             for (int i = 0; i < buttons.length; ++i) {
                 buttons[i] = new Button();
                 buttons[i].setMnemonicParsing(true);
-                buttons[i].setText("Enter box " + i + ":"); //trans (x,y,z) and rotate (deg)
+                if (i == 0) {
+                    buttons[0].setText("Fixed Point:");
+                } else if (i == 1) {
+                    buttons[1].setText("Angle:");
+                } else if (i == 2) {
+                    buttons[2].setText("Scale/Trans/Arb vect:");
+                } else if (i == 10) {
+                    buttons[10].setText("Triangle color:");
+                }
+
                 buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {

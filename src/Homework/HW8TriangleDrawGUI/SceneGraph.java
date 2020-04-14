@@ -17,43 +17,44 @@ public class SceneGraph extends SceneGraphBase {
     public void render(int[][] framebuffer) { //add grey for cube
         //render 24 lines, 6 squares in total here
         //from looking top down to it:
+        int color = 255;
 
         //face: points in clockwise rotation from looking at the surface facing outward:
         //top (default): 0, 1, 2, 3
-        Lines.bresenhamForm((int) scene[0][0], (int) scene[1][0], (int) scene[0][1], (int) scene[1][1], framebuffer);
-        Lines.bresenhamForm((int) scene[0][1], (int) scene[1][1], (int) scene[0][2], (int) scene[1][2], framebuffer);
-        Lines.bresenhamForm((int) scene[0][2], (int) scene[1][2], (int) scene[0][3], (int) scene[1][3], framebuffer);
-        Lines.bresenhamForm((int) scene[0][3], (int) scene[1][3], (int) scene[0][0], (int) scene[1][0], framebuffer);
+        Lines.bresenhamForm((int) scene[0][0], (int) scene[1][0], (int) scene[0][1], (int) scene[1][1], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][1], (int) scene[1][1], (int) scene[0][2], (int) scene[1][2], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][2], (int) scene[1][2], (int) scene[0][3], (int) scene[1][3], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][3], (int) scene[1][3], (int) scene[0][0], (int) scene[1][0], framebuffer, color);
 
         //front: 3, 2, 6, 7
-        Lines.bresenhamForm((int) scene[0][3], (int) scene[1][3], (int) scene[0][2], (int) scene[1][2], framebuffer);
-        Lines.bresenhamForm((int) scene[0][2], (int) scene[1][2], (int) scene[0][6], (int) scene[1][6], framebuffer);
-        Lines.bresenhamForm((int) scene[0][6], (int) scene[1][6], (int) scene[0][7], (int) scene[1][7], framebuffer);
-        Lines.bresenhamForm((int) scene[0][7], (int) scene[1][7], (int) scene[0][3], (int) scene[1][3], framebuffer);
+        Lines.bresenhamForm((int) scene[0][3], (int) scene[1][3], (int) scene[0][2], (int) scene[1][2], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][2], (int) scene[1][2], (int) scene[0][6], (int) scene[1][6], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][6], (int) scene[1][6], (int) scene[0][7], (int) scene[1][7], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][7], (int) scene[1][7], (int) scene[0][3], (int) scene[1][3], framebuffer, color);
 
         //bottom: 7, 6, 5, 4
-        Lines.bresenhamForm((int) scene[0][7], (int) scene[1][7], (int) scene[0][6], (int) scene[1][6], framebuffer);
-        Lines.bresenhamForm((int) scene[0][6], (int) scene[1][6], (int) scene[0][5], (int) scene[1][5], framebuffer);
-        Lines.bresenhamForm((int) scene[0][5], (int) scene[1][5], (int) scene[0][4], (int) scene[1][4], framebuffer);
-        Lines.bresenhamForm((int) scene[0][4], (int) scene[1][4], (int) scene[0][7], (int) scene[1][7], framebuffer);
+        Lines.bresenhamForm((int) scene[0][7], (int) scene[1][7], (int) scene[0][6], (int) scene[1][6], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][6], (int) scene[1][6], (int) scene[0][5], (int) scene[1][5], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][5], (int) scene[1][5], (int) scene[0][4], (int) scene[1][4], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][4], (int) scene[1][4], (int) scene[0][7], (int) scene[1][7], framebuffer, color);
 
         //back: 4, 5, 1, 0
-        Lines.bresenhamForm((int) scene[0][4], (int) scene[1][4], (int) scene[0][5], (int) scene[1][5], framebuffer);
-        Lines.bresenhamForm((int) scene[0][5], (int) scene[1][5], (int) scene[0][1], (int) scene[1][1], framebuffer);
-        Lines.bresenhamForm((int) scene[0][1], (int) scene[1][1], (int) scene[0][0], (int) scene[1][0], framebuffer);
-        Lines.bresenhamForm((int) scene[0][0], (int) scene[1][0], (int) scene[0][4], (int) scene[1][4], framebuffer);
+        Lines.bresenhamForm((int) scene[0][4], (int) scene[1][4], (int) scene[0][5], (int) scene[1][5], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][5], (int) scene[1][5], (int) scene[0][1], (int) scene[1][1], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][1], (int) scene[1][1], (int) scene[0][0], (int) scene[1][0], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][0], (int) scene[1][0], (int) scene[0][4], (int) scene[1][4], framebuffer, color);
 
         //right: 2, 1, 5, 6
-        Lines.bresenhamForm((int) scene[0][2], (int) scene[1][2], (int) scene[0][1], (int) scene[1][1], framebuffer);
-        Lines.bresenhamForm((int) scene[0][1], (int) scene[1][1], (int) scene[0][5], (int) scene[1][5], framebuffer);
-        Lines.bresenhamForm((int) scene[0][5], (int) scene[1][5], (int) scene[0][6], (int) scene[1][6], framebuffer);
-        Lines.bresenhamForm((int) scene[0][6], (int) scene[1][6], (int) scene[0][2], (int) scene[1][2], framebuffer);
+        Lines.bresenhamForm((int) scene[0][2], (int) scene[1][2], (int) scene[0][1], (int) scene[1][1], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][1], (int) scene[1][1], (int) scene[0][5], (int) scene[1][5], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][5], (int) scene[1][5], (int) scene[0][6], (int) scene[1][6], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][6], (int) scene[1][6], (int) scene[0][2], (int) scene[1][2], framebuffer, color);
 
         //left: 0, 3, 7, 4
-        Lines.bresenhamForm((int) scene[0][0], (int) scene[1][0], (int) scene[0][3], (int) scene[1][3], framebuffer);
-        Lines.bresenhamForm((int) scene[0][3], (int) scene[1][3], (int) scene[0][7], (int) scene[1][7], framebuffer);
-        Lines.bresenhamForm((int) scene[0][7], (int) scene[1][7], (int) scene[0][4], (int) scene[1][4], framebuffer);
-        Lines.bresenhamForm((int) scene[0][4], (int) scene[1][4], (int) scene[0][0], (int) scene[1][0], framebuffer);
+        Lines.bresenhamForm((int) scene[0][0], (int) scene[1][0], (int) scene[0][3], (int) scene[1][3], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][3], (int) scene[1][3], (int) scene[0][7], (int) scene[1][7], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][7], (int) scene[1][7], (int) scene[0][4], (int) scene[1][4], framebuffer, color);
+        Lines.bresenhamForm((int) scene[0][4], (int) scene[1][4], (int) scene[0][0], (int) scene[1][0], framebuffer, color);
     }
 
     //the starting coordinates of each point, and other info

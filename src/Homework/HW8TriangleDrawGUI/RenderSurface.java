@@ -34,8 +34,7 @@ public class RenderSurface extends WritableImage {
 		surface = new int[surface.length][surface[0].length];
 	}
 	
-	public int[][] getSurface()
-	{
+	public int[][] getSurface() {
 		return surface;
 	}
 	

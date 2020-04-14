@@ -43,12 +43,15 @@ public class Triangle {
 
     //render the lines at those coordinates
     //this renders each square
-    public void render(int[][] fb, int color) {
+    public void render(int[][] fb, int outColor, int fillColor) {
         // b -> a -> c -> b
-        Lines.bresenhamForm((int)b.y, (int)b.x, (int)a.y, (int)a.x, this.fb);
-        Lines.bresenhamForm((int)a.y, (int)a.x, (int)c.y, (int)c.x, this.fb);
-        Lines.bresenhamForm((int)c.y, (int)c.x, (int)b.y, (int)b.x, this.fb);
-        fill(this.fb, 0, color);
+        Lines.bresenhamForm((int)b.y, (int)b.x, (int)a.y, (int)a.x, this.fb, outColor);
+        Lines.bresenhamForm((int)a.y, (int)a.x, (int)c.y, (int)c.x, this.fb, outColor);
+        Lines.bresenhamForm((int)c.y, (int)c.x, (int)b.y, (int)b.x, this.fb, outColor);
+        fill(this.fb, 0, fillColor);
+        Lines.bresenhamForm((int)b.y, (int)b.x, (int)a.y, (int)a.x, this.fb, outColor);
+        Lines.bresenhamForm((int)a.y, (int)a.x, (int)c.y, (int)c.x, this.fb, outColor);
+        Lines.bresenhamForm((int)c.y, (int)c.x, (int)b.y, (int)b.x, this.fb, outColor);
 
         replaceFB(this.fb, fb);
     }
