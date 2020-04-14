@@ -183,7 +183,7 @@ public class GraphicsJavaFX extends Application {
                         System.out.println(count);
                         if (count == 0) {
                             //first click creates the triangle, populating the arraylist
-                            triangles.add(triIndex, new Triangle());
+                            triangles.add(triIndex, new Triangle(WIDTH, HEIGHT));
                         }
                         //the current triangle will add the point to that triangle object
                         triangles.get(triIndex).add(count, new Point(x, y));

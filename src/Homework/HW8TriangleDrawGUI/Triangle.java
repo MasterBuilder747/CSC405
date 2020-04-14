@@ -13,11 +13,14 @@ public class Triangle {
     Point a;
     Point b;
     Point c;
+    int[][] fb;
 
-    public Triangle() {
+    public Triangle(int x, int y) {
+        this.fb = new int[x][y];
     }
 
-    public Triangle(Point a, Point b, Point c) {
+    public Triangle(int x, int y, Point a, Point b, Point c) {
+        this.fb = new int[x][y];
         this.a = a;
         this.b = b;
         this.c = c;
@@ -42,11 +45,26 @@ public class Triangle {
     //this renders each square
     public void render(int[][] fb, int color) {
         // b -> a -> c -> b
-        Lines.bresenhamForm((int)b.y, (int)b.x, (int)a.y, (int)a.x, fb);
-        Lines.bresenhamForm((int)a.y, (int)a.x, (int)c.y, (int)c.x, fb);
-        Lines.bresenhamForm((int)c.y, (int)c.x, (int)b.y, (int)b.x, fb);
+        Lines.bresenhamForm((int)b.y, (int)b.x, (int)a.y, (int)a.x, this.fb);
+        Lines.bresenhamForm((int)a.y, (int)a.x, (int)c.y, (int)c.x, this.fb);
+        Lines.bresenhamForm((int)c.y, (int)c.x, (int)b.y, (int)b.x, this.fb);
+        fill(this.fb, 0, color);
 
+        replaceFB(this.fb, fb);
+    }
 
+    //1 -> 2
+    public void replaceFB(int[][] fb1, int[][] fb2) {
+        if (fb1.length == fb2.length && fb1[0].length == fb2[0].length) {
+            for (int i = 0; i < fb2.length; i++) {
+                for (int j = 0; j < fb2[0].length; j++) {
+                    //ignore the empty space in the individual fb
+                    if (fb1[i][j] != 0) {
+                        fb2[i][j] = fb1[i][j];
+                    }
+                }
+            }
+        }
     }
 
     public void fill(int[][] fb, int black, int color) {
