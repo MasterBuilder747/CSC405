@@ -59,7 +59,7 @@ public class Lines extends LineBase {
     }
 
     //@Override
-    public static void bresenhamForm(int x1, int y1, int x2, int y2, int[][] framebuffer, int color)
+    public static void bresenhamForm(int x1, int y1, int x2, int y2, int[][] framebuffer)
             throws NullPointerException, ArrayIndexOutOfBoundsException {
 
         //SOURCE: https://github.com/SagarGaniga/computer-graphics/blob/master/Bresenham's%20Line/Bresenhams.cpp

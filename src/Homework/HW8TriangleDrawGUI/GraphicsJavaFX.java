@@ -31,6 +31,8 @@ public class GraphicsJavaFX extends Application
     int WIDTH = 512;
     int HEIGHT = 512;
 
+    int count = 0;
+
     private AnimationTimer animationTimer;
     private Scene mainScene;
 
@@ -56,7 +58,7 @@ public class GraphicsJavaFX extends Application
     public void start(Stage mainStage)
     {
         // -- Application title
-        mainStage.setTitle("Homework 6 Joseph Audras");
+        mainStage.setTitle("Homework 8 Joseph Audras");
 
         // -- create canvas for drawing
         graphicsCanvas = new GraphicsCanvasInner(WIDTH, HEIGHT);
@@ -137,24 +139,6 @@ public class GraphicsJavaFX extends Application
             graphicsContext.drawImage(renderSurface, 0, 0, this.getWidth(), this.getHeight());
         }
 
-        //display image
-        public void paintTwoPoint() {
-            //two point
-            graphicsCanvas.renderSurface.clearSurface();
-            //then add the twopoint image
-            Lines.mainTwoPoint(renderSurface.getSurface());
-            graphicsCanvas.renderSurface.insertArray();
-        }
-
-        //display image
-        public void paintParametric() {
-            //parametric
-            renderSurface.clearSurface();
-            //then add the parametric image
-            Lines.mainParametric(renderSurface.getSurface());
-            renderSurface.insertArray();
-        }
-
         private void prepareActionHandlers()
         {
             // -- mouse listeners belong to the canvas
@@ -179,6 +163,33 @@ public class GraphicsJavaFX extends Application
                     repaint();
                 }
             });
+            //triangle draw
+            this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    if (event.getButton() == MouseButton.PRIMARY) {
+                        //draw the triangle, exclude z axis as the screen is only in 2D
+                        //System.out.println("mouse pos: (" + event.getX() + ", " + event.getY() + ")");
+                        int x = (int)event.getX();
+                        int y = (int)event.getY();
+
+                        //keep track of number of clicks
+                        //System.out.println(count);
+
+
+
+                        count++;
+                        if (count == 3) {
+                            count = 0;
+                        }
+                    }
+                    else if (event.getButton() == MouseButton.SECONDARY) {
+                        //nothing for now
+                    }
+                    pane.requestFocus();
+                    repaint();
+                }
+            });
             this.setOnMouseDragged(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -197,14 +208,16 @@ public class GraphicsJavaFX extends Application
     public class ControlBoxInner extends VBox {
 
         private Button buttons[];
-        private int nButtons = 10;
+        //total amount of elements, textboxes and buttons
+        private int nButtons = 11;
 
+        //textbox objects that store the text
         private TextField button0;
         private TextField button1;
         private TextField button2;
+        private TextField button10;
 
-        public ControlBoxInner()
-        {
+        public ControlBoxInner() {
             super();
 
             // -- set up buttons
@@ -225,6 +238,10 @@ public class GraphicsJavaFX extends Application
                     button2 = new TextField();
                     button2.setMaxWidth(100);
                     this.getChildren().add(button2); //scaling / translation / abritrary vector
+                } else if (i == 10) {
+                    button10 = new TextField();
+                    button10.setMaxWidth(100);
+                    this.getChildren().add(button10); //triangle color
                 }
             }
         }
@@ -247,6 +264,9 @@ public class GraphicsJavaFX extends Application
 
                         }
                         else if (actionEvent.getSource() == buttons[2]) {
+
+                        }
+                        else if (actionEvent.getSource() == buttons[10]) {
 
                         }
                         // -- process the button
