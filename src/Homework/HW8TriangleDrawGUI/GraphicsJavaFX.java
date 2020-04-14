@@ -25,13 +25,19 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
-public class GraphicsJavaFX extends Application
-{
+import java.util.ArrayList;
+
+public class GraphicsJavaFX extends Application {
+
     int WIDTH = 512;
     int HEIGHT = 512;
 
+    //triangle drawing variables
     int count = 0;
+    int triIndex = 0;
+    ArrayList<Triangle> triangles = new ArrayList<>();
 
     private AnimationTimer animationTimer;
     private Scene mainScene;
@@ -174,13 +180,27 @@ public class GraphicsJavaFX extends Application
                         int y = (int)event.getY();
 
                         //keep track of number of clicks
-                        //System.out.println(count);
-
-
+                        System.out.println(count);
+                        if (count == 0) {
+                            //first click creates the triangle, populating the arraylist
+                            triangles.add(triIndex, new Triangle());
+                        }
+                        //the current triangle will add the point to that triangle object
+                        triangles.get(triIndex).add(count, new Point(x, y));
 
                         count++;
                         if (count == 3) {
+                            //the triangle is now finished and is stored, render it
+                            //graphicsCanvas.renderSurface.clearSurface();
+
+                            triangles.get(triIndex).render(graphicsCanvas.renderSurface.getSurface(), 255);
+
+                            sc.render(graphicsCanvas.renderSurface.getSurface());
+                            graphicsCanvas.renderSurface.insertArray();
+                            graphicsCanvas.repaint();
+
                             count = 0;
+                            triIndex++;
                         }
                     }
                     else if (event.getButton() == MouseButton.SECONDARY) {

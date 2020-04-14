@@ -14,8 +14,7 @@ public class Triangle {
     Point b;
     Point c;
 
-    private Triangle() {
-
+    public Triangle() {
     }
 
     public Triangle(Point a, Point b, Point c) {
@@ -24,13 +23,56 @@ public class Triangle {
         this.c = c;
     }
 
+    public void add(int i, Point p) {
+        if (i < 0 || i > 2) {
+            //nothing
+        } else {
+            switch (i) {
+                case 0:
+                    this.a = p;
+                case 1:
+                    this.b = p;
+                case 2:
+                    this.c = p;
+            }
+        }
+    }
+
     //render the lines at those coordinates
     //this renders each square
-    public void render(int[][] framebuffer, int color) {
+    public void render(int[][] fb, int color) {
         // b -> a -> c -> b
-        Lines.bresenhamForm((int)b.x, (int)b.y, (int)a.x, (int)a.y, framebuffer);
-        Lines.bresenhamForm((int)a.x, (int)a.y, (int)c.x, (int)c.y, framebuffer);
-        Lines.bresenhamForm((int)c.x, (int)c.y, (int)b.x, (int)b.y, framebuffer);
+        Lines.bresenhamForm((int)b.y, (int)b.x, (int)a.y, (int)a.x, fb);
+        Lines.bresenhamForm((int)a.y, (int)a.x, (int)c.y, (int)c.x, fb);
+        Lines.bresenhamForm((int)c.y, (int)c.x, (int)b.y, (int)b.x, fb);
+
+
+    }
+
+    public void fill(int[][] fb, int black, int color) {
+        for (int x = 0; x < fb.length; x++) {
+
+            //read the fb from left to right
+            int i = 0;
+            while (i < fb[0].length && fb[x][i] == black) {
+                i++;
+            }
+            if (i == fb[0].length) {
+                continue;
+            }
+            int x1 = i;
+
+            //read the fb from right to left
+            i = fb[0].length - 1;
+            while (i > 0 && fb[x][i] == black) {
+                i--;
+            }
+            int x2 = i;
+
+            for (int j = x2; j >= x1; j--) {
+                fb[x][j] = color;
+            }
+        }
     }
 }
 
