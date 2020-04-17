@@ -8,7 +8,7 @@ Date due: 4-16-20
 
 package Homework.HW9HiddenSurfaceRemoval;
 
-public class MatrixMultiplication {
+public class Matrix {
 
     public static double[][] matMult (double[][] a, double[][] b) throws IllegalArgumentException {
         //a[0] indicates to test the length of just the columns of array a

@@ -368,7 +368,7 @@ public class GraphicsJavaFX extends Application {
                         double x;
                         double y;
                         double z;
-                        try {
+//                        try {
                             if (but2[0] != null || but2[1] != null || but2[2] != null) {
                                 x = Double.parseDouble(but2[0]);
                                 y = Double.parseDouble(but2[1]);
@@ -377,9 +377,9 @@ public class GraphicsJavaFX extends Application {
                                 sc.translation(x, y, z);
                                 System.out.println("Translated by " + x + ", " + y + ", " + z);
                             }
-                        } catch (Exception e) {
-                            System.out.println("Requires 3 doubles: x, y, and z comma separated from the last textbox.");
-                        }
+//                        } catch (Exception e) {
+//                            System.out.println("Requires 3 doubles: x, y, and z comma separated from the last textbox.");
+//                        }
 
                         sc.render(graphicsCanvas.renderSurface.getSurface());
 
