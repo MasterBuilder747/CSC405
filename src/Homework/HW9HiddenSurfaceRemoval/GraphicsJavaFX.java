@@ -6,7 +6,7 @@ Class: CSC 405-1
 Date due: 4-16-20
 */
 
-package Homework.HW9HiddenSurfaceRemoval.HW8TriangleDrawGUI;
+package Homework.HW9HiddenSurfaceRemoval;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -170,9 +170,6 @@ public class GraphicsJavaFX extends Application {
             this.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    String oldText;
-                    int fillColor;
-                    int outlineColor;
 
                     //only on the last click: check the color and draw if it is valid, if not, do not draw it
 
@@ -217,11 +214,11 @@ public class GraphicsJavaFX extends Application {
                                             System.out.println("Triangle rendered.");
                                         }
                                     } else {
-                                        System.out.println("Requires two color inputs. Inputs are outlineColor, fillColor.");
+                                        System.out.println("Requires two color inputs. Inputs are fillColor, outlineColor.");
                                     }
                                 } catch (Exception e) {
                                     //catch unwanted text
-                                    System.out.println("Invalid input in the color textbox. Inputs are outlineColor, fillColor.");
+                                    System.out.println("Invalid input in the color textbox. Inputs are fillColor, outlineColor.");
                                 }
                             } else {
                                 System.out.println("Colors input required for drawing a triangle.");
@@ -421,8 +418,8 @@ public class GraphicsJavaFX extends Application {
                                         //System.out.println("x: " + x + "y: " + y + "z: " + z);
                                         //add z != 0 for cube
                                         if (x == 0 || y == 0 || z == 0) {
-                                            System.out.println("for scaling: x, y, and z cannot be 0.");
-                                        }else{
+                                            System.out.println("for scaling: x, y, and z cannot be 0 as dimensions will be reduced. Use 1 to keep the same scale by that axis");
+                                        } else {
                                             graphicsCanvas.renderSurface.clearSurface();
                                             sc.scaling(x, y, z);
                                             sc.render(graphicsCanvas.renderSurface.getSurface());

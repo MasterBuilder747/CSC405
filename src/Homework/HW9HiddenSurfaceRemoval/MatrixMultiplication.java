@@ -6,7 +6,7 @@ Class: CSC 405-1
 Date due: 4-16-20
 */
 
-package Homework.HW9HiddenSurfaceRemoval.HW8TriangleDrawGUI;
+package Homework.HW9HiddenSurfaceRemoval;
 
 public class MatrixMultiplication {
 
@@ -31,6 +31,18 @@ public class MatrixMultiplication {
         return c;
     }
 
+    //perform a series of matrix multiplications through a 3D array
+    //this is done in an array of matrices
+    //all of the matrices in the array must be the same size in rows and columns
+    //note that this goes from left to right
+    public static double[][] matMulti(double[][][] a) {
+        double[][] result = matMult(a[0], a[1]);
+        for (int i = 1; i < a.length - 1; i++) {
+            result = matMult(result, a[i+1]);
+        }
+        return result;
+    }
+
     public static void printMat(double[][]a) {
         for (double[] doubles : a) {
             for (int j = 0; j < a[0].length; j++) {
@@ -40,11 +52,4 @@ public class MatrixMultiplication {
         }
         System.out.println();
     }
-
-    //example arrays
-    double[][] a = {{1, 0, 0, 10},
-                    {0, 1, 0, 10},
-                    {0, 0, 0, 1},
-                    {0, 0, 0, 1}};
-    double[][] scene = {{0, 10}, {0, 10}, {0, 0}, {1, 1}};
 }

@@ -6,7 +6,7 @@ Class: CSC 405-1
 Date due: 4-16-20
 */
 
-package Homework.HW9HiddenSurfaceRemoval.HW8TriangleDrawGUI;
+package Homework.HW9HiddenSurfaceRemoval;
 
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;

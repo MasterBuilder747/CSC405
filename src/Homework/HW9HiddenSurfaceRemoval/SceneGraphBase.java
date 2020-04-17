@@ -6,7 +6,7 @@ Class: CSC 405-1
 Date due: 4-16-20
 */
 
-package Homework.HW9HiddenSurfaceRemoval.HW8TriangleDrawGUI;
+package Homework.HW9HiddenSurfaceRemoval;
 
 public abstract class SceneGraphBase {
 
@@ -19,10 +19,4 @@ public abstract class SceneGraphBase {
     public double getScene () {
         return 0.0;
     }
-
-    //
-    //public abstract void render (int framebuffer[][], int gray) {
-
-    //cube:
-
 }

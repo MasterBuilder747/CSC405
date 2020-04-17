@@ -6,60 +6,67 @@ Class: CSC 405-1
 Date due: 4-16-20
 */
 
-package Homework.HW9HiddenSurfaceRemoval.HW8TriangleDrawGUI;
+package Homework.HW9HiddenSurfaceRemoval;
 
 import java.util.Arrays;
 
-public class SceneGraph extends SceneGraphBase {
+public class SceneGraph extends MatrixMultiplication {
 
     //render the lines at those coordinates
     //this renders each square
     public void render(int[][] framebuffer) { //add grey for cube
         //render 24 lines, 6 squares in total here
         //from looking top down to it:
-        int color = 255;
+        int outlineColor = 255;
+        //top, front, bottom, back, right, left
+        int[] surfaceColor = {255, 192, 255, 192, 128, 128};
 
         //face: points in clockwise rotation from looking at the surface facing outward:
         //top (default): 0, 1, 2, 3
-        Lines.bresenhamForm((int) scene[0][0], (int) scene[1][0], (int) scene[0][1], (int) scene[1][1], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][1], (int) scene[1][1], (int) scene[0][2], (int) scene[1][2], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][2], (int) scene[1][2], (int) scene[0][3], (int) scene[1][3], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][3], (int) scene[1][3], (int) scene[0][0], (int) scene[1][0], framebuffer, color);
+        Lines.drawLine((int) scene[0][0], (int) scene[1][0], (int) scene[0][1], (int) scene[1][1], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][1], (int) scene[1][1], (int) scene[0][2], (int) scene[1][2], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][2], (int) scene[1][2], (int) scene[0][3], (int) scene[1][3], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][3], (int) scene[1][3], (int) scene[0][0], (int) scene[1][0], framebuffer, outlineColor);
 
         //front: 3, 2, 6, 7
-        Lines.bresenhamForm((int) scene[0][3], (int) scene[1][3], (int) scene[0][2], (int) scene[1][2], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][2], (int) scene[1][2], (int) scene[0][6], (int) scene[1][6], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][6], (int) scene[1][6], (int) scene[0][7], (int) scene[1][7], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][7], (int) scene[1][7], (int) scene[0][3], (int) scene[1][3], framebuffer, color);
+        Lines.drawLine((int) scene[0][3], (int) scene[1][3], (int) scene[0][2], (int) scene[1][2], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][2], (int) scene[1][2], (int) scene[0][6], (int) scene[1][6], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][6], (int) scene[1][6], (int) scene[0][7], (int) scene[1][7], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][7], (int) scene[1][7], (int) scene[0][3], (int) scene[1][3], framebuffer, outlineColor);
 
         //bottom: 7, 6, 5, 4
-        Lines.bresenhamForm((int) scene[0][7], (int) scene[1][7], (int) scene[0][6], (int) scene[1][6], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][6], (int) scene[1][6], (int) scene[0][5], (int) scene[1][5], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][5], (int) scene[1][5], (int) scene[0][4], (int) scene[1][4], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][4], (int) scene[1][4], (int) scene[0][7], (int) scene[1][7], framebuffer, color);
+        Lines.drawLine((int) scene[0][7], (int) scene[1][7], (int) scene[0][6], (int) scene[1][6], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][6], (int) scene[1][6], (int) scene[0][5], (int) scene[1][5], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][5], (int) scene[1][5], (int) scene[0][4], (int) scene[1][4], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][4], (int) scene[1][4], (int) scene[0][7], (int) scene[1][7], framebuffer, outlineColor);
 
         //back: 4, 5, 1, 0
-        Lines.bresenhamForm((int) scene[0][4], (int) scene[1][4], (int) scene[0][5], (int) scene[1][5], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][5], (int) scene[1][5], (int) scene[0][1], (int) scene[1][1], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][1], (int) scene[1][1], (int) scene[0][0], (int) scene[1][0], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][0], (int) scene[1][0], (int) scene[0][4], (int) scene[1][4], framebuffer, color);
+        Lines.drawLine((int) scene[0][4], (int) scene[1][4], (int) scene[0][5], (int) scene[1][5], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][5], (int) scene[1][5], (int) scene[0][1], (int) scene[1][1], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][1], (int) scene[1][1], (int) scene[0][0], (int) scene[1][0], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][0], (int) scene[1][0], (int) scene[0][4], (int) scene[1][4], framebuffer, outlineColor);
 
         //right: 2, 1, 5, 6
-        Lines.bresenhamForm((int) scene[0][2], (int) scene[1][2], (int) scene[0][1], (int) scene[1][1], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][1], (int) scene[1][1], (int) scene[0][5], (int) scene[1][5], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][5], (int) scene[1][5], (int) scene[0][6], (int) scene[1][6], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][6], (int) scene[1][6], (int) scene[0][2], (int) scene[1][2], framebuffer, color);
+        Lines.drawLine((int) scene[0][2], (int) scene[1][2], (int) scene[0][1], (int) scene[1][1], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][1], (int) scene[1][1], (int) scene[0][5], (int) scene[1][5], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][5], (int) scene[1][5], (int) scene[0][6], (int) scene[1][6], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][6], (int) scene[1][6], (int) scene[0][2], (int) scene[1][2], framebuffer, outlineColor);
 
         //left: 0, 3, 7, 4
-        Lines.bresenhamForm((int) scene[0][0], (int) scene[1][0], (int) scene[0][3], (int) scene[1][3], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][3], (int) scene[1][3], (int) scene[0][7], (int) scene[1][7], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][7], (int) scene[1][7], (int) scene[0][4], (int) scene[1][4], framebuffer, color);
-        Lines.bresenhamForm((int) scene[0][4], (int) scene[1][4], (int) scene[0][0], (int) scene[1][0], framebuffer, color);
+        Lines.drawLine((int) scene[0][0], (int) scene[1][0], (int) scene[0][3], (int) scene[1][3], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][3], (int) scene[1][3], (int) scene[0][7], (int) scene[1][7], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][7], (int) scene[1][7], (int) scene[0][4], (int) scene[1][4], framebuffer, outlineColor);
+        Lines.drawLine((int) scene[0][4], (int) scene[1][4], (int) scene[0][0], (int) scene[1][0], framebuffer, outlineColor);
     }
 
     //the starting coordinates of each point, and other info
-    double[][] sceneReset = {
+    //0-7: points
+    //8-13: surface normals
+    //14: center
+    //cube
+    double[][] resetPt = {
             //4x15 size
+            //[rowID][colID]
             //pt1-8, 6 surface normal point of each side, 1 centroid point
         //pt:0      1       2       3       4       5       6       7       8T  9F  10Bo    11Ba    12R     13L 14c
             {-100,  100,    100,    -100,   -100,   100,    100,    -100,   0,  0,  0,      0,      0,      0,  0}, //x 0
@@ -67,13 +74,12 @@ public class SceneGraph extends SceneGraphBase {
             {100,   100,    100,    100,    -100,   -100,   -100,   -100,   0,  0,  0,      0,      0,      0,  0}, //z 2
             {1,     1,      1,      1,      1,      1,      1,      1,      1,  1,  1,      1,      1,      1,  1}  //w 3                                        //w 3
     };
-
-    double[][] scene = new double[sceneReset.length][sceneReset[0].length];
+    double[][] scene = new double[resetPt.length][resetPt[0].length];
 
     public void resetScene() {
         for (int i = 0; i < scene.length; i++) {
             for (int j = 0; j < scene[0].length; j++) {
-                scene[i][j] = sceneReset[i][j];
+                scene[i][j] = resetPt[i][j];
             }
         }
     }
@@ -95,7 +101,7 @@ public class SceneGraph extends SceneGraphBase {
     public void resetSN() {
         //calculate the surface normals at this point
         //calculation done HERE:
-        calculateSN();
+        calculateSN(); //only dones when reset, will get modified otherwise
         //store it into a separete array in case
         //then put those values into the scene matrix
         for (int i = 0; i < 3; i++) {
@@ -167,7 +173,6 @@ public class SceneGraph extends SceneGraphBase {
         return new double[] {pt[0] - og[0], pt[1] - og[1], pt[2] - og[2]};
     }
 
-
 //    public void updateSNScale() {
 //        //this particular version of the function is only used when scaling,
 //        //an extra step is needed when calculating the surface normals
@@ -190,6 +195,9 @@ public class SceneGraph extends SceneGraphBase {
 //        System.out.println("Surface normals: ");
 //        printMat(surfaceNormals);
 //    }
+
+
+
 
     //STATIC TRANSFORMATION MATRICES
     //translation
@@ -249,58 +257,44 @@ public class SceneGraph extends SceneGraphBase {
         System.out.println();
     }
 
-
-    //only works for a square, use sum / 8 for a cube
-    public double[] center = new double[3];
-    //this recalculated the center of this particular object
-    public void updateC() {
-        //(point 0 to point 6) / 2
-        //c=         pt0: x, y, z+ pt6: x, y, z / 2
-        center[0] = (scene[0][0] + scene[0][6]) / 2.0;
-        center[1] = (scene[1][0] + scene[1][6]) / 2.0;
-        center[2] = (scene[2][0] + scene[2][6]) / 2.0;
+    public double[] getCenter() {
+        return new double[] {scene[0][14], scene[1][14], scene[2][14]};
     }
-    //testing
-    public void printCenter() {
-        System.out.println("Center point: ");
-        System.out.println(Arrays.toString(center));
+    public double[] getCenterNeg() {
+        return new double[] {-scene[0][14], -scene[1][14], -scene[2][14]};
     }
-
-
 
     // TRANSFORMATIONS
     public void translation(double x, double y, double z) {
-        scene = matMult(bldTrans(x, y, z), scene);
-        updateC();
+        scene = matMult((bldTrans(x, y, z)), scene);
     }
 
     public void toOrigin() {
-        scene = matMult(bldTrans(-center[0], -center[1], -center[2]), scene);
-        updateC();
+        double[] center = getCenterNeg();
+        scene = matMult(bldTrans(center[0], center[1], center[2]), scene);
     }
-    public void toOldCenter(double[] b) {
-        scene = matMult(bldTrans(b[0], b[1], b[2]), scene);
-        updateC();
+    //take an old stored center
+    public void toOldCenter(double[] a) {
+        scene = matMult((bldTrans(a[0], a[1], a[2])), scene);
     }
 
+    //requires other multiplications
     public void scaling(double x, double y, double z) {
-        double[] oldCenter = {center[0], center[1], center[2]};
+        double[] oldCenter = getCenter();
         toOrigin();
         scene = matMult(bldScale(x, y, z), scene);
         toOldCenter(oldCenter);
-        //updateC();
     }
     public void scaling(double x, double y, double z, double X, double Y, double Z) {
         translation(-X, -Y, -Z);
         scene = matMult(bldScale(x, y, z), scene);
         translation(X, Y, Z);
-        //updateC();
     }
 
     //rotations
     // X
     public void rotateX(double angle) {
-        double[] oldCenter = {center[0], center[1], center[2]};
+        double[] oldCenter = getCenter();
         toOrigin();
         scene = matMult(bldX(angle), scene);
         toOldCenter(oldCenter);
@@ -313,7 +307,7 @@ public class SceneGraph extends SceneGraphBase {
 
     // Y
     public void rotateY(double angle) {
-        double[] oldCenter = {center[0], center[1], center[2]};
+        double[] oldCenter = getCenter();
         toOrigin();
         scene = matMult(bldY(angle), scene);
         toOldCenter(oldCenter);
@@ -326,7 +320,7 @@ public class SceneGraph extends SceneGraphBase {
 
     // Z
     public void rotateZ(double angle) {
-        double[] oldCenter = {center[0], center[1], center[2]};
+        double[] oldCenter = getCenter();
         toOrigin();
         scene = matMult(bldZ(angle), scene);
         toOldCenter(oldCenter);
@@ -413,41 +407,4 @@ public class SceneGraph extends SceneGraphBase {
         M = matMult(Ti, M);
         scene = matMult(M, scene);
     }
-
-    public static double[][] matMult (double[][] a, double[][] b) throws IllegalArgumentException {
-        //a[0] indicates to test the length of just the columns of array a
-        int l1 = a[0].length; //results in a null
-        int l2 = b.length;
-        if (l1 != l2) {
-            throw new IllegalArgumentException("incompatible arrays");
-        }
-
-        //vice versa
-        double c[][] = new double[a.length][b[0].length];
-
-        for (int i = 0; i < a.length; i++) { //for every row in a
-            for(int j = 0; j < b[0].length; j++) { //for every column in b
-                double dotprod = 0;
-                for(int k = 0; k < a[0].length; k++) { //dot product
-                    dotprod += a[i][k] * b[k][j];
-                }
-                c[i][j] = dotprod;
-            }
-        }
-        return c;
-    }
-
-    //perform a series of matrix multiplications through a 3D array
-    //this is done in an array of matrices
-    //all of the matrices in the array must be the same size in rows and columns
-    //note that this goes from left to right
-    public static double[][] matMulti(double[][][] a) {
-        double[][] result = matMult(a[0], a[1]);
-        for (int i = 1; i < a.length - 1; i++) {
-            result = matMult(result, a[i+1]);
-        }
-        return result;
-    }
 }
-
-
