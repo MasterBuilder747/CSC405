@@ -10,14 +10,15 @@ package Homework.HW9HiddenSurfaceRemoval;
 
 public class SceneGraph extends Transformations {
 
+    //a collection of objects on the scene
+
     //render the lines at those coordinates
     //this renders each square
     public void render(int[][] framebuffer) { //add grey for cube
         //render 24 lines, 6 squares in total here
         //from looking top down to it:
-        int outlineColor = 255;
+
         //top, front, bottom, back, right, left
-        int[] surfaceColor = {255, 192, 255, 192, 128, 128};
 
         //face: points in clockwise rotation from looking at the surface facing outward:
         //top (default): 0, 1, 2, 3
