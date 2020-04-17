@@ -13,10 +13,16 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-public class Lines {
+public abstract class Lines {
 
-    public static void drawLine(int x1, int y1, int x2, int y2, int[][] framebuffer)
+    public static void drawLine(Point a, Point b, int[][] framebuffer)
             throws NullPointerException, ArrayIndexOutOfBoundsException {
+
+        //this must be switched due to how my imported algorithm works
+        int x1 = (int)a.y;
+        int x2 = (int)b.y;
+        int y1 = (int)a.x;
+        int y2 = (int)b.x;
 
         int color = 255; //default
 
@@ -95,8 +101,14 @@ public class Lines {
         }
     }
 
-    public static void drawLine(int x1, int y1, int x2, int y2, int[][] framebuffer, int color)
+    public static void drawLine(Point a, Point b, int[][] framebuffer, int color)
             throws NullPointerException, ArrayIndexOutOfBoundsException {
+
+        //this must be switched due to how my imported algorithm works
+        int x1 = (int)a.y;
+        int x2 = (int)b.y;
+        int y1 = (int)a.x;
+        int y2 = (int)b.x;
 
         //SOURCE: https://github.com/SagarGaniga/computer-graphics/blob/master/Bresenham's%20Line/Bresenhams.cpp
         /*
@@ -140,7 +152,7 @@ public class Lines {
         //putpixels(x,y);
 
 
-            // Loop for dx times
+        // Loop for dx times
         for (int i = 0; i < Math.abs(dx); i++) {
             // Depending on decision parameter
             if (p < 0) { //p is negative, dx is greater than dy, point is rendered above the line
@@ -164,7 +176,7 @@ public class Lines {
                 x = x + sx; //plot the point at (x+1,y+1)
                 y = y + sy;
                 try {
-                framebuffer[(int) x][(int) y] = color; //plot the image
+                    framebuffer[(int) x][(int) y] = color; //plot the image
                 } catch (ArrayIndexOutOfBoundsException e) {
                     //ignore exception due to clipping
                 }

@@ -2,8 +2,6 @@ package Homework.HW9HiddenSurfaceRemoval;
 
 public abstract class Polygon extends Lines {
 
-    public abstract void add(int i, Point p);
-
     //1 -> 2
     public void updateFB(int[][] fb1, int[][] fb2) {
         if (fb1.length == fb2.length && fb1[0].length == fb2[0].length) {

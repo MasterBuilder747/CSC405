@@ -21,6 +21,7 @@ public class SceneGraph extends Transformations {
 
         //face: points in clockwise rotation from looking at the surface facing outward:
         //top (default): 0, 1, 2, 3
+        /*
         Lines.drawLine((int) points[0][0], (int) points[1][0], (int) points[0][1], (int) points[1][1], framebuffer, outlineColor);
         Lines.drawLine((int) points[0][1], (int) points[1][1], (int) points[0][2], (int) points[1][2], framebuffer, outlineColor);
         Lines.drawLine((int) points[0][2], (int) points[1][2], (int) points[0][3], (int) points[1][3], framebuffer, outlineColor);
@@ -55,6 +56,7 @@ public class SceneGraph extends Transformations {
         Lines.drawLine((int) points[0][3], (int) points[1][3], (int) points[0][7], (int) points[1][7], framebuffer, outlineColor);
         Lines.drawLine((int) points[0][7], (int) points[1][7], (int) points[0][4], (int) points[1][4], framebuffer, outlineColor);
         Lines.drawLine((int) points[0][4], (int) points[1][4], (int) points[0][0], (int) points[1][0], framebuffer, outlineColor);
+         */
     }
 
     //the starting coordinates of each point, and other info

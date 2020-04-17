@@ -8,14 +8,14 @@ Date due: 4-16-20
 
 package Homework.HW9HiddenSurfaceRemoval;
 
-public class Triangle extends Polygon {
+public class Square extends Polygon {
 
-    final int SIDES = 3;
+    final int SIDES = 4;
     Point[] points = new Point[SIDES];
 
     int[][] fb;
 
-    public Triangle(int x, int y) {
+    public Square(int x, int y) {
         this.fb = new int[x][y];
     }
 
@@ -38,7 +38,8 @@ public class Triangle extends Polygon {
     public void renderWire(int outColor) {
         drawLine(points[0], points[1], this.fb, outColor);
         drawLine(points[1], points[2], this.fb, outColor);
-        drawLine(points[2], points[0], this.fb, outColor);
+        drawLine(points[2], points[3], this.fb, outColor);
+        drawLine(points[3], points[0], this.fb, outColor);
     }
 }
 
