@@ -8,9 +8,7 @@ Date due: 4-16-20
 
 package Homework.HW9HiddenSurfaceRemoval;
 
-import java.util.Arrays;
-
-public class SceneGraph extends MatrixMultiplication {
+public class SceneGraph extends Transformations {
 
     //render the lines at those coordinates
     //this renders each square
@@ -23,40 +21,40 @@ public class SceneGraph extends MatrixMultiplication {
 
         //face: points in clockwise rotation from looking at the surface facing outward:
         //top (default): 0, 1, 2, 3
-        Lines.drawLine((int) scene[0][0], (int) scene[1][0], (int) scene[0][1], (int) scene[1][1], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][1], (int) scene[1][1], (int) scene[0][2], (int) scene[1][2], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][2], (int) scene[1][2], (int) scene[0][3], (int) scene[1][3], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][3], (int) scene[1][3], (int) scene[0][0], (int) scene[1][0], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][0], (int) points[1][0], (int) points[0][1], (int) points[1][1], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][1], (int) points[1][1], (int) points[0][2], (int) points[1][2], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][2], (int) points[1][2], (int) points[0][3], (int) points[1][3], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][3], (int) points[1][3], (int) points[0][0], (int) points[1][0], framebuffer, outlineColor);
 
         //front: 3, 2, 6, 7
-        Lines.drawLine((int) scene[0][3], (int) scene[1][3], (int) scene[0][2], (int) scene[1][2], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][2], (int) scene[1][2], (int) scene[0][6], (int) scene[1][6], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][6], (int) scene[1][6], (int) scene[0][7], (int) scene[1][7], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][7], (int) scene[1][7], (int) scene[0][3], (int) scene[1][3], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][3], (int) points[1][3], (int) points[0][2], (int) points[1][2], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][2], (int) points[1][2], (int) points[0][6], (int) points[1][6], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][6], (int) points[1][6], (int) points[0][7], (int) points[1][7], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][7], (int) points[1][7], (int) points[0][3], (int) points[1][3], framebuffer, outlineColor);
 
         //bottom: 7, 6, 5, 4
-        Lines.drawLine((int) scene[0][7], (int) scene[1][7], (int) scene[0][6], (int) scene[1][6], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][6], (int) scene[1][6], (int) scene[0][5], (int) scene[1][5], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][5], (int) scene[1][5], (int) scene[0][4], (int) scene[1][4], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][4], (int) scene[1][4], (int) scene[0][7], (int) scene[1][7], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][7], (int) points[1][7], (int) points[0][6], (int) points[1][6], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][6], (int) points[1][6], (int) points[0][5], (int) points[1][5], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][5], (int) points[1][5], (int) points[0][4], (int) points[1][4], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][4], (int) points[1][4], (int) points[0][7], (int) points[1][7], framebuffer, outlineColor);
 
         //back: 4, 5, 1, 0
-        Lines.drawLine((int) scene[0][4], (int) scene[1][4], (int) scene[0][5], (int) scene[1][5], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][5], (int) scene[1][5], (int) scene[0][1], (int) scene[1][1], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][1], (int) scene[1][1], (int) scene[0][0], (int) scene[1][0], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][0], (int) scene[1][0], (int) scene[0][4], (int) scene[1][4], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][4], (int) points[1][4], (int) points[0][5], (int) points[1][5], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][5], (int) points[1][5], (int) points[0][1], (int) points[1][1], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][1], (int) points[1][1], (int) points[0][0], (int) points[1][0], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][0], (int) points[1][0], (int) points[0][4], (int) points[1][4], framebuffer, outlineColor);
 
         //right: 2, 1, 5, 6
-        Lines.drawLine((int) scene[0][2], (int) scene[1][2], (int) scene[0][1], (int) scene[1][1], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][1], (int) scene[1][1], (int) scene[0][5], (int) scene[1][5], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][5], (int) scene[1][5], (int) scene[0][6], (int) scene[1][6], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][6], (int) scene[1][6], (int) scene[0][2], (int) scene[1][2], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][2], (int) points[1][2], (int) points[0][1], (int) points[1][1], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][1], (int) points[1][1], (int) points[0][5], (int) points[1][5], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][5], (int) points[1][5], (int) points[0][6], (int) points[1][6], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][6], (int) points[1][6], (int) points[0][2], (int) points[1][2], framebuffer, outlineColor);
 
         //left: 0, 3, 7, 4
-        Lines.drawLine((int) scene[0][0], (int) scene[1][0], (int) scene[0][3], (int) scene[1][3], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][3], (int) scene[1][3], (int) scene[0][7], (int) scene[1][7], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][7], (int) scene[1][7], (int) scene[0][4], (int) scene[1][4], framebuffer, outlineColor);
-        Lines.drawLine((int) scene[0][4], (int) scene[1][4], (int) scene[0][0], (int) scene[1][0], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][0], (int) points[1][0], (int) points[0][3], (int) points[1][3], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][3], (int) points[1][3], (int) points[0][7], (int) points[1][7], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][7], (int) points[1][7], (int) points[0][4], (int) points[1][4], framebuffer, outlineColor);
+        Lines.drawLine((int) points[0][4], (int) points[1][4], (int) points[0][0], (int) points[1][0], framebuffer, outlineColor);
     }
 
     //the starting coordinates of each point, and other info
@@ -74,12 +72,12 @@ public class SceneGraph extends MatrixMultiplication {
             {100,   100,    100,    100,    -100,   -100,   -100,   -100,   0,  0,  0,      0,      0,      0,  0}, //z 2
             {1,     1,      1,      1,      1,      1,      1,      1,      1,  1,  1,      1,      1,      1,  1}  //w 3                                        //w 3
     };
-    double[][] scene = new double[resetPt.length][resetPt[0].length];
+    double[][] points = new double[resetPt.length][resetPt[0].length];
 
     public void resetScene() {
-        for (int i = 0; i < scene.length; i++) {
-            for (int j = 0; j < scene[0].length; j++) {
-                scene[i][j] = resetPt[i][j];
+        for (int i = 0; i < points.length; i++) {
+            for (int j = 0; j < points[0].length; j++) {
+                points[i][j] = resetPt[i][j];
             }
         }
     }
@@ -107,7 +105,7 @@ public class SceneGraph extends MatrixMultiplication {
         for (int i = 0; i < 3; i++) {
             for (int j = 8; j < 14; j++) {
                 //vector - center
-                scene[i][j] = surfaceNormals[i][j - 8];
+                points[i][j] = surfaceNormals[i][j - 8];
             }
         }
         printSN();
@@ -162,9 +160,9 @@ public class SceneGraph extends MatrixMultiplication {
     //where o is the relative origin and k is the point of interest
     public double[] vectorSub(int k, int o) {
         //convert column into row
-        double[] pt = {scene[0][k], scene[1][k], scene[2][k]};
+        double[] pt = {points[0][k], points[1][k], points[2][k]};
         //aString(pt);
-        double[] og = {scene[0][o], scene[1][o], scene[2][o]};
+        double[] og = {points[0][o], points[1][o], points[2][o]};
         //aString(og);
         //return new double[] {scene[0][k], scene[1][k], scene[2][k]};
 
@@ -201,7 +199,7 @@ public class SceneGraph extends MatrixMultiplication {
 
     //STATIC TRANSFORMATION MATRICES
     //translation
-    public static double[][] bldTrans(double x, double y, double z) {
+    public double[][] bldTrans(double x, double y, double z) {
         return new double[][] {
                 {1, 0, 0, x},
                 {0, 1, 0, y},
@@ -210,7 +208,7 @@ public class SceneGraph extends MatrixMultiplication {
         };
     }
     //scaling
-    public static double[][] bldScale(double x, double y, double z) {
+    public double[][] bldScale(double x, double y, double z) {
         return new double[][] {
                 {x, 0, 0, 0},
                 {0, y, 0, 0},
@@ -219,7 +217,7 @@ public class SceneGraph extends MatrixMultiplication {
         };
     }
     //rotX
-    public static double[][] bldX(double angle) {
+    public double[][] bldX(double angle) {
         return new double[][]{
                 {1, 0, 0, 0},
                 {0, Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)), 0},
@@ -228,7 +226,7 @@ public class SceneGraph extends MatrixMultiplication {
         };
     }
     //rotY
-    public static double[][] bldY(double angle) {
+    public double[][] bldY(double angle) {
         return new double[][]{
                 {Math.cos(Math.toRadians(angle)), 0, Math.sin(Math.toRadians(angle)), 0},
                 {0, 1, 0, 0},
@@ -237,7 +235,7 @@ public class SceneGraph extends MatrixMultiplication {
         };
     }
     //rotZ
-    public static double[][] bldZ(double angle) {
+    public double[][] bldZ(double angle) {
         return new double[][]{
                 {Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)), 0, 0},
                 {Math.sin(Math.toRadians(angle)), Math.cos(Math.toRadians(angle)), 0, 0},
@@ -246,48 +244,37 @@ public class SceneGraph extends MatrixMultiplication {
         };
     }
 
-    //testing
-    public static void printMat(double[][]a) {
-        for (double[] doubles : a) {
-            for (int j = 0; j < a[0].length; j++) {
-                System.out.printf("%7.2f ", doubles[j]); // 7.2f = 7 spaces, 2 digits to the right of the decimal, floating point representation
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
-
     public double[] getCenter() {
-        return new double[] {scene[0][14], scene[1][14], scene[2][14]};
+        return new double[] {points[0][14], points[1][14], points[2][14]};
     }
     public double[] getCenterNeg() {
-        return new double[] {-scene[0][14], -scene[1][14], -scene[2][14]};
+        return new double[] {-points[0][14], -points[1][14], -points[2][14]};
     }
 
     // TRANSFORMATIONS
     public void translation(double x, double y, double z) {
-        scene = matMult((bldTrans(x, y, z)), scene);
+        points = matMult((bldTrans(x, y, z)), points);
     }
 
     public void toOrigin() {
         double[] center = getCenterNeg();
-        scene = matMult(bldTrans(center[0], center[1], center[2]), scene);
+        points = matMult(bldTrans(center[0], center[1], center[2]), points);
     }
     //take an old stored center
     public void toOldCenter(double[] a) {
-        scene = matMult((bldTrans(a[0], a[1], a[2])), scene);
+        points = matMult((bldTrans(a[0], a[1], a[2])), points);
     }
 
     //requires other multiplications
     public void scaling(double x, double y, double z) {
         double[] oldCenter = getCenter();
         toOrigin();
-        scene = matMult(bldScale(x, y, z), scene);
+        points = matMult(bldScale(x, y, z), points);
         toOldCenter(oldCenter);
     }
     public void scaling(double x, double y, double z, double X, double Y, double Z) {
         translation(-X, -Y, -Z);
-        scene = matMult(bldScale(x, y, z), scene);
+        points = matMult(bldScale(x, y, z), points);
         translation(X, Y, Z);
     }
 
@@ -296,12 +283,12 @@ public class SceneGraph extends MatrixMultiplication {
     public void rotateX(double angle) {
         double[] oldCenter = getCenter();
         toOrigin();
-        scene = matMult(bldX(angle), scene);
+        points = matMult(bldX(angle), points);
         toOldCenter(oldCenter);
     }
     public void rotateX(double angle, double x, double y, double z) {
         translation(-x, -y, -z);
-        scene = matMult(bldX(angle), scene);
+        points = matMult(bldX(angle), points);
         translation(x, y, z);
     }
 
@@ -309,12 +296,12 @@ public class SceneGraph extends MatrixMultiplication {
     public void rotateY(double angle) {
         double[] oldCenter = getCenter();
         toOrigin();
-        scene = matMult(bldY(angle), scene);
+        points = matMult(bldY(angle), points);
         toOldCenter(oldCenter);
     }
     public void rotateY(double angle, double x, double y, double z) {
         translation(-x, -y, -z);
-        scene = matMult(bldY(angle), scene);
+        points = matMult(bldY(angle), points);
         translation(x, y, z);
     }
 
@@ -322,17 +309,14 @@ public class SceneGraph extends MatrixMultiplication {
     public void rotateZ(double angle) {
         double[] oldCenter = getCenter();
         toOrigin();
-        scene = matMult(bldZ(angle), scene);
+        points = matMult(bldZ(angle), points);
         toOldCenter(oldCenter);
     }
     public void rotateZ(double angle, double x, double y, double z) {
         translation(-x, -y, -z);
-        scene = matMult(bldZ(angle), scene);
+        points = matMult(bldZ(angle), points);
         translation(x, y, z);
     }
-
-    //ARBITRARY
-    double[][] M; // -- the transformation matrix
 
     // -- p is the fixed point x, y, z
     //    angle is rotation angle in degrees
@@ -399,12 +383,6 @@ public class SceneGraph extends MatrixMultiplication {
         };
 
         // -- build the final matrix
-        M = matMult(Rx, T);
-        M = matMult(Ry, M);
-        M = matMult(Rz, M);
-        M = matMult(Riy, M);
-        M = matMult(Rix, M);
-        M = matMult(Ti, M);
-        scene = matMult(M, scene);
+        points = matMulti(new double[][][] {Ti, Rix, Riy, Rz, Ry, Rx, T, points});
     }
 }
