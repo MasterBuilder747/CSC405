@@ -10,7 +10,7 @@ package Homework.HW9HiddenSurfaceRemoval;
 
 public class SceneGraph {
 
-    //this scenegraph's size
+    //this scenegraph's size is the framebuffer size
     int w;
     int h;
 
@@ -24,13 +24,15 @@ public class SceneGraph {
         this.h = y;
     }
 
-    public void addCube() {
+    public void addCube(int size) {
+        //this would later add to the ArrayList
         this.c = new Cube(this.w, this.h);
+        c.setSize(size);
     }
 
     //render the lines at those coordinates
     //this renders each square
-    public void render(int[][] fb, int fillCOlor, int outlineColor) { //add int index for which cube later
-        this.c.render(fb, fillCOlor, outlineColor);
+    public void renderCube(int[][] fb) { //add int index for which cube later
+        this.c.render(fb);
     }
 }

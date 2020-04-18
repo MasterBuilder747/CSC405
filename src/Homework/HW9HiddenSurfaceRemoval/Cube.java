@@ -97,32 +97,25 @@ public class Cube extends Polygon {
         return new double[] {pt[0] - og[0], pt[1] - og[1], pt[2] - og[2]};
     }
 
-    //render the lines at those coordinates
-    //this renders each square
-    public void render(int[][] fb, int fillColor, int outColor) {
-        int outlineColor = 255;
+    public void render(int[][] fb) {
+        //these may be definable later
+        int outColor = 255;
         int[] surfaceColor = {255, 192, 255, 192, 128, 128};
 
-        //renderWire(outColor);
-        //fill(this.fb, 0, fillColor);
-        //renderWire(outColor);
-
-        updateFB(this.fb, fb);
-    }
-
-    public void renderWire(int[][] fb, int outColor) {
-        //top (default): 0, 1, 2, 3
-
+        //top: 0, 1, 2, 3
+        squares[0].render(fb, this.points, 0, 1, 2, 3, surfaceColor[0], outColor);
         //front: 3, 2, 6, 7
-
+        squares[1].render(fb, this.points, 0, 1, 2, 3, surfaceColor[1], outColor);
         //bottom: 7, 6, 5, 4
-
+        squares[2].render(fb, this.points, 0, 1, 2, 3, surfaceColor[2], outColor);
         //back: 4, 5, 1, 0
-
+        squares[3].render(fb, this.points, 0, 1, 2, 3, surfaceColor[3], outColor);
         //right: 2, 1, 5, 6
-
+        squares[4].render(fb, this.points, 0, 1, 2, 3, surfaceColor[4], outColor);
         //left: 0, 3, 7, 4
+        squares[5].render(fb, this.points, 0, 1, 2, 3, surfaceColor[5], outColor);
 
+        //update the scenegraph's framebuffer
         updateFB(this.fb, fb);
     }
 }

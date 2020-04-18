@@ -10,35 +10,26 @@ package Homework.HW9HiddenSurfaceRemoval;
 
 public class Square extends Polygon {
 
-    final int SIDES = 4;
-    Point[] points = new Point[SIDES];
-
+    //internal framebuffer
     int[][] fb;
 
     public Square(int x, int y) {
         this.fb = new int[x][y];
     }
 
-    public void add(int i, Point p) {
-        if (i > -1 && i < this.SIDES) {
-            this.points[i] = p;
-        }
-    }
-
-    //render the lines at those coordinates
-    //this renders each square
-    public void renderFill(int[][] fb, int fillColor, int outColor) {
+    public void render(int[][] fb, double[][] points, int a, int b, int c, int d, int fillColor, int outColor) {
+        //write the render to this individual surface's framebuffer
+        renderWire(points, a, b, c, d, outColor);
         fill(this.fb, 0, fillColor);
-
+        //update the cube's framebuffer with the filled square
         updateFB(this.fb, fb);
     }
 
-    public void renderWire(int[][] fb, int a, int b, int c, int d, int outColor) {
-        drawLine(points[a], points[b], this.fb, outColor);
-        drawLine(points[b], points[c], this.fb, outColor);
-        drawLine(points[c], points[d], this.fb, outColor);
-        drawLine(points[d], points[a], this.fb, outColor);
-        updateFB(this.fb, fb);
+    public void renderWire(double[][] points, int a, int b, int c, int d, int outColor) {
+        drawLine((int)points[0][a], (int)points[1][a], (int)points[0][b], (int)points[1][b], this.fb, outColor);
+        drawLine((int)points[0][b], (int)points[1][b], (int)points[0][c], (int)points[1][c], this.fb, outColor);
+        drawLine((int)points[0][c], (int)points[1][c], (int)points[0][d], (int)points[1][d], this.fb, outColor);
+        drawLine((int)points[0][d], (int)points[1][d], (int)points[0][a], (int)points[1][a], this.fb, outColor);
     }
 }
 
