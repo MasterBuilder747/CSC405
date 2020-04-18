@@ -15,9 +15,10 @@ public class Cube extends Polygon {
 
     int[][] fb;
     double[][] points;
-    double[][] surfaceNormals;
+    Transformations t;
 
     public Cube(int x, int y) {
+        //set points
         this.points = new double[][] {
                 //4x15 size
                 //[rowID][colID]
@@ -30,11 +31,14 @@ public class Cube extends Polygon {
         this.calculateSN();
         this.calculateCenter();
 
+        //set individual frame buffers
         this.fb = new int[x][y];
-
         for (int i = 0; i < this.SQUARES; i++) {
             this.squares[i] = new Square(x, y);
         }
+
+        //allows for this particular cube to be transformed on its own set of points
+        this.t = new Transformations(this.points);
     }
 
     public void setSize(int size) {
@@ -93,43 +97,32 @@ public class Cube extends Polygon {
         return new double[] {pt[0] - og[0], pt[1] - og[1], pt[2] - og[2]};
     }
 
-    //    public void updateSNScale() {
-//        //this particular version of the function is only used when scaling,
-//        //an extra step is needed when calculating the surface normals
-//
-//        //the surface normals are updated based on the current center point
-//        //so you can store these current calculated values in a separate array
-//        //this is surfaceNormals
-//
-//        //points 8-13
-//        //T,   F,   Bo,  Ba,   R,    L
-//        for (int i = 0; i < 3; i++) {
-//            for (int j = 8; j < 14; j++) {
-//                //cross / mag
-//
-//            }
-//        }
-//    }
-//    public void printSNScale() {
-//        updateSNScale();
-//        System.out.println("Surface normals: ");
-//        printMat(surfaceNormals);
-//    }
-
     //render the lines at those coordinates
     //this renders each square
     public void render(int[][] fb, int fillColor, int outColor) {
         int outlineColor = 255;
         int[] surfaceColor = {255, 192, 255, 192, 128, 128};
 
-        renderWire(outColor);
+        //renderWire(outColor);
         //fill(this.fb, 0, fillColor);
-        renderWire(outColor);
+        //renderWire(outColor);
 
         updateFB(this.fb, fb);
     }
 
-    public void renderWire(int outColor) {
+    public void renderWire(int[][] fb, int outColor) {
+        //top (default): 0, 1, 2, 3
 
+        //front: 3, 2, 6, 7
+
+        //bottom: 7, 6, 5, 4
+
+        //back: 4, 5, 1, 0
+
+        //right: 2, 1, 5, 6
+
+        //left: 0, 3, 7, 4
+
+        updateFB(this.fb, fb);
     }
 }

@@ -12,6 +12,10 @@ public class Transformations extends Matrix {
 
     double[][] points;
 
+    public Transformations(double[][] points) {
+        this.points = points;
+    }
+
     //STATIC TRANSFORMATION MATRICES
     //translation
     public double[][] bldTrans(double x, double y, double z) {

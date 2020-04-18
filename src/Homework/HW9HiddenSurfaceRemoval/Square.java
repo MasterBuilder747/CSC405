@@ -27,19 +27,18 @@ public class Square extends Polygon {
 
     //render the lines at those coordinates
     //this renders each square
-    public void render(int[][] fb, int fillColor, int outColor) {
-        renderWire(outColor);
+    public void renderFill(int[][] fb, int fillColor, int outColor) {
         fill(this.fb, 0, fillColor);
-        renderWire(outColor);
 
         updateFB(this.fb, fb);
     }
 
-    public void renderWire(int outColor) {
-        drawLine(points[0], points[1], this.fb, outColor);
-        drawLine(points[1], points[2], this.fb, outColor);
-        drawLine(points[2], points[3], this.fb, outColor);
-        drawLine(points[3], points[0], this.fb, outColor);
+    public void renderWire(int[][] fb, int a, int b, int c, int d, int outColor) {
+        drawLine(points[a], points[b], this.fb, outColor);
+        drawLine(points[b], points[c], this.fb, outColor);
+        drawLine(points[c], points[d], this.fb, outColor);
+        drawLine(points[d], points[a], this.fb, outColor);
+        updateFB(this.fb, fb);
     }
 }
 
