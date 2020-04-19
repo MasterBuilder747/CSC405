@@ -17,31 +17,14 @@ public class Cube extends Polygon {
     double[][] points;
     Transformations t;
 
-    public Cube(int x, int y) {
+    int x;
+    int y;
+
+    public Cube(int x, int y, int size) {
+        this.x = x;
+        this.y = y;
+
         //set points
-        this.points = new double[][] {
-                //4x15 size
-                //[rowID][colID]
-                //pt1-8, 9-13: surface normals, 14: centroid point
-                {-1, 1, 1, -1, -1, 1, 1, -1, 0, 0, 0, 0, 0, 0, 0}, //x 0
-                {-1, -1, 1, 1, -1, -1, 1, 1, 0, 0, 0, 0, 0, 0, 0}, //y 1
-                {1, 1, 1, 1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0}, //z 2
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}  //w 3
-        };
-        this.calculateSN();
-        this.calculateCenter();
-
-        //set individual frame buffers
-        this.fb = new int[x][y];
-        for (int i = 0; i < this.SQUARES; i++) {
-            this.squares[i] = new Square(x, y);
-        }
-
-        //allows for this particular cube to be transformed on its own set of points
-        this.t = new Transformations(this.points);
-    }
-
-    public void setSize(int size) {
         this.points = new double[][] {
                 //4x15 size
                 //[rowID][colID]
@@ -51,7 +34,30 @@ public class Cube extends Polygon {
                 {size, size, size, size, -size, -size, -size, -size, 0, 0, 0, 0, 0, 0, 0}, //z 2
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}  //w 3
         };
+        this.calculateSN();
+        this.calculateCenter();
+
+        //allows for this particular cube to be transformed on its own set of points
+        this.t = new Transformations(this.points);
+
+        //set individual frame buffers
+        this.fb = new int[x][y];
+        for (int i = 0; i < this.SQUARES; i++) {
+            this.squares[i] = new Square(x, y);
+        }
     }
+
+    /*
+    this.points = new double[][] {
+                //4x15 size
+                //[rowID][colID]
+                //pt1-8, 9-13: surface normals, 14: centroid point
+                {-1, 1, 1, -1, -1, 1, 1, -1, 0, 0, 0, 0, 0, 0, 0}, //x 0
+                {-1, -1, 1, 1, -1, -1, 1, 1, 0, 0, 0, 0, 0, 0, 0}, //y 1
+                {1, 1, 1, 1, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0}, //z 2
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}  //w 3
+    };
+    */
 
     //initial calculations during construction
     //center
@@ -65,17 +71,17 @@ public class Cube extends Polygon {
     //surface normals
     public void calculateSN() {
         //top: 3: 2, 0
-        setSurfaceNormals(3, 0, 2, 8);
+        this.setSurfaceNormals(3, 0, 2, 8);
         //front: 7: 6, 3
-        setSurfaceNormals(7, 3, 6, 9);
+        this.setSurfaceNormals(7, 3, 6, 9);
         //bottom: 4, 5, 7
-        setSurfaceNormals(4, 7, 5, 10);
+        this.setSurfaceNormals(4, 7, 5, 10);
         //back: 0: 1, 4
-        setSurfaceNormals(0, 4, 1, 11);
+        this.setSurfaceNormals(0, 4, 1, 11);
         //right: 6: 5, 2
-        setSurfaceNormals(6, 2, 5, 12);
+        this.setSurfaceNormals(6, 2, 5, 12);
         //left: 4: 7, 0
-        setSurfaceNormals(4, 0, 7, 13);
+        this.setSurfaceNormals(4, 0, 7, 13);
     }
     public void setSurfaceNormals(int o, int a, int b, int i) {
         //cross product of two vector lengths on each face
@@ -91,8 +97,8 @@ public class Cube extends Polygon {
     }
     public double[] vectorSub(int k, int o) {
         //convert column into row
-        double[] pt = {points[0][k], points[1][k], points[2][k]};
-        double[] og = {points[0][o], points[1][o], points[2][o]};
+        double[] pt = {this.points[0][k], this.points[1][k], this.points[2][k]};
+        double[] og = {this.points[0][o], this.points[1][o], this.points[2][o]};
 
         return new double[] {pt[0] - og[0], pt[1] - og[1], pt[2] - og[2]};
     }
@@ -100,22 +106,30 @@ public class Cube extends Polygon {
     public void render(int[][] fb) {
         //these may be definable later
         int outColor = 255;
+        //the custom fill colors
         int[] surfaceColor = {255, 192, 255, 192, 128, 128};
 
-        //top: 0, 1, 2, 3
-        squares[0].render(fb, this.points, 0, 1, 2, 3, surfaceColor[0], outColor);
-        //front: 3, 2, 6, 7
-        squares[1].render(fb, this.points, 0, 1, 2, 3, surfaceColor[1], outColor);
-        //bottom: 7, 6, 5, 4
-        squares[2].render(fb, this.points, 0, 1, 2, 3, surfaceColor[2], outColor);
-        //back: 4, 5, 1, 0
-        squares[3].render(fb, this.points, 0, 1, 2, 3, surfaceColor[3], outColor);
-        //right: 2, 1, 5, 6
-        squares[4].render(fb, this.points, 0, 1, 2, 3, surfaceColor[4], outColor);
-        //left: 0, 3, 7, 4
-        squares[5].render(fb, this.points, 0, 1, 2, 3, surfaceColor[5], outColor);
+        this.clearFB();
 
+        //top: 0, 1, 2, 3
+        squares[0].render(this.fb, this.t.points, 0, 1, 2, 3, surfaceColor[0], outColor);
+        //front: 3, 2, 6, 7
+        squares[1].render(this.fb, this.t.points, 3, 2, 6, 7, surfaceColor[1], outColor);
+        //bottom: 7, 6, 5, 4
+        squares[2].render(this.fb, this.t.points, 7, 6, 5, 4, surfaceColor[2], outColor);
+        //back: 4, 5, 1, 0
+        squares[3].render(this.fb, this.t.points, 4, 5, 1, 0, surfaceColor[3], outColor);
+        //right: 2, 1, 5, 6
+        squares[4].render(this.fb, this.t.points, 2, 1, 5, 6, surfaceColor[4], outColor);
+        //left: 0, 3, 7, 4
+        squares[5].render(this.fb, this.t.points, 0, 3, 7, 4, surfaceColor[5], outColor);
+
+        //this.points = this.t.points;
         //update the scenegraph's framebuffer
         updateFB(this.fb, fb);
+    }
+
+    public void clearFB() {
+        this.fb = new int[x][y];
     }
 }

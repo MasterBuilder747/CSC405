@@ -26,13 +26,6 @@ public class SceneGraph {
 
     public void addCube(int size) {
         //this would later add to the ArrayList
-        this.c = new Cube(this.w, this.h);
-        c.setSize(size);
-    }
-
-    //render the lines at those coordinates
-    //this renders each square
-    public void renderCube(int[][] fb) { //add int index for which cube later
-        this.c.render(fb);
+        this.c = new Cube(this.w, this.h, size);
     }
 }

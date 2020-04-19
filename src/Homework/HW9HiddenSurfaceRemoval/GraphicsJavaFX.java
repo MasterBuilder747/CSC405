@@ -342,7 +342,8 @@ public class GraphicsJavaFX extends Application {
 
                         //resets the shape as well
                         sg.addCube(100);
-                        sg.renderCube(graphicsCanvas.renderSurface.getSurface());
+                        //sg.c.t.printPoints();
+                        sg.c.render(graphicsCanvas.renderSurface.getSurface());
 
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
@@ -368,19 +369,21 @@ public class GraphicsJavaFX extends Application {
                         double x;
                         double y;
                         double z;
-//                        try {
+                        try {
                             if (but2[0] != null || but2[1] != null || but2[2] != null) {
                                 x = Double.parseDouble(but2[0]);
                                 y = Double.parseDouble(but2[1]);
                                 z = Double.parseDouble(but2[2]);
-                                graphicsCanvas.renderSurface.clearSurface();
 
-                                //sg.translation(x, y, z);
+                                graphicsCanvas.renderSurface.clearSurface();
+                                sg.c.t.translation(x, y, z);
+                                sg.c.render(graphicsCanvas.renderSurface.getSurface());
+
                                 System.out.println("Translated by " + x + ", " + y + ", " + z);
                             }
-//                        } catch (Exception e) {
-//                            System.out.println("Requires 3 doubles: x, y, and z comma separated from the last textbox.");
-//                        }
+                        } catch (Exception e) {
+                            System.out.println("Requires 3 doubles: x, y, and z comma separated from the last textbox.");
+                        }
 
                         //sg.render(graphicsCanvas.renderSurface.getSurface());
 
@@ -422,8 +425,8 @@ public class GraphicsJavaFX extends Application {
                                             System.out.println("for scaling: x, y, and z cannot be 0 as dimensions will be reduced. Use 1 to keep the same scale by that axis");
                                         } else {
                                             graphicsCanvas.renderSurface.clearSurface();
-                                            //sg.scaling(x, y, z);
-                                            //sg.render(graphicsCanvas.renderSurface.getSurface());
+                                            sg.c.t.scaling(x, y, z);
+                                            sg.c.render(graphicsCanvas.renderSurface.getSurface());
                                             graphicsCanvas.renderSurface.insertArray();
                                             graphicsCanvas.repaint();
                                             System.out.println("Scaled object by " + x + ", " + y + ", " + z);
@@ -455,8 +458,8 @@ public class GraphicsJavaFX extends Application {
                                     System.out.println("for fixed/scaling: x, y cannot be 0.");
                                 } else {
                                     graphicsCanvas.renderSurface.clearSurface();
-                                    //sg.scaling(sx, sy, sz, fx, fy, fz);
-                                    //sg.render(graphicsCanvas.renderSurface.getSurface());
+                                    sg.c.t.scaling(sx, sy, sz, fx, fy, fz);
+                                    sg.c.render(graphicsCanvas.renderSurface.getSurface());
                                     graphicsCanvas.renderSurface.insertArray();
                                     graphicsCanvas.repaint();
                                     System.out.println("Scaled object by " + sx + ", " + sy + ", " + sz + " from fixed point " + fx + ", " + fy + ", " + fz);
@@ -497,8 +500,8 @@ public class GraphicsJavaFX extends Application {
                                 if (but1 != null) {
                                     graphicsCanvas.renderSurface.clearSurface();
                                     angle = Double.parseDouble(but1);
-                                    //sg.rotateX(angle);
-                                    //sg.render(graphicsCanvas.renderSurface.getSurface());
+                                    sg.c.t.rotateX(angle);
+                                    sg.c.render(graphicsCanvas.renderSurface.getSurface());
                                     graphicsCanvas.renderSurface.insertArray();
                                     graphicsCanvas.repaint();
                                     System.out.println("Rotate along the x axis by " + angle + " degrees.");
@@ -518,8 +521,8 @@ public class GraphicsJavaFX extends Application {
                                 if (but1 != null) {
                                     graphicsCanvas.renderSurface.clearSurface();
                                     angle = Double.parseDouble(but1);
-                                    //sg.rotateX(angle, x, y, z); //z will be passed for cube
-                                    //sg.render(graphicsCanvas.renderSurface.getSurface());
+                                    sg.c.t.rotateX(angle, x, y, z); //z will be passed for cube
+                                    sg.c.render(graphicsCanvas.renderSurface.getSurface());
                                     graphicsCanvas.renderSurface.insertArray();
                                     graphicsCanvas.repaint();
                                     System.out.println("Rotate along the x axis by " + angle + " degrees via fixed point " + x + ", " + y + ", " + z);
@@ -559,8 +562,8 @@ public class GraphicsJavaFX extends Application {
                                 if (but1 != null) {
                                     graphicsCanvas.renderSurface.clearSurface();
                                     angle = Double.parseDouble(but1);
-                                    //sg.rotateY(angle);
-                                    //sg.render(graphicsCanvas.renderSurface.getSurface());
+                                    sg.c.t.rotateY(angle);
+                                    sg.c.render(graphicsCanvas.renderSurface.getSurface());
                                     graphicsCanvas.renderSurface.insertArray();
                                     graphicsCanvas.repaint();
                                     System.out.println("Rotate along the y axis by " + angle + " degrees.");
@@ -579,8 +582,8 @@ public class GraphicsJavaFX extends Application {
                                 if (but1 != null) {
                                     graphicsCanvas.renderSurface.clearSurface();
                                     angle = Double.parseDouble(but1);
-                                    //sg.rotateY(angle, x, y, z); //z will be passed for cube
-                                    //sg.render(graphicsCanvas.renderSurface.getSurface());
+                                    sg.c.t.rotateY(angle, x, y, z); //z will be passed for cube
+                                    sg.c.render(graphicsCanvas.renderSurface.getSurface());
                                     graphicsCanvas.renderSurface.insertArray();
                                     graphicsCanvas.repaint();
                                     System.out.println("Rotate along the y axis by " + angle + " degrees via fixed point " + x + ", " + y + ", " + z);
@@ -619,8 +622,8 @@ public class GraphicsJavaFX extends Application {
                                 if (but1 != null) {
                                     graphicsCanvas.renderSurface.clearSurface();
                                     angle = Double.parseDouble(but1);
-                                    //sg.rotateZ(angle);
-                                    //sg.render(graphicsCanvas.renderSurface.getSurface());
+                                    sg.c.t.rotateZ(angle);
+                                    sg.c.render(graphicsCanvas.renderSurface.getSurface());
                                     graphicsCanvas.renderSurface.insertArray();
                                     graphicsCanvas.repaint();
                                     System.out.println("Rotate along the z axis by " + angle + " degrees.");
@@ -639,8 +642,8 @@ public class GraphicsJavaFX extends Application {
                                 if (but1 != null) {
                                     graphicsCanvas.renderSurface.clearSurface();
                                     angle = Double.parseDouble(but1);
-                                    //sg.rotateZ(angle, x, y, z); //z will be passed for cube
-                                    //sg.render(graphicsCanvas.renderSurface.getSurface());
+                                    sg.c.t.rotateZ(angle, x, y, z); //z will be passed for cube
+                                    sg.c.render(graphicsCanvas.renderSurface.getSurface());
                                     graphicsCanvas.renderSurface.insertArray();
                                     graphicsCanvas.repaint();
                                     System.out.println("Rotate along the z axis by " + angle + " degrees via fixed point " + x + ", " + y + ", " + z);
@@ -691,8 +694,8 @@ public class GraphicsJavaFX extends Application {
                                 System.out.println("Axis of rotation cannot be 0, 0, 0.");
                             } else {
                                 graphicsCanvas.renderSurface.clearSurface();
-                                //sg.arbitrary(new double[]{fx, fy, fz}, angle, new double[]{ax, ay, az});
-                                //sg.render(graphicsCanvas.renderSurface.getSurface());
+                                sg.c.t.arbitrary(new double[]{fx, fy, fz}, angle, new double[]{ax, ay, az});
+                                sg.c.render(graphicsCanvas.renderSurface.getSurface());
                                 graphicsCanvas.renderSurface.insertArray();
                                 graphicsCanvas.repaint();
                                 System.out.println("Rotated along arbitrary axis of <" + ax + ", " + ay + ", " + az + "> by " + angle + " degrees around fixed point " + fx + ", " + fy + ", " + fz + ".");
