@@ -54,4 +54,14 @@ public class Matrix {
         }
         System.out.println();
     }
+
+    public static void printMat(int[][]a) {
+        for (int[] ints : a) {
+            for (int j = 0; j < a[0].length; j++) {
+                System.out.print(ints[j] + ",");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
 }

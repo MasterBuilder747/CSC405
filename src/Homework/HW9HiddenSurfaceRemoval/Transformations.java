@@ -26,7 +26,7 @@ public class Transformations extends Matrix {
     }
 
     public void toOrigin() {
-        double[] center = getCenterNeg();
+        double[] center = this.getCenterNeg();
         this.points = matMult(this.bldTrans(center[0], center[1], center[2]), this.points);
     }
     //take an old stored center
@@ -173,8 +173,8 @@ public class Transformations extends Matrix {
                 {0, 0, 0, 1}
         };
     }
-    //rotX
-    public double[][] bldX(double angle) {
+    //rotY
+    public double[][] bldY(double angle) {
         return new double[][]{
                 {1, 0, 0, 0},
                 {0, Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)), 0},
@@ -182,8 +182,8 @@ public class Transformations extends Matrix {
                 {0, 0, 0, 1}
         };
     }
-    //rotY
-    public double[][] bldY(double angle) {
+    //rotX
+    public double[][] bldX(double angle) {
         return new double[][]{
                 {Math.cos(Math.toRadians(angle)), 0, Math.sin(Math.toRadians(angle)), 0},
                 {0, 1, 0, 0},

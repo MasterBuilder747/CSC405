@@ -252,7 +252,7 @@ public class GraphicsJavaFX extends Application {
 
         private Button buttons[];
         //total amount of elements, textboxes and buttons
-        private int nButtons = 11;
+        private int nButtons = 13;
 
         //textbox objects that store the text
         private TextField button0;
@@ -342,7 +342,6 @@ public class GraphicsJavaFX extends Application {
 
                         //resets the shape as well
                         sg.addCube(100);
-                        //sg.c.t.printPoints();
                         sg.c.render(graphicsCanvas.renderSurface.getSurface());
 
                         graphicsCanvas.renderSurface.insertArray();
@@ -706,6 +705,40 @@ public class GraphicsJavaFX extends Application {
                             System.out.println("Requires a fixed point of x, y, z in the top textbox;");
                             System.out.println("one angle in degrees in the middle textbox;");
                             System.out.println("and a vector for the arbitrary axis of rotation in <x, y, z> in the bottom textbox.");
+                        }
+                    }
+                }
+            });
+
+            i = 11;
+            buttons[i] = new Button();
+            buttons[i].setMnemonicParsing(true);
+            buttons[i].setText("Print Points");
+            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if (actionEvent.getSource() == buttons[11]) {
+                        try {
+                            sg.c.t.printPoints();
+                        } catch (Exception e) {
+                            System.out.println("Object does not exist. Create it first.");
+                        }
+                    }
+                }
+            });
+
+            i = 12;
+            buttons[i] = new Button();
+            buttons[i].setMnemonicParsing(true);
+            buttons[i].setText("Print Framebuffer");
+            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    if (actionEvent.getSource() == buttons[12]) {
+                        try {
+                            Matrix.printMat(graphicsCanvas.renderSurface.getSurface());
+                        } catch (Exception e) {
+                            System.out.println("Framebuffer does not exist. Create it first.");
                         }
                     }
                 }
