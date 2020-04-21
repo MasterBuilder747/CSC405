@@ -130,37 +130,37 @@ public class Cube extends Polygon {
         //x, y, z
         //0, 0, 1 (only one shown: aka the viewer vector)
         if (this.t.points[2][8] > 0 && this.t.points[2][8] < 1.00000000001) {
-            System.out.println("render top");
+            //System.out.println("render top");
             squares[0].render(this.fb, this.t.points, 0, 1, 2, 3, surfaceColor[0], outColor);
         }
         //front: 3, 2, 6, 7
         //0, 1, 0
         if (this.t.points[2][9] > 0 && this.t.points[2][9] < 1.00000000001) {
-            System.out.println("render front");
+            //System.out.println("render front");
             squares[1].render(this.fb, this.t.points, 3, 2, 6, 7, surfaceColor[1], outColor);
         }
         //bottom: 7, 6, 5, 4
         //0, 0, -1
         if (this.t.points[2][10] > 0 && this.t.points[2][10] < 1.00000000001) {
-            System.out.println("render bottom");
+            //System.out.println("render bottom");
             squares[2].render(this.fb, this.t.points, 7, 6, 5, 4, surfaceColor[2], outColor);
         }
         //back: 4, 5, 1, 0
         //0, -1, 0
         if (this.t.points[2][11] > 0 && this.t.points[2][11] < 1.00000000001) {
-            System.out.println("render back");
+            //System.out.println("render back");
             squares[3].render(this.fb, this.t.points, 4, 5, 1, 0, surfaceColor[3], outColor);
         }
         //right: 2, 1, 5, 6
         //1, 0, 0
         if (this.t.points[2][12] > 0 && this.t.points[2][12] < 1.00000000001) {
-            System.out.println("render right");
+            //System.out.println("render right");
             squares[4].render(this.fb, this.t.points, 2, 1, 5, 6, surfaceColor[4], outColor);
         }
         //left: 0, 3, 7, 4
         //-1, 0, 0
         if (this.t.points[2][13] > 0 && this.t.points[2][13] < 1.00000000001) {
-            System.out.println("render left");
+            //System.out.println("render left");
             squares[5].render(this.fb, this.t.points, 0, 3, 7, 4, surfaceColor[5], outColor);
         }
 
