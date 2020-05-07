@@ -2,8 +2,6 @@ package FinalProject;
 
 public class LinesCurved {
 
-    final static double PI = Math.PI;
-
     //note that this only works for an exact circle (with equal radius), not a ellipsoid
     public static void drawCircle(Point c, int radius, int[][] fb, int color)
             throws NullPointerException, ArrayIndexOutOfBoundsException {
