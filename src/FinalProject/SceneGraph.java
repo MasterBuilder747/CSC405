@@ -11,6 +11,8 @@ package FinalProject;
 public class SceneGraph {
 
     //this scenegraph's size is the framebuffer size
+    //but it does not store a framebuffer,
+    //but instead initializes the framebuffer sizes of its objects
     int w;
     int h;
 

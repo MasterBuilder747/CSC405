@@ -1,5 +1,7 @@
 package FinalProject;
 
+import javafx.scene.paint.Color;
+
 public class Circle extends Polygon {
     int[][] fb;
     int x;
@@ -11,7 +13,7 @@ public class Circle extends Polygon {
         this.fb = new int[x][y];
     }
 
-    public void render(int[][] fb, int cx, int cy, int radius, int fillColor, int outColor) {
+    public void render(int[][] fb, int cx, int cy, int radius, int fillColor, Color outColor) {
         this.clearFB();
         //write the render to this individual surface's framebuffer
         LinesCurved.drawCircle(new Point(cx, cy), radius, this.fb, outColor);

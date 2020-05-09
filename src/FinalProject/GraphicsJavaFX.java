@@ -94,8 +94,7 @@ public class GraphicsJavaFX extends Application {
     }
 
     // -- key handlers belong to the Pane
-    private void prepareActionHandlers(Pane container)
-    {
+    private void prepareActionHandlers(Pane container) {
         // -- key listeners belong to Pane
         container.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -114,7 +113,7 @@ public class GraphicsJavaFX extends Application {
     }
 
     // -- Inner class for Graphics
-    public class GraphicsCanvasInner extends Canvas  {
+    public class GraphicsCanvasInner extends Canvas {
 
         private GraphicsContext graphicsContext;
         private RenderSurface renderSurface;
@@ -148,8 +147,10 @@ public class GraphicsJavaFX extends Application {
                 @Override
                 public void handle(MouseEvent event) {
                     if (event.getButton() == MouseButton.PRIMARY) {
+
                     }
                     else if (event.getButton() == MouseButton.SECONDARY) {
+
                     }
                     pane.requestFocus();
                 }
@@ -158,8 +159,10 @@ public class GraphicsJavaFX extends Application {
                 @Override
                 public void handle(MouseEvent event) {
                     if (event.getButton() == MouseButton.PRIMARY) {
+
                     }
                     else if (event.getButton() == MouseButton.SECONDARY) {
+
                     }
                     pane.requestFocus();
                     repaint();
@@ -342,7 +345,7 @@ public class GraphicsJavaFX extends Application {
 
                         //resets the shape as well
                         sg.addCircle();
-                        sg.circle.render(graphicsCanvas.renderSurface.getSurface(), 256, 256, 100, 255, 255);
+                        //sg.circle.render(graphicsCanvas.renderSurface.getSurface(), 256, 256, 100, 256, 255);
 
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
