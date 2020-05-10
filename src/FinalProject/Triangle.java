@@ -29,10 +29,10 @@ public class Triangle extends Polygon {
     //this renders each square
     public void render(int[][] fb, int fillColor, int outColor) {
         renderWire(outColor);
-        fill(this.fb, 0, fillColor);
+        //fill(this.fb, 0, fillColor);
         renderWire(outColor);
 
-        updateFB(this.fb, fb);
+        //updateFB(this.fb, fb);
     }
 
     public void renderWire(int outColor) {

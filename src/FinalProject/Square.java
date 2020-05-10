@@ -25,9 +25,9 @@ public class Square extends Polygon {
         this.clearFB();
         //write the render to this individual surface's framebuffer
         renderWire(points, a, b, c, d, outColor);
-        fill(this.fb, 0, fillColor);
+        //fill(this.fb, 0, fillColor);
         //update the cube's framebuffer with the filled square
-        updateFB(this.fb, fb);
+        //updateFB(this.fb, fb);
     }
 
     public void renderWire(double[][] points, int a, int b, int c, int d, int outColor) {

@@ -104,7 +104,7 @@ public class Cube extends Polygon {
         return new double[] {pt[0] - og[0], pt[1] - og[1], pt[2] - og[2]};
     }
 
-    public void render(int[][] fb) {
+    public void render(frameBuffer fb) {
         //these may be definable later
         int outColor = 255;
         //the custom fill colors
@@ -166,7 +166,7 @@ public class Cube extends Polygon {
 
         //this.points = this.t.points;
         //update the scenegraph's framebuffer
-        updateFB(this.fb, fb);
+        //updateFB(this.fb, fb);
     }
 
     public void clearFB() {

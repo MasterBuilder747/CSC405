@@ -8,44 +8,49 @@ Date due: 5-14-20
 
 package FinalProject;
 
+import javafx.scene.paint.Color;
+
 public abstract class Polygon extends Lines {
 
     //1 -> 2
-    public void updateFB(int[][] fb1, int[][] fb2) {
-        if (fb1.length == fb2.length && fb1[0].length == fb2[0].length) {
-            for (int i = 0; i < fb2.length; i++) {
-                for (int j = 0; j < fb2[0].length; j++) {
+    public void updateFB(frameBuffer fb1, frameBuffer fb2) {
+        if (fb1.fb.length == fb2.fb.length && fb1.fb[0].length == fb2.fb[0].length) {
+            for (int i = 0; i < fb2.fb.length; i++) {
+                for (int j = 0; j < fb2.fb[0].length; j++) {
                     //ignore the empty space in the individual fb
-                    if (fb1[i][j] != 0) {
-                        fb2[i][j] = fb1[i][j];
+                    //check to make sure the color is in fact NOT black in the r, g, and b values
+                    if (!fb1.compareColor(i, j, Color.rgb(0, 0, 0, 1.0))) {
+                        fb2.writePixel(i, j, fb1.readPixel(i, j));
+                    } else {
+                        fb2.writePixel(i, j, Color.rgb(0, 0, 0, 1.0));
                     }
                 }
             }
         }
     }
 
-    public void fill(int[][] fb, int black, int color) {
-        for (int x = 0; x < fb.length; x++) {
+    public void fill(frameBuffer fb, Color black, Color color) {
+        for (int x = 0; x < fb.fb.length; x++) {
 
             //read the fb from left to right
             int i = 0;
-            while (i < fb[0].length && fb[x][i] == black) {
+            while (i < fb.fb[0].length && fb.compareColor(x, i, black)) {
                 i++;
             }
-            if (i == fb[0].length) {
+            if (i == fb.fb[0].length) {
                 continue;
             }
             int x1 = i;
 
             //read the fb from right to left
-            i = fb[0].length - 1;
-            while (i > 0 && fb[x][i] == black) {
+            i = fb.fb[0].length - 1;
+            while (i > 0 && fb.compareColor(x, i, black)) {
                 i--;
             }
             int x2 = i;
 
             for (int j = x2; j >= x1; j--) {
-                fb[x][j] = color;
+                fb.writePixel(x, j, color);
             }
         }
     }

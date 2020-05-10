@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 public class LinesCurved {
 
     //note that this only works for an exact circle (with equal radius), not a ellipsoid
-    public static void drawCircle(Point c, int radius, int[][] fb, Color color)
+    public static void drawCircle(Point c, int radius, frameBuffer fb, Color color)
             throws NullPointerException, ArrayIndexOutOfBoundsException {
 
         //Found here, converted from C++:
@@ -45,7 +45,7 @@ public class LinesCurved {
         }
     }
 
-    private static void writeAll(int[][] fb, int xc, int yc, int x, int y, Color color)
+    private static void writeAll(frameBuffer fb, int xc, int yc, int x, int y, Color color)
             throws ArrayIndexOutOfBoundsException {
         //store each point drawing in all 8 parts in the fb
         writePixel(fb, xc+x, yc+y, color);
@@ -58,10 +58,11 @@ public class LinesCurved {
         writePixel(fb, xc-y, yc-x, color);
     }
 
-    private static void writePixel(int[][] fb, int x, int y, Color color)
+    private static void writePixel(frameBuffer fb, int x, int y, Color color)
             throws ArrayIndexOutOfBoundsException {
         try {
             //fb[x][y] = colorConvert.RGBtoInt(color);
+            fb.writePixel(x, y, color);
         } catch (ArrayIndexOutOfBoundsException e) {
             //ignore due to clipping
         }

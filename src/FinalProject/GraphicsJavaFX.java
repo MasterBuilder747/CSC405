@@ -210,7 +210,7 @@ public class GraphicsJavaFX extends Application {
                                             System.out.println("Triangle colors must be between 0 and 255, inclusive.");
                                         } else {
                                             //render the triangle, do not clear the surface so that other triangles can render
-                                            triangles.get(triIndex).render(graphicsCanvas.renderSurface.getSurface(), out[0], out[1]);
+                                            //triangles.get(triIndex).render(graphicsCanvas.renderSurface.getSurface(), out[0], out[1]);
                                             //sg.render(graphicsCanvas.renderSurface.getSurface());
                                             graphicsCanvas.renderSurface.insertArray();
                                             graphicsCanvas.repaint();
@@ -345,7 +345,7 @@ public class GraphicsJavaFX extends Application {
 
                         //resets the shape as well
                         sg.addCircle();
-                        //sg.circle.render(graphicsCanvas.renderSurface.getSurface(), 256, 256, 100, 256, 255);
+                        sg.circle.render(graphicsCanvas.renderSurface.getSurface(), 256, 256, 100, Color.rgb(255, 0, 0, 1.0), Color.rgb(255, 0, 0, 1.0));
 
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
@@ -739,7 +739,7 @@ public class GraphicsJavaFX extends Application {
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[12]) {
                         try {
-                            Matrix.printMat(graphicsCanvas.renderSurface.getSurface());
+                            //Matrix.printMat(graphicsCanvas.renderSurface.getSurface());
                         } catch (Exception e) {
                             System.out.println("Framebuffer does not exist. Create it first.");
                         }

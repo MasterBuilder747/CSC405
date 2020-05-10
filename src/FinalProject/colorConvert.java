@@ -4,6 +4,8 @@ import javafx.scene.paint.Color;
 
 public class colorConvert {
 
+    //this is here for reference, it will not be used
+
     public static int RGBtoInt(Color c) {
         int r = (int)c.getRed() * 255;
         int g = (int)c.getGreen() * 255;

@@ -39,9 +39,9 @@ public class RenderSurface extends WritableImage {
 		surface = new frameBuffer(this.x, this.y);
 	}
 	
-	public int[][] getSurface() {
-		//return surface.fb;
-		return new int[3][3];
+	public frameBuffer getSurface() {
+		return surface;
+		//return new int[3][3];
 	}
 	
     public void insertArray() {
