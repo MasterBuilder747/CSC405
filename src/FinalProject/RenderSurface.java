@@ -32,22 +32,22 @@ public class RenderSurface extends WritableImage {
 				// colorConvertOld.RGBtoInt(Color.rgb(100, 0, 0, 1.0));
 			}
 		}
-		insertArray();
+		this.insertArray();
 	}
 
 	public void clearSurface() {
-		surface = new frameBuffer(this.x, this.y);
+		this.surface.setFill(Color.rgb(0, 0, 0, 1.0));
 	}
 	
 	public frameBuffer getSurface() {
-		return surface;
+		return this.surface;
 		//return new int[3][3];
 	}
 	
     public void insertArray() {
-        //Creating a writable image 
-    	int height = surface.fb.length;
-    	int width = surface.fb[0].length;
+        //Creating a writable image
+    	int height = this.surface.fb.length;
+    	int width = this.surface.fb[0].length;
 
         //getting the pixel writer 
         PixelWriter writer = this.getPixelWriter();
@@ -55,7 +55,7 @@ public class RenderSurface extends WritableImage {
         for(int y = 0; y < height; y++) {
         	for(int x = 0; x < width; x++) {
            		//this inserts the fb into the screen
-				writer.setColor(x, y, surface.readPixel(x, y));
+				writer.setColor(x, y, this.surface.readPixel(x, y));
            	}
         }
     }

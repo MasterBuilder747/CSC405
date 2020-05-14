@@ -32,8 +32,8 @@ public class SceneGraph {
         this.c = new Cube(this.w, this.h, size);
     }
 
-    public void addCircle() {
+    public void addCircle(int x, int y, int radius) {
         //this would later add to the ArrayList
-        this.circle = new Circle(this.w, this.h);
+        this.circle = new Circle(this.w, this.h, x, y, radius);
     }
 }

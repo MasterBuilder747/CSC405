@@ -41,7 +41,7 @@ public class GraphicPanel extends JPanel {
 		
 		gf = _gf;
 
-		this.setBackground(Color.gray);
+		this.setBackground(Color.black);
 
 		// -- The JPanel can have a mouse listener if desired
 		this.addMouseListener(new MouseListener() {

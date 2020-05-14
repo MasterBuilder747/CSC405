@@ -344,9 +344,12 @@ public class GraphicsJavaFX extends Application {
                         graphicsCanvas.renderSurface.clearSurface();
 
                         //resets the shape as well
-                        sg.addCircle();
-                        sg.circle.render(graphicsCanvas.renderSurface.getSurface(), 256, 256, 100, Color.rgb(255, 0, 0, 1.0), Color.rgb(255, 0, 0, 1.0));
+                        sg.addCircle(256, 256, 100);
+                        //sg.circle.fb.print();
+                        //sg.circle.render(graphicsCanvas.renderSurface.getSurface(), Color.rgb(255, 255, 255, 1.0));
+                        sg.circle.render(graphicsCanvas.renderSurface.getSurface(), 1, 1, -1, Color.rgb(255, 255, 255, 1.0));
 
+                        //graphicsCanvas.renderSurface.getSurface().print();
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
                         System.out.println("Scene rendered/reset.");

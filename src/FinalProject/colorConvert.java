@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 
 public class colorConvert {
 
-    //this is here for reference, it will not be used
+    //this is here for reference/testing, it will not be used
 
     public static int RGBtoInt(Color c) {
         int r = (int)c.getRed() * 255;
@@ -32,4 +32,12 @@ public class colorConvert {
 //    public static void main(String[] args) {
 //        System.out.println(IntToRGB(1058107857).getBlue());
 //    }
+    public static void main(String[] args) {
+        frameBuffer fb = new frameBuffer(1, 1);
+        Circle c = new Circle(1, 1, 0, 0, 3);
+        //c.fb.writePixel(0, 0, Color.rgb(255, 0, 0, 1.0));
+        c.render(fb, Color.rgb(0, 0, 0, 1.0));
+        //fb.writePixel(0, 0, Color.rgb(255, 0, 0, 1.0));
+        fb.print();
+    }
 }
