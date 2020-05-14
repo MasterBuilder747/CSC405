@@ -36,7 +36,7 @@ public class colorConvert {
         frameBuffer fb = new frameBuffer(1, 1);
         Circle c = new Circle(1, 1, 0, 0, 3);
         //c.fb.writePixel(0, 0, Color.rgb(255, 0, 0, 1.0));
-        c.render(fb, Color.rgb(0, 0, 0, 1.0));
+        //c.render(fb, Color.rgb(0, 0, 0, 1.0));
         //fb.writePixel(0, 0, Color.rgb(255, 0, 0, 1.0));
         fb.print();
     }

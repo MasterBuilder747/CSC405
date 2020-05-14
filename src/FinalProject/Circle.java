@@ -28,31 +28,25 @@ public class Circle extends Polygon {
     //shading
     public void render(frameBuffer fb, double lx, double ly, double lz, Color c) {
         //make internal fb the background color
-        this.fb.setFill(Color.color(0.0, 0.0, 0.0, 1.0));
+        updateFB(fb, this.fb);
         //write the render to this individual surface's framebuffer
         LinesCurved.drawCircle(new Point(this.x, this.y), this.radius, this.fb, c);
-        //fill(this.fb, Color.rgb(0, 0, 0, 1.0), fillColor);
+        //fill(this.fb, Color.rgb(0, 0, 0, 1.0), c);
         shade(lx, ly, lz, c);
         //update the cube's framebuffer with the filled square
         updateFB(this.fb, fb);
     }
 
     //fill, no shading
-    public void render(frameBuffer fb, Color c) {
+    public void renderFill(frameBuffer fb, Color c) {
         //make internal fb the background color
-        this.fb.setFill(Color.color(0.0, 0.0, 0.0, 1.0));
-        //this.fb.print();
-
+        updateFB(fb, this.fb);
         //write the render to this individual surface's framebuffer
         LinesCurved.drawCircle(new Point(this.x, this.y), this.radius, this.fb, c);
-        //this.fb.print();
-
         //fill the color in
         fill(this.fb, Color.rgb(0, 0, 0, 1.0), c);
-
         //update the external framebuffer with the filled sphere
         updateFB(this.fb, fb);
-        //fb.print();
     }
 
     public void resize(int radius) {
@@ -118,7 +112,7 @@ public class Circle extends Polygon {
                     double nz = z;
 
                     // -- make the normal a unit vector
-                    double nMag = Math.sqrt(nx * nx + ny * ny + nz * nz);
+                    double nMag = Math.sqrt((nx * nx) + (ny * ny) + (nz * nz));
                     nx /= nMag;
                     ny /= nMag;
                     nz /= nMag;
@@ -129,8 +123,10 @@ public class Circle extends Polygon {
 
                     // -- scale the angle between surface normal and light vector to [0..255]
                     //    and assign as pixel intensity
-                    int pixel = (int)(angle * 255.0 / Math.PI);//180.0);
-                    this.fb.writePixel(i, j, Color.rgb(0, 0, 255, pixel/255.0D));
+                    double pixel = (angle / Math.PI);//180.0);
+                    //this.fb.writePixel(i, j, Color.rgb((int)c.getRed() * 255, (int)c.getGreen() * 255, (int)c.getBlue() * 255, pixel/255.0D));
+                    this.fb.writePixel(i, j, Color.rgb((int)(pixel * c.getRed() * 255), (int)(pixel * c.getGreen() * 255), (int)(pixel * c.getBlue() * 255), 1.0));
+                    //this.fb.writePixel(i, j, Color.rgb((int)pixel, (int)pixel, (int)pixel, 1.0));
                 }
             }
         }

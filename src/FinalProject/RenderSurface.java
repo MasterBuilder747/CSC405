@@ -28,7 +28,13 @@ public class RenderSurface extends WritableImage {
 		this.surface = new frameBuffer(width, height);
 		for (int i = 0; i < height; ++i) {
 			for (int j = 0; j < width; ++j) {
-				surface.writePixel(i, j, Color.rgb(0, 0, 0, 1.0));
+				//generate distant stars
+				int dice = (int)(Math.random() * 1000.0);
+				if (dice == 10) {
+					surface.writePixel(i, j, Color.rgb((int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random() * 255), 1.0));
+				} else {
+					surface.writePixel(i, j, Color.rgb(0, 0, 0, 1.0));
+				}
 				// colorConvertOld.RGBtoInt(Color.rgb(100, 0, 0, 1.0));
 			}
 		}

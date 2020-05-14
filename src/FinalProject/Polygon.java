@@ -20,11 +20,13 @@ public abstract class Polygon extends Lines {
                     //ignore the empty space in the individual fb
                     //check to make sure the color is in fact NOT black in the r, g, and b values
                     fb2.writePixel(i, j, fb1.readPixel(i, j));
+                    /*
                     if (!fb1.compareColor(i, j, Color.rgb(0, 0, 0, 1.0))) {
                         fb2.writePixel(i, j, fb1.readPixel(i, j));
                     } else {
                         fb2.writePixel(i, j, Color.color(0, 0, 0, 1.0));
                     }
+                    */
                 }
             }
         }

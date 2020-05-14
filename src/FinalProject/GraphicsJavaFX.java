@@ -341,13 +341,13 @@ public class GraphicsJavaFX extends Application {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (actionEvent.getSource() == buttons[3]) {
-                        graphicsCanvas.renderSurface.clearSurface();
+                        //graphicsCanvas.renderSurface.clearSurface();
 
                         //resets the shape as well
-                        sg.addCircle(256, 256, 100);
+                        sg.addCircle(256, 256, 150);
                         //sg.circle.fb.print();
-                        //sg.circle.render(graphicsCanvas.renderSurface.getSurface(), Color.rgb(255, 255, 255, 1.0));
-                        sg.circle.render(graphicsCanvas.renderSurface.getSurface(), 1, 1, -1, Color.rgb(255, 255, 255, 1.0));
+                        //sg.circle.renderFill(graphicsCanvas.renderSurface.getSurface(), Color.rgb(0, 0, 0, 1.0));
+                        sg.circle.render(graphicsCanvas.renderSurface.getSurface(), 0, 0, -1, Color.rgb(255, 0, 255));
 
                         //graphicsCanvas.renderSurface.getSurface().print();
                         graphicsCanvas.renderSurface.insertArray();
