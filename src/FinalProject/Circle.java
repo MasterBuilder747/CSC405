@@ -82,7 +82,8 @@ public class Circle extends Polygon {
 
             // -- fill the circle
             for (int i = 0; i < this.fb.fb.length; ++i) {
-                int left = 0, right = this.fb.fb[i].length - 1;
+                int left = 0;
+                int right = this.fb.fb[i].length - 1;
 
                 // -- find the outline
                 while (left < this.fb.fb[i].length && this.fb.compareColor(i, left, b)) {
@@ -129,7 +130,7 @@ public class Circle extends Polygon {
                     // -- scale the angle between surface normal and light vector to [0..255]
                     //    and assign as pixel intensity
                     int pixel = (int)(angle * 255.0 / Math.PI);//180.0);
-                    this.fb.writePixel(i, j, Color.rgb(pixel, pixel, pixel, 1.0));
+                    this.fb.writePixel(i, j, Color.rgb(0, 0, 255, pixel/255.0D));
                 }
             }
         }
