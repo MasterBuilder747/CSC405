@@ -196,7 +196,7 @@ public class GraphicsJavaFX extends Application {
 
         private Button buttons[];
         //total amount of elements, textboxes and buttons
-        private int nButtons = 9;
+        private int nButtons = 6;
 
         //textbox objects that store the text
         private TextField button0;
@@ -285,17 +285,35 @@ public class GraphicsJavaFX extends Application {
                         //graphicsCanvas.renderSurface.clearSurface();
 
                         //take in: RGB color, radius
+                        String rad = button0.getText();
+                        String c = button1.getText();
+                        String[] but2 = c.split(",\\s*");
+                        double r, g, b;
 
-                        //resets the shape as well
-                        sg.addCircle(512, 512, 50);
-                        //sg.circle.fb.print();
-                        //sg.circle.renderFill(graphicsCanvas.renderSurface.getSurface(), Color.rgb(0, 0, 0, 1.0));
-                        sg.sphere.render(graphicsCanvas.renderSurface.getSurface(), 1, 1, -1, Color.rgb(255, 255, 0));
+                        try {
+                            if (but2[0] != null || but2[1] != null || but2[2] != null) {
+                                r = Double.parseDouble(but2[0]);
+                                g = Double.parseDouble(but2[1]);
+                                b = Double.parseDouble(but2[2]);
+                                double ra = Double.parseDouble(rad);
+                                if (ra < 2 || ra > WIDTH / 2.0) {
+                                    ra = 50;
+                                }
+                                //resets the shape as well
+                                sg.addCircle((int)(WIDTH / 2.0), (int)(HEIGHT / 2.0), (int)ra);
+                                //sg.circle.fb.print();
+                                //sg.circle.renderFill(graphicsCanvas.renderSurface.getSurface(), Color.rgb(0, 0, 0, 1.0));
+                                sg.sphere.render(graphicsCanvas.renderSurface.getSurface(), 0, 0, -1, Color.rgb((int)r, (int)g, (int)b));
 
-                        //graphicsCanvas.renderSurface.getSurface().print();
-                        graphicsCanvas.renderSurface.insertArray();
-                        graphicsCanvas.repaint();
-                        System.out.println("Star Created.");
+                                //graphicsCanvas.renderSurface.getSurface().print();
+                                graphicsCanvas.renderSurface.insertArray();
+                                graphicsCanvas.repaint();
+                                System.out.println("Star Created.");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Color RGB requires 3 doubles: r, g, b comma separated from the last textbox.");
+                        }
+
                     }
                     // focus back to the pane
                     pane.requestFocus();
@@ -328,7 +346,7 @@ public class GraphicsJavaFX extends Application {
             i = 5;
             buttons[i] = new Button();
             buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Move");
+            buttons[i].setText("Re-Render");
             buttons[i].setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
@@ -339,45 +357,6 @@ public class GraphicsJavaFX extends Application {
                         sg.sphere.render(graphicsCanvas.renderSurface.getSurface(), 1, 1, -1, Color.rgb(255, 255, 0));
                         graphicsCanvas.renderSurface.insertArray();
                         graphicsCanvas.repaint();
-                    }
-                }
-            });
-
-            i = 6;
-            buttons[i] = new Button();
-            buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Set Orbit");
-            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    if (actionEvent.getSource() == buttons[6]) {
-
-                    }
-                }
-            });
-
-            i = 7;
-            buttons[i] = new Button();
-            buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Set Theta");
-            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    if (actionEvent.getSource() == buttons[7]) {
-
-                    }
-                }
-            });
-
-            i = 8;
-            buttons[i] = new Button();
-            buttons[i].setMnemonicParsing(true);
-            buttons[i].setText("Animate");
-            buttons[i].setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    if (actionEvent.getSource() == buttons[8]) {
-
                     }
                 }
             });
