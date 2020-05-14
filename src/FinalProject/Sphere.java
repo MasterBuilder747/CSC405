@@ -31,7 +31,7 @@ public class Sphere extends Polygon {
         LinesCurved.drawCircle(new Point(this.x, this.y), this.radius, this.fb, c);
         //fill(this.fb, Color.rgb(0, 0, 0, 1.0), c);
         shade(lx, ly, lz, c);
-        //LinesCurved.drawRays(new Point(this.x, this.y), this.radius, this.fb, c);
+        LinesCurved.drawRays(new Point(this.x, this.y), this.radius, this.fb, c);
         //update the cube's framebuffer with the filled square
         updateFB(this.fb, fb);
     }

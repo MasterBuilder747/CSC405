@@ -104,14 +104,23 @@ public class LinesCurved {
     private static void writeRays(FrameBuffer fb, int xc, int yc, int x, int y, int radius, Color color)
             throws ArrayIndexOutOfBoundsException {
         //store each point drawing in all 8 parts in the fb
-        writeRay(fb, xc+x, yc+y, xc, yc, true, true, radius, color);
-        writeRay(fb, xc-x, yc+y, xc, yc, false, true, radius, color);
+        //in clockwise order
+        //1
         writeRay(fb, xc+x, yc-y, xc, yc, true, false, radius, color);
-        writeRay(fb, xc-x, yc-y, xc, yc, false, false, radius, color);
-        writeRay(fb, xc+y, yc+x, xc, yc, true, true, radius, color);
-        writeRay(fb, xc-y, yc+x, xc, yc, false, true, radius, color);
+        //2
         writeRay(fb, xc+y, yc-x, xc, yc, true, false, radius, color);
+        //3
+        writeRay(fb, xc+y, yc+x, xc, yc, true, true, radius, color);
+        //4
+        writeRay(fb, xc+x, yc+y, xc, yc, true, true, radius, color);
+        //5
+        writeRay(fb, xc-x, yc+y, xc, yc, false, true, radius, color);
+        //6
+        writeRay(fb, xc-y, yc+x, xc, yc, false, true, radius, color);
+        //7
         writeRay(fb, xc-y, yc-x, xc, yc, false, false, radius, color);
+        //8
+        writeRay(fb, xc-x, yc-y, xc, yc, false, false, radius, color);
     }
 
     private static void writeRay(FrameBuffer fb, int x1, int y1, int xc, int yc, boolean xSign, boolean ySign, int radius, Color color)
@@ -121,6 +130,7 @@ public class LinesCurved {
             Color c = Color.rgb((int)(Math.abs((color.getRed() * 255) - dark)), (int)(Math.abs((color.getGreen() * 255) - dark)), (int)(Math.abs((color.getBlue() * 255) - dark)), color.getOpacity());
             //we need to determine the point that is perpendicular (normal) to the pixel being drawn
             //so we need the angle that the pixel is at
+            /*
             int x2, y2;
             int base = 10; //base length
             int rand = 10; //random value from 1 to this value to be added to base value
@@ -131,10 +141,31 @@ public class LinesCurved {
             x2 = (int)(x1 * scale);
             y2 = (int)(y1 * scale);
             Lines.drawLine(x1, y1, x2, y2, fb, c);
-
-            //fb.writePixel(x+1, y+1, c);
+            */
+            int base = (int)(-1 * radius * 0.03); //base length
+            int rand = (int)(radius * 0.15);
+            for (int i = 0; i < 1 + (int)(Math.random() * 10); i++) {
+                randomRay(xSign, ySign, x1, y1, base, rand, fb, c);
+            }
         } catch (ArrayIndexOutOfBoundsException e) {
             //ignore due to clipping
+        }
+    }
+
+    private static void randomRay(boolean xSign, boolean ySign, int x1, int y1, int base, int rand, FrameBuffer fb, Color c) {
+        int chance = 10;
+        if (xSign && ySign) {
+            Lines.drawLine(x1, y1, x1 + base + (int) (Math.random() * rand), y1 + base + (int) (Math.random() * rand), fb, c);
+            if ((int)(Math.random() * chance) == 1) Lines.drawLine(x1 + 1, y1 + 1, x1 + base + (int) (Math.random() * rand), y1 + base + (int) (Math.random() * rand), fb, c);
+        } else if (!xSign && ySign) {
+            Lines.drawLine(x1, y1, x1 - base - (int) (Math.random() * rand), y1 + base + (int) (Math.random() * rand), fb, c);
+            if ((int)(Math.random() * chance) == 1) Lines.drawLine(x1 - 1, y1 + 1, x1 - base - (int) (Math.random() * rand), y1 + base + (int) (Math.random() * rand), fb, c);
+        } else if (xSign && !ySign) {
+            Lines.drawLine(x1, y1, x1 + base + (int) (Math.random() * rand), y1 - base - (int) (Math.random() * rand), fb, c);
+            if ((int)(Math.random() * chance) == 1) Lines.drawLine(x1 + 1, y1 - 1, x1 + base + (int) (Math.random() * rand), y1 - base - (int) (Math.random() * rand), fb, c);
+        } else {
+            Lines.drawLine(x1, y1, x1 - base - (int) (Math.random() * rand), y1 - base - (int) (Math.random() * rand), fb, c);
+            if ((int)(Math.random() * chance) == 1) Lines.drawLine(x1 - 1, y1 - 1, x1 - base - (int) (Math.random() * rand), y1 - base - (int) (Math.random() * rand), fb, c);
         }
     }
 }
