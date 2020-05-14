@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage;
 
 public class RenderSurface extends WritableImage {
 	
-	private frameBuffer surface;
+	private FrameBuffer surface;
 	private final int x;
 	private final int y;
 
@@ -25,7 +25,7 @@ public class RenderSurface extends WritableImage {
 		super(width, height);
 		this.x = width;
 		this.y = height;
-		this.surface = new frameBuffer(width, height);
+		this.surface = new FrameBuffer(width, height);
 		for (int i = 0; i < height; ++i) {
 			for (int j = 0; j < width; ++j) {
 				//generate distant stars
@@ -45,7 +45,7 @@ public class RenderSurface extends WritableImage {
 		this.surface.setFill(Color.rgb(0, 0, 0, 1.0));
 	}
 	
-	public frameBuffer getSurface() {
+	public FrameBuffer getSurface() {
 		return this.surface;
 		//return new int[3][3];
 	}

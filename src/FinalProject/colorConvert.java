@@ -33,8 +33,8 @@ public class colorConvert {
 //        System.out.println(IntToRGB(1058107857).getBlue());
 //    }
     public static void main(String[] args) {
-        frameBuffer fb = new frameBuffer(1, 1);
-        Circle c = new Circle(1, 1, 0, 0, 3);
+        FrameBuffer fb = new FrameBuffer(1, 1);
+        Sphere c = new Sphere(1, 1, 0, 0, 3);
         //c.fb.writePixel(0, 0, Color.rgb(255, 0, 0, 1.0));
         //c.render(fb, Color.rgb(0, 0, 0, 1.0));
         //fb.writePixel(0, 0, Color.rgb(255, 0, 0, 1.0));

@@ -347,7 +347,7 @@ public class GraphicsJavaFX extends Application {
                         sg.addCircle(256, 256, 150);
                         //sg.circle.fb.print();
                         //sg.circle.renderFill(graphicsCanvas.renderSurface.getSurface(), Color.rgb(0, 0, 0, 1.0));
-                        sg.circle.render(graphicsCanvas.renderSurface.getSurface(), 0, 0, -1, Color.rgb(255, 0, 255));
+                        sg.sphere.render(graphicsCanvas.renderSurface.getSurface(), 1, 1, -1, Color.rgb(0, 0, 255));
 
                         //graphicsCanvas.renderSurface.getSurface().print();
                         graphicsCanvas.renderSurface.insertArray();

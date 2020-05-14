@@ -20,7 +20,7 @@ public class SceneGraph {
     //for now, there is only one cube,
     //but later on an ArrayList will be used for multiple objects
     Cube c;
-    Circle circle;
+    Sphere sphere;
 
     public SceneGraph(int x, int y) {
         this.w = x;
@@ -34,6 +34,6 @@ public class SceneGraph {
 
     public void addCircle(int x, int y, int radius) {
         //this would later add to the ArrayList
-        this.circle = new Circle(this.w, this.h, x, y, radius);
+        this.sphere = new Sphere(this.w, this.h, x, y, radius);
     }
 }

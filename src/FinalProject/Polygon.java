@@ -13,7 +13,7 @@ import javafx.scene.paint.Color;
 public abstract class Polygon extends Lines {
 
     //1 -> 2
-    public void updateFB(frameBuffer fb1, frameBuffer fb2) {
+    public void updateFB(FrameBuffer fb1, FrameBuffer fb2) {
         if (fb1.fb.length == fb2.fb.length && fb1.fb[0].length == fb2.fb[0].length) {
             for (int i = 0; i < fb2.fb.length; i++) {
                 for (int j = 0; j < fb2.fb[0].length; j++) {
@@ -32,7 +32,7 @@ public abstract class Polygon extends Lines {
         }
     }
 
-    public void fill(frameBuffer fb, Color black, Color color) {
+    public void fill(FrameBuffer fb, Color black, Color color) {
         for (int x = 0; x < fb.fb.length; x++) {
 
             //read the fb from left to right

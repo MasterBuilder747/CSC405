@@ -10,13 +10,13 @@ package FinalProject;
 
 import javafx.scene.paint.Color;
 
-public class frameBuffer {
+public class FrameBuffer {
 
     //this is a 2D representation of a 0 to 255 colored pixel
     //r, g, b, alpha(true double)
     double[][][] fb;
 
-    public frameBuffer(int w, int h) {
+    public FrameBuffer(int w, int h) {
         //all values are set to 0.0 by default
         this.fb = new double[w][h][4];
     }

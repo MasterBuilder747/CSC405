@@ -2,10 +2,8 @@ package FinalProject;
 
 import javafx.scene.paint.Color;
 
-//import PhongShading.Utilities.ScanConvert;
-
-public class Circle extends Polygon {
-    frameBuffer fb;
+public class Sphere extends Polygon {
+    FrameBuffer fb;
     int w;
     int h;
     //this is the center point location
@@ -13,7 +11,7 @@ public class Circle extends Polygon {
     int y;
     int radius;
 
-    public Circle(int w, int h, int x, int y, int radius) {
+    public Sphere(int w, int h, int x, int y, int radius) {
         //size of the internal fb
         this.w = w;
         this.h = h;
@@ -22,23 +20,24 @@ public class Circle extends Polygon {
         this.y = y;
         this.radius = radius;
         //framebuffer is still empty
-        this.fb = new frameBuffer(w, h);
+        this.fb = new FrameBuffer(w, h);
     }
 
     //shading
-    public void render(frameBuffer fb, double lx, double ly, double lz, Color c) {
+    public void render(FrameBuffer fb, double lx, double ly, double lz, Color c) {
         //make internal fb the background color
         updateFB(fb, this.fb);
         //write the render to this individual surface's framebuffer
         LinesCurved.drawCircle(new Point(this.x, this.y), this.radius, this.fb, c);
         //fill(this.fb, Color.rgb(0, 0, 0, 1.0), c);
         shade(lx, ly, lz, c);
+        //LinesCurved.drawRays(new Point(this.x, this.y), this.radius, this.fb, c);
         //update the cube's framebuffer with the filled square
         updateFB(this.fb, fb);
     }
 
     //fill, no shading
-    public void renderFill(frameBuffer fb, Color c) {
+    public void renderFill(FrameBuffer fb, Color c) {
         //make internal fb the background color
         updateFB(fb, this.fb);
         //write the render to this individual surface's framebuffer

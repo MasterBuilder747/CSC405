@@ -104,7 +104,7 @@ public class Cube extends Polygon {
         return new double[] {pt[0] - og[0], pt[1] - og[1], pt[2] - og[2]};
     }
 
-    public void render(frameBuffer fb) {
+    public void render(FrameBuffer fb) {
         //these may be definable later
         int outColor = 255;
         //the custom fill colors
