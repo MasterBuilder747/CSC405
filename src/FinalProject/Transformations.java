@@ -91,8 +91,7 @@ public class Transformations extends Matrix {
     //    angle is rotation angle in degrees
     //    axis is the axis of rotation x, y, z
     //    builds the transformation matrix M
-    public void arbitrary(double[] p, double angle, double[] axis) throws IllegalArgumentException
-    {
+    public void arbitrary(double[] fp, double angle, double[] axis) throws IllegalArgumentException {
         // -- convert the axis to a unit vector
         double mag = Math.sqrt(Math.pow(axis[0],  2) + Math.pow(axis[1],  2) + Math.pow(axis[2],  2));
         //System.out.println(mag);
@@ -109,15 +108,15 @@ public class Transformations extends Matrix {
             // -- just rotate about the x axis
 
             // ADD CALL TO rotateX(P, angle) HERE
-            this.rotateX(angle, p[0], p[1], p[2]);
+            this.rotateX(angle, fp[0], fp[1], fp[2]);
             //m = xrotate((int)p[0],(int)p[1],(int)p[2],angle,scene);
             return;
         }
 
         // -- translate fixed point to origin
-        double[][] T = this.bldTrans(-p[0], -p[1], -p[2]);
+        double[][] T = this.bldTrans(-fp[0], -fp[1], -fp[2]);
         // -- translate fixed point to original location
-        double[][] Ti = this.bldTrans(p[0], p[1], p[2]);
+        double[][] Ti = this.bldTrans(fp[0], fp[1], fp[2]);
         // -- rotate about the z axis by theta
         double[][] Rz = this.bldZ(angle);
 

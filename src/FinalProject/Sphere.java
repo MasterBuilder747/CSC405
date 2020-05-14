@@ -60,8 +60,10 @@ public class Sphere extends Polygon {
     public void shade(double lx, double ly, double lz, Color c) {
         Color b = Color.rgb(0, 0, 0, 1.0);
         if (this.fb != null) {
-            int centerX = this.fb.fb[0].length / 2;
-            int centerY = this.fb.fb.length / 2;
+//            int centerX = this.fb.fb[0].length / 2;
+//            int centerY = this.fb.fb.length / 2;
+            int centerX = this.x;
+            int centerY = this.y;
 
             // -- outline the circle
             //ScanConvert.BresenhamCircleGray(radius, centerX, centerY, fb, 255);

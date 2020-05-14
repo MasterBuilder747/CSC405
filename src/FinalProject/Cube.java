@@ -8,12 +8,14 @@ Date due: 5-14-20
 
 package FinalProject;
 
+import javafx.scene.paint.Color;
+
 public class Cube extends Polygon {
 
     final int SQUARES = 6;
     Square[] squares = new Square[SQUARES];
 
-    int[][] fb;
+    FrameBuffer fb;
     double[][] points;
     Transformations t;
 
@@ -42,7 +44,7 @@ public class Cube extends Polygon {
         this.t = new Transformations(this.points);
 
         //set individual frame buffers
-        this.fb = new int[x][y];
+        this.fb = new FrameBuffer(x, y);
         for (int i = 0; i < this.SQUARES; i++) {
             this.squares[i] = new Square(x, y);
         }
@@ -68,6 +70,9 @@ public class Cube extends Polygon {
         this.points[0][14] = (this.points[0][0] + this.points[0][6]) / 2.0;
         this.points[1][14] = (this.points[1][0] + this.points[1][6]) / 2.0;
         this.points[2][14] = (this.points[2][0] + this.points[2][6]) / 2.0;
+    }
+    public double[] getCenter() {
+        return new double[]{this.points[0][14], this.points[1][14], this.points[2][14]};
     }
     //surface normals
     public void calculateSN(double[][] points) {
@@ -105,11 +110,19 @@ public class Cube extends Polygon {
     }
 
     public void render(FrameBuffer fb) {
+        //updateFB(fb, this.fb);
         //these may be definable later
-        int outColor = 255;
+        //int outColor = 255;
         //the custom fill colors
         //top, front, bottom, back, right, left
-        int[] surfaceColor = {255, 220, 180, 140, 100, 60};
+        Color[] surfaceColor = {
+                Color.color(Math.random(), Math.random(), Math.random(), 1.0),
+                Color.color(Math.random(), Math.random(), Math.random(), 1.0),
+                Color.color(Math.random(), Math.random(), Math.random(), 1.0),
+                Color.color(Math.random(), Math.random(), Math.random(), 1.0),
+                Color.color(Math.random(), Math.random(), Math.random(), 1.0),
+                Color.color(Math.random(), Math.random(), Math.random(), 1.0)
+        };
 
         this.clearFB();
 
@@ -129,47 +142,48 @@ public class Cube extends Polygon {
         //top: 0, 1, 2, 3
         //x, y, z
         //0, 0, 1 (only one shown: aka the viewer vector)
+        //squares[0].render(this.fb, this.t.points, 0, 1, 2, 3, surfaceColor[0]);
         if (this.t.points[2][8] > 0 && this.t.points[2][8] < 1.00000000001) {
             //System.out.println("render top");
-            squares[0].render(this.fb, this.t.points, 0, 1, 2, 3, surfaceColor[0], outColor);
+            squares[0].render(this.fb, this.t.points, 0, 1, 2, 3, surfaceColor[0]);
         }
         //front: 3, 2, 6, 7
         //0, 1, 0
         if (this.t.points[2][9] > 0 && this.t.points[2][9] < 1.00000000001) {
             //System.out.println("render front");
-            squares[1].render(this.fb, this.t.points, 3, 2, 6, 7, surfaceColor[1], outColor);
+            squares[1].render(this.fb, this.t.points, 3, 2, 6, 7, surfaceColor[1]);
         }
         //bottom: 7, 6, 5, 4
         //0, 0, -1
         if (this.t.points[2][10] > 0 && this.t.points[2][10] < 1.00000000001) {
             //System.out.println("render bottom");
-            squares[2].render(this.fb, this.t.points, 7, 6, 5, 4, surfaceColor[2], outColor);
+            squares[2].render(this.fb, this.t.points, 7, 6, 5, 4, surfaceColor[2]);
         }
         //back: 4, 5, 1, 0
         //0, -1, 0
         if (this.t.points[2][11] > 0 && this.t.points[2][11] < 1.00000000001) {
             //System.out.println("render back");
-            squares[3].render(this.fb, this.t.points, 4, 5, 1, 0, surfaceColor[3], outColor);
+            squares[3].render(this.fb, this.t.points, 4, 5, 1, 0, surfaceColor[3]);
         }
         //right: 2, 1, 5, 6
         //1, 0, 0
         if (this.t.points[2][12] > 0 && this.t.points[2][12] < 1.00000000001) {
             //System.out.println("render right");
-            squares[4].render(this.fb, this.t.points, 2, 1, 5, 6, surfaceColor[4], outColor);
+            squares[4].render(this.fb, this.t.points, 2, 1, 5, 6, surfaceColor[4]);
         }
         //left: 0, 3, 7, 4
         //-1, 0, 0
         if (this.t.points[2][13] > 0 && this.t.points[2][13] < 1.00000000001) {
             //System.out.println("render left");
-            squares[5].render(this.fb, this.t.points, 0, 3, 7, 4, surfaceColor[5], outColor);
+            squares[5].render(this.fb, this.t.points, 0, 3, 7, 4, surfaceColor[5]);
         }
 
         //this.points = this.t.points;
         //update the scenegraph's framebuffer
-        //updateFB(this.fb, fb);
+        updateFB(this.fb, fb);
     }
 
     public void clearFB() {
-        this.fb = new int[x][y];
+        this.fb.setFill(Color.rgb(0, 0, 0, 1.0));
     }
 }

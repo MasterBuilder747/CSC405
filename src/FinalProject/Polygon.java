@@ -20,13 +20,42 @@ public abstract class Polygon extends Lines {
                     //ignore the empty space in the individual fb
                     //check to make sure the color is in fact NOT black in the r, g, and b values
                     fb2.writePixel(i, j, fb1.readPixel(i, j));
-                    /*
-                    if (!fb1.compareColor(i, j, Color.rgb(0, 0, 0, 1.0))) {
+                }
+            }
+        }
+    }
+
+    //1 -> 2
+    public void updateFB(FrameBuffer fb1, FrameBuffer fb2, Color b) {
+        if (fb1.fb.length == fb2.fb.length && fb1.fb[0].length == fb2.fb[0].length) {
+            for (int i = 0; i < fb2.fb.length; i++) {
+                for (int j = 0; j < fb2.fb[0].length; j++) {
+                    //ignore the empty space in the individual fb
+                    //check to make sure the color is in fact NOT black in the r, g, and b values
+                    //fb2.writePixel(i, j, fb1.readPixel(i, j));
+                    if (!fb1.compareColor(i, j, b)) {
                         fb2.writePixel(i, j, fb1.readPixel(i, j));
                     } else {
-                        fb2.writePixel(i, j, Color.color(0, 0, 0, 1.0));
+                        fb2.writePixel(i, j, b);
                     }
-                    */
+                }
+            }
+        }
+    }
+
+    //1 -> 2
+    public void replaceFB(FrameBuffer fb1, FrameBuffer fb2, Color b) {
+        if (fb1.fb.length == fb2.fb.length && fb1.fb[0].length == fb2.fb[0].length) {
+            for (int i = 0; i < fb2.fb.length; i++) {
+                for (int j = 0; j < fb2.fb[0].length; j++) {
+                    //ignore the empty space in the individual fb
+                    //check to make sure the color is in fact NOT black in the r, g, and b values
+                    //fb2.writePixel(i, j, fb1.readPixel(i, j));
+                    if (!fb1.compareColor(i, j, b)) {
+                        fb2.writePixel(i, j, fb1.readPixel(i, j));
+                    } else {
+                        fb2.writePixel(i, j, Color.rgb(0, 0, 0, 1.0));
+                    }
                 }
             }
         }
